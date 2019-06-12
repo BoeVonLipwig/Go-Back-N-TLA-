@@ -9,6 +9,9 @@ begin
 A:
     while TRUE do
         await reciveData # <<>> /\ state = "open";
+        if reciveData[1] = "closing" then
+            SKIP;
+        end if;
         if reciveData[1] # CORRUPT_DATA then
             if (reciveData[1] = requestNum) then
                 output := output \o <<reciveData[2]>>;
@@ -46,7 +49,11 @@ A:
         if reciveData # CORRUPT_DATA then
             if Len(reciveData) = 4 /\ reciveData[1] = 0 /\ reciveData[2] = 1 /\ reciveData[3] = synNum /\ reciveData[4] = requestNum + 1 then
                 state := "open";
+            else 
+                reciveData := <<>>;
             end if;
+        else
+            reciveData := <<>>;
         end if;
         
         if state = "SYN-RECIVED" then 
@@ -103,15 +110,16 @@ SendSYNACK == /\ state = "SYN-RECIVED" /\ reciveData # <<>>
               /\ IF reciveData # CORRUPT_DATA
                     THEN /\ IF Len(reciveData) = 4 /\ reciveData[1] = 0 /\ reciveData[2] = 1 /\ reciveData[3] = synNum /\ reciveData[4] = requestNum + 1
                                THEN /\ state' = "open"
-                               ELSE /\ TRUE
+                                    /\ UNCHANGED reciveData
+                               ELSE /\ reciveData' = <<>>
                                     /\ state' = state
-                    ELSE /\ TRUE
+                    ELSE /\ reciveData' = <<>>
                          /\ state' = state
               /\ IF state' = "SYN-RECIVED"
                     THEN /\ sendReq' = <<1, 1, synNum, requestNum>>
                     ELSE /\ TRUE
                          /\ UNCHANGED sendReq
-              /\ UNCHANGED << reciveData, requestNum, output, synNum >>
+              /\ UNCHANGED << requestNum, output, synNum >>
 
 Next == Recive \/ WaitSYN \/ SendSYNACK
 
@@ -135,9 +143,11 @@ Invariants == \*/\ TypeOK
               /\ requestNum > 0
 
 Fairness == /\ WF_vars(Recive)
-
+            /\ WF_vars(WaitSYN)
+            /\ WF_vars(SendSYNACK)
+ 
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 21:43:51 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 21:54:57 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

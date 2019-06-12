@@ -69,41 +69,26 @@ A:
         await state = "SYN_ACK_RECIVED" /\ reciveReq # <<>>;
         if reciveReq # CORRUPT_DATA then 
             if reciveReq[1] = 1 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1 then 
-                sendData := <<0, 1, sequenceNum + 1, reqNum>>
+                state := "open"
+            else 
+                reciveReq := <<>>;
             end if;
         else 
             reciveReq := <<>>;
-            state := "opening";
+       end if;
+       
+       if state = "SYN_ACK_RECIVED" then 
+           sendData := <<0, 1, sequenceNum + 1, reqNum>>;
        end if;
     end while;
 end process;
 
-fair process Connect = "connect"
-begin 
-A:
-    while TRUE do
-        if state = "closed" \/ (state = "SYN-SENT" /\ reciveReq = <<>>) then
-            if  Len(reciveReq) # 4 then
-                sendData := <<1, 0, sequenceNum>>;
-                state := "SYN-SENT";
-            end if;
-        elsif (state = "ESTABLISHED" /\ Len(reciveReq) # 1 ) \/ (state = "SYN-SENT" /\ reciveReq # <<>>) then
-            if reciveReq[1] = 1 /\ reciveReq[2] = 1 /\  reciveReq[3] = sequenceNum +1 /\ Len(reciveReq) = 4 then 
-                sendData := <<0, 1, reciveReq[3], reciveReq[4] + 1>>;
-                reciveReq := <<>>;
-            end if;
-        elsif state = "ESTABLISHED" /\ Len(reciveReq) = 1 then
-            state := "open";
-        end if;
-    end while;
-end process;
 
 end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Send at line 16 col 5 changed to A_
 \* Label A of process SYN at line 44 col 5 changed to A_S
-\* Label A of process ACK at line 68 col 5 changed to A_A
 VARIABLES sendData, reciveReq, toSend, state, sequenceNum, windowStart, 
           windowEnd, reqNum
 
@@ -114,7 +99,7 @@ MIN(x,y)  == IF (x < y) THEN x ELSE y
 vars == << sendData, reciveReq, toSend, state, sequenceNum, windowStart, 
            windowEnd, reqNum >>
 
-ProcSet == {"send"} \cup {"syn"} \cup {"ack"} \cup {"connect"}
+ProcSet == {"send"} \cup {"syn"} \cup {"ack"}
 
 Init == (* Global variables *)
         /\ sendData = <<>>
@@ -170,44 +155,24 @@ SYN == /\ state = "opening" /\ sendData = <<>>
 ACK == /\ state = "SYN_ACK_RECIVED" /\ reciveReq # <<>>
        /\ IF reciveReq # CORRUPT_DATA
              THEN /\ IF reciveReq[1] = 1 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1
-                        THEN /\ sendData' = <<0, 1, sequenceNum + 1, reqNum>>
-                        ELSE /\ TRUE
-                             /\ UNCHANGED sendData
-                  /\ UNCHANGED << reciveReq, state >>
+                        THEN /\ state' = "open"
+                             /\ UNCHANGED reciveReq
+                        ELSE /\ reciveReq' = <<>>
+                             /\ state' = state
              ELSE /\ reciveReq' = <<>>
-                  /\ state' = "opening"
+                  /\ state' = state
+       /\ IF state' = "SYN_ACK_RECIVED"
+             THEN /\ sendData' = <<0, 1, sequenceNum + 1, reqNum>>
+             ELSE /\ TRUE
                   /\ UNCHANGED sendData
        /\ UNCHANGED << toSend, sequenceNum, windowStart, windowEnd, reqNum >>
 
-Connect == /\ IF state = "closed" \/ (state = "SYN-SENT" /\ reciveReq = <<>>)
-                 THEN /\ IF Len(reciveReq) # 4
-                            THEN /\ sendData' = <<1, 0, sequenceNum>>
-                                 /\ state' = "SYN-SENT"
-                            ELSE /\ TRUE
-                                 /\ UNCHANGED << sendData, state >>
-                      /\ UNCHANGED reciveReq
-                 ELSE /\ IF (state = "ESTABLISHED" /\ Len(reciveReq) # 1 ) \/ (state = "SYN-SENT" /\ reciveReq # <<>>)
-                            THEN /\ IF reciveReq[1] = 1 /\ reciveReq[2] = 1 /\  reciveReq[3] = sequenceNum +1 /\ Len(reciveReq) = 4
-                                       THEN /\ sendData' = <<0, 1, reciveReq[3], reciveReq[4] + 1>>
-                                            /\ reciveReq' = <<>>
-                                       ELSE /\ TRUE
-                                            /\ UNCHANGED << sendData, 
-                                                            reciveReq >>
-                                 /\ state' = state
-                            ELSE /\ IF state = "ESTABLISHED" /\ Len(reciveReq) = 1
-                                       THEN /\ state' = "open"
-                                       ELSE /\ TRUE
-                                            /\ state' = state
-                                 /\ UNCHANGED << sendData, reciveReq >>
-           /\ UNCHANGED << toSend, sequenceNum, windowStart, windowEnd, reqNum >>
-
-Next == Send \/ SYN \/ ACK \/ Connect
+Next == Send \/ SYN \/ ACK
 
 Spec == /\ Init /\ [][Next]_vars
         /\ WF_vars(Send)
         /\ WF_vars(SYN)
         /\ WF_vars(ACK)
-        /\ WF_vars(Connect)
 
 \* END TRANSLATION
 
@@ -235,8 +200,9 @@ Invariants == \*/\ TypeOK
 
 \* Both of the below proccesses are weakly fair
 Fairness == /\ WF_vars(Send)
-            /\ WF_vars(Connect)
+            /\ WF_vars(SYN)
+            /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 21:13:49 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 21:53:56 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
