@@ -93,7 +93,7 @@ A:
         await state = "closing";
         if receiveReq # <<>> then
             if receiveReq # CORRUPT_DATA then
-                if receiveReq[1] = "FIN" then 
+                if ToString(receiveReq[1]) = "FIN" then 
                     state := "FIN-ACK";
                 end if;
             end if;
@@ -112,7 +112,7 @@ A:
         await state = "FIN-ACK" /\ receiveReq # <<>>;
         
         if receiveReq # CORRUPT_DATA then
-            if receiveReq[1] = "ACK" then 
+            if ToString(receiveReq[1]) = "ACK" then 
                 state := "closed";
             end if;
         end if;
@@ -217,7 +217,7 @@ ACK == /\ state = "SYN_ACK_receive D"
 FIN == /\ state = "closing"
        /\ IF receiveReq # <<>>
              THEN /\ IF receiveReq # CORRUPT_DATA
-                        THEN /\ IF receiveReq[1] = "FIN"
+                        THEN /\ IF ToString(receiveReq[1]) = "FIN"
                                    THEN /\ state' = "FIN-ACK"
                                    ELSE /\ TRUE
                                         /\ state' = state
@@ -234,7 +234,7 @@ FIN == /\ state = "closing"
 
 FINACK == /\ state = "FIN-ACK" /\ receiveReq # <<>>
           /\ IF receiveReq # CORRUPT_DATA
-                THEN /\ IF receiveReq[1] = "ACK"
+                THEN /\ IF ToString(receiveReq[1]) = "ACK"
                            THEN /\ state' = "closed"
                            ELSE /\ TRUE
                                 /\ state' = state
@@ -285,7 +285,9 @@ Properties == \A x \in {"opening", "SYN_ACK_receive D", "open","closing", "close
 Fairness == /\ WF_vars(Send)
             /\ WF_vars(SYN)
             /\ WF_vars(ACK)
+            /\ WF_vars(FIN)
+            /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:23:26 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:48:37 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

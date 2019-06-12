@@ -16,19 +16,19 @@ VARIABLES sendDataQueue, \* send data  to dataWire
           windowEnd, \* 
           messOut,
           senderState,
-          recieverState,
+          receieverState,
           synNum,
           reqNum
            
           
           
 
-vars == <<sendDataQueue, receiveDataQueue, receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, recieverState, synNum, reqNum>>
+vars == <<sendDataQueue, receiveDataQueue, receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, receieverState, synNum, reqNum>>
  
 dataWir == INSTANCE DataWire WITH inputW <- sendDataQueue, outputW <- receiveDataQueue
 reqWir == INSTANCE DataWire WITH inputW <- sendReqQueue, outputW <- receiveReqQueue
 sender == INSTANCE Sender WITH sendData <- sendDataQueue, receiveReq <- receiveReqQueue, state <- senderState
-receiver == INSTANCE Receiver WITH sendReq <- sendReqQueue, reciveData <- receiveDataQueue, output <- messOut, state <- recieverState
+receiver == INSTANCE Receiver WITH sendReq <- sendReqQueue, receiveData <- receiveDataQueue, output <- messOut, state <- receieverState
 
  
 \* The following varibles run the init code in their respective modules
@@ -40,13 +40,13 @@ Init ==  /\ dataWir!Init
 
 \* These are used to help define what the "next" step is and state what variables remain unchanged
 dataChannel ==  /\  dataWir!Next
-                /\  UNCHANGED <<receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, recieverState, synNum, reqNum>>
+                /\  UNCHANGED <<receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, receieverState, synNum, reqNum>>
 
 reqChannel ==  /\  reqWir!Next
-               /\  UNCHANGED <<sendDataQueue, receiveDataQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, recieverState, synNum, reqNum>>
+               /\  UNCHANGED <<sendDataQueue, receiveDataQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, receieverState, synNum, reqNum>>
 
 senderChannel ==   /\  sender!Next
-                   /\  UNCHANGED <<receiveDataQueue, sendReqQueue, requestNum, messOut, recieverState, synNum>>
+                   /\  UNCHANGED <<receiveDataQueue, sendReqQueue, requestNum, messOut, receieverState, synNum>>
 
 receiverChannel == /\  receiver!Next
                   /\  UNCHANGED <<sendDataQueue, receiveReqQueue, sequenceNum, windowStart, windowEnd, senderState, reqNum>>
@@ -71,7 +71,7 @@ Spec == /\ Init /\ [][Next]_vars
 \*        (* The following line inforce the invariants of the modules. This is used 
 \*           for type checking*)
 \*        /\ sender!Invariants
-\*        /\ reciver!Invariants
+\*        /\ receiveWir!Invariants
 \*        /\ dataWir!Invariants
        
 ---------
@@ -88,5 +88,5 @@ Properties == /\ CorrectResult
                   
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:12:43 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:31:28 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi

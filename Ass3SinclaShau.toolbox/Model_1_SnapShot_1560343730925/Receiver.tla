@@ -87,7 +87,7 @@ A:
         
         await receiveData # <<>> /\ state = "closing";
         if receiveData # CORRUPT_DATA then 
-            if ToString(receiveData[1]) = "FIN-ACK" then
+            if receiveData[1] = "FIN-ACK" then
                 state := "ACK";
             end if;
         end if;
@@ -104,11 +104,11 @@ fair process SendACK = "sendack"
 begin
 A: 
     while TRUE do
-        await state = "ACK" \/ state = "closed";
+        await state = "closing" \/ state = "closed";
         (* since we cant prove this message has been recived by the sender and we cant time this out 
            we will just send it forever as tla does not allow us to fully implement tcp*)
-        sendReq := <<"ACK">>;
         state := "closed";
+        sendReq := <<"ACK">>;
     end while;
 
 end process;
@@ -195,7 +195,7 @@ WaitData == /\ receiveData # <<>> /\ state = "WAIT-FOR-DATA"
 
 SendFIN == /\ receiveData # <<>> /\ state = "closing"
            /\ IF receiveData # CORRUPT_DATA
-                 THEN /\ IF ToString(receiveData[1]) = "FIN-ACK"
+                 THEN /\ IF receiveData[1] = "FIN-ACK"
                             THEN /\ state' = "ACK"
                             ELSE /\ TRUE
                                  /\ state' = state
@@ -207,9 +207,9 @@ SendFIN == /\ receiveData # <<>> /\ state = "closing"
                       /\ UNCHANGED sendReq
            /\ UNCHANGED << receiveData, requestNum, output, synNum >>
 
-SendACK == /\ state = "ACK" \/ state = "closed"
-           /\ sendReq' = <<"ACK">>
+SendACK == /\ state = "closing" \/ state = "closed"
            /\ state' = "closed"
+           /\ sendReq' = <<"ACK">>
            /\ UNCHANGED << receiveData, requestNum, output, synNum >>
 
 Next == Receive \/ WaitSYN \/ SendSYNACK \/ WaitData \/ SendFIN \/ SendACK
@@ -249,5 +249,5 @@ Properties == \A x \in {"closed", "closing","SYN-RECIVED", "WAIT-FOR-DATA", "ope
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:50:24 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:46:16 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

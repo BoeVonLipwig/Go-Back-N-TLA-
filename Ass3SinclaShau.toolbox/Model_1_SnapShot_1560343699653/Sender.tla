@@ -112,7 +112,7 @@ A:
         await state = "FIN-ACK" /\ receiveReq # <<>>;
         
         if receiveReq # CORRUPT_DATA then
-            if ToString(receiveReq[1]) = "ACK" then 
+            if receiveReq[1] = "ACK" then 
                 state := "closed";
             end if;
         end if;
@@ -234,7 +234,7 @@ FIN == /\ state = "closing"
 
 FINACK == /\ state = "FIN-ACK" /\ receiveReq # <<>>
           /\ IF receiveReq # CORRUPT_DATA
-                THEN /\ IF ToString(receiveReq[1]) = "ACK"
+                THEN /\ IF receiveReq[1] = "ACK"
                            THEN /\ state' = "closed"
                            ELSE /\ TRUE
                                 /\ state' = state
@@ -289,5 +289,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:48:37 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:48:07 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

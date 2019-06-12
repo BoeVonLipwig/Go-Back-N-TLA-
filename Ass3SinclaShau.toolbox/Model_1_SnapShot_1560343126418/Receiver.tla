@@ -13,12 +13,13 @@ A:
             \* sender will send -1 if it wants to close the connection
             if receiveData[1] = -1 then
                 state := "closing";
+            else
+                if (receiveData[1] = requestNum) then
+                    output := output \o <<receiveData[2]>>;
+                    requestNum := requestNum + 1;
+                end if;
+                sendReq := <<requestNum>>;
             end if;
-            if (receiveData[1] = requestNum) then
-                output := output \o <<receiveData[2]>>;
-                requestNum := requestNum + 1;
-            end if;
-            sendReq := <<requestNum>>;
         end if;
         receiveData := <<>>;
     end while;
@@ -87,7 +88,7 @@ A:
         
         await receiveData # <<>> /\ state = "closing";
         if receiveData # CORRUPT_DATA then 
-            if ToString(receiveData[1]) = "FIN-ACK" then
+            if receiveData[1] = "FIN-ACK" then
                 state := "ACK";
             end if;
         end if;
@@ -104,11 +105,11 @@ fair process SendACK = "sendack"
 begin
 A: 
     while TRUE do
-        await state = "ACK" \/ state = "closed";
+        await state = "closing" \/ state = "closed";
         (* since we cant prove this message has been recived by the sender and we cant time this out 
            we will just send it forever as tla does not allow us to fully implement tcp*)
-        sendReq := <<"ACK">>;
         state := "closed";
+        sendReq := <<"ACK">>;
     end while;
 
 end process;
@@ -116,10 +117,10 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Receive at line 10 col 5 changed to A_
-\* Label A of process WaitSYN at line 31 col 5 changed to A_W
-\* Label A of process SendSYNACK at line 49 col 5 changed to A_S
-\* Label A of process WaitData at line 69 col 5 changed to A_Wa
-\* Label A of process SendFIN at line 86 col 5 changed to A_Se
+\* Label A of process WaitSYN at line 32 col 5 changed to A_W
+\* Label A of process SendSYNACK at line 50 col 5 changed to A_S
+\* Label A of process WaitData at line 70 col 5 changed to A_Wa
+\* Label A of process SendFIN at line 87 col 5 changed to A_Se
 VARIABLES sendReq, receiveData, requestNum, output, state, synNum
 
 vars == << sendReq, receiveData, requestNum, output, state, synNum >>
@@ -138,14 +139,14 @@ Receive == /\ receiveData # <<>> /\ state = "open"
            /\ IF receiveData[1] # CORRUPT_DATA
                  THEN /\ IF receiveData[1] = -1
                             THEN /\ state' = "closing"
-                            ELSE /\ TRUE
+                                 /\ UNCHANGED << sendReq, requestNum, output >>
+                            ELSE /\ IF (receiveData[1] = requestNum)
+                                       THEN /\ output' = output \o <<receiveData[2]>>
+                                            /\ requestNum' = requestNum + 1
+                                       ELSE /\ TRUE
+                                            /\ UNCHANGED << requestNum, output >>
+                                 /\ sendReq' = <<requestNum'>>
                                  /\ state' = state
-                      /\ IF (receiveData[1] = requestNum)
-                            THEN /\ output' = output \o <<receiveData[2]>>
-                                 /\ requestNum' = requestNum + 1
-                            ELSE /\ TRUE
-                                 /\ UNCHANGED << requestNum, output >>
-                      /\ sendReq' = <<requestNum'>>
                  ELSE /\ TRUE
                       /\ UNCHANGED << sendReq, requestNum, output, state >>
            /\ receiveData' = <<>>
@@ -195,7 +196,7 @@ WaitData == /\ receiveData # <<>> /\ state = "WAIT-FOR-DATA"
 
 SendFIN == /\ receiveData # <<>> /\ state = "closing"
            /\ IF receiveData # CORRUPT_DATA
-                 THEN /\ IF ToString(receiveData[1]) = "FIN-ACK"
+                 THEN /\ IF receiveData[1] = "FIN-ACK"
                             THEN /\ state' = "ACK"
                             ELSE /\ TRUE
                                  /\ state' = state
@@ -207,9 +208,9 @@ SendFIN == /\ receiveData # <<>> /\ state = "closing"
                       /\ UNCHANGED sendReq
            /\ UNCHANGED << receiveData, requestNum, output, synNum >>
 
-SendACK == /\ state = "ACK" \/ state = "closed"
-           /\ sendReq' = <<"ACK">>
+SendACK == /\ state = "closing" \/ state = "closed"
            /\ state' = "closed"
+           /\ sendReq' = <<"ACK">>
            /\ UNCHANGED << receiveData, requestNum, output, synNum >>
 
 Next == Receive \/ WaitSYN \/ SendSYNACK \/ WaitData \/ SendFIN \/ SendACK
@@ -249,5 +250,5 @@ Properties == \A x \in {"closed", "closing","SYN-RECIVED", "WAIT-FOR-DATA", "ope
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:50:24 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:38:24 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi
