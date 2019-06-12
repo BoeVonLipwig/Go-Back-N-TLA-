@@ -29,9 +29,13 @@ begin
 A:
     while TRUE do
         await state = "Waiting" /\ receiveData # <<>>;
-        if receiveData # CORRUPT_DATA /\ receiveData[1] = 1 /\ receiveData[2] = 0 then 
-            synNum := receiveData[3] + 1;
-            state := "SYN_RECEIVED";
+        if receiveData # CORRUPT_DATA then 
+            if receiveData[1] = 1 /\ receiveData[2] = 0 then 
+                synNum := receiveData[3] + 1;
+                state := "SYN_RECEIVED";
+            else 
+                receiveData := <<>>;
+            end if;
         else 
             receiveData := <<>>;
         end if;
@@ -211,5 +215,5 @@ Properties == \A x \in {"Closed", "FIN_RECEIVED","SYN_RECEIVED", "WAIT-FOR-DATA"
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:55:25 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 02:54:57 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

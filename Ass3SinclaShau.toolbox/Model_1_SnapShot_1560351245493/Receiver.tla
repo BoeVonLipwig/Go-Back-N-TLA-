@@ -29,9 +29,13 @@ begin
 A:
     while TRUE do
         await state = "Waiting" /\ receiveData # <<>>;
-        if receiveData # CORRUPT_DATA /\ receiveData[1] = 1 /\ receiveData[2] = 0 then 
-            synNum := receiveData[3] + 1;
-            state := "SYN_RECEIVED";
+        if receiveData # CORRUPT_DATA then 
+            if receiveData[1] = 1 /\ receiveData[2] = 0 then 
+                synNum := receiveData[3] + 1;
+                state := "SYN_RECEIVED";
+            else 
+                receiveData := <<>>;
+            end if;
         else 
             receiveData := <<>>;
         end if;
@@ -43,10 +47,14 @@ begin
 A:
     while TRUE do
         await state = "SYN_RECEIVED" /\ receiveData # <<>>;
-        if receiveData # CORRUPT_DATA /\ Len(receiveData) = 4 /\ receiveData[1] = 0 /\ receiveData[2] = 1 /\ receiveData[3] = synNum /\ receiveData[4] = requestNum + 1 then
-            state := "WAIT-FOR-DATA";
-        end if;
+        if receiveData # CORRUPT_DATA then
+            if Len(receiveData) = 4 /\ receiveData[1] = 0 /\ receiveData[2] = 1 /\ receiveData[3] = synNum /\ receiveData[4] = requestNum + 1 then
+                state := "WAIT-FOR-DATA";
+            end if;
             receiveData := <<>>;
+        else 
+            receiveData := <<>>;
+        end if;
         
         if state = "SYN_RECEIVED" then
             sendReq := <<1, 1, synNum, requestNum>>;
@@ -59,8 +67,10 @@ begin
 A: 
     while TRUE do
         await receiveData # <<>> /\ state = "WAIT-FOR-DATA";
-        if receiveData # CORRUPT_DATA /\ receiveData[1] = requestNum then
-            state := "Open";
+        if receiveData # CORRUPT_DATA then 
+            if receiveData[1] = requestNum then
+                state := "Open";
+            end if;
         end if;
         
         if state = "WAIT-FOR-DATA" then 
@@ -77,8 +87,10 @@ A:
         
         await receiveData # <<>> /\ state = "FIN_RECEIVED";
         
-        if receiveData # CORRUPT_DATA /\ receiveData[1] = -3 /\ receiveData[2] = "ACK" then
-            state := "Closed";
+        if receiveData # CORRUPT_DATA then 
+            if receiveData[1] = -3 /\ receiveData[2] = "ACK" then
+                state := "Closed";
+            end if;
         end if;
         receiveData := <<>>;
         
@@ -211,5 +223,5 @@ Properties == \A x \in {"Closed", "FIN_RECEIVED","SYN_RECEIVED", "WAIT-FOR-DATA"
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:55:25 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 02:28:17 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi
