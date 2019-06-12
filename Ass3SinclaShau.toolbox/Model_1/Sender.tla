@@ -80,7 +80,7 @@ A:
             end if;
        end if;
        \* spam ACK
-       if state = "SYN_ACK_receive D" then 
+       if state = "SYN_ACK_received" then 
            sendData := <<0, 1, sequenceNum + 1, reqNum>>;
        end if;
     end while;
@@ -209,7 +209,7 @@ ACK == /\ state = "SYN_ACK_received"
                              /\ state' = state
              ELSE /\ TRUE
                   /\ UNCHANGED << receiveReq, state >>
-       /\ IF state' = "SYN_ACK_receive D"
+       /\ IF state' = "SYN_ACK_received"
              THEN /\ sendData' = <<0, 1, sequenceNum + 1, reqNum>>
              ELSE /\ TRUE
                   /\ UNCHANGED sendData
@@ -277,7 +277,7 @@ Invariants == \*/\ TypeOK
               /\ WinEndOK
               /\ SeqNumOK
 
-Properties == \A x \in {"FIN-ACK", "SYN_ACK_receive", "open","opening", "closed", "closing" }: <>( state = x )
+Properties == \A x \in {"FIN-ACK", "SYN_ACK_received", "open", "opening", "closed", "closing" }: <>( state = x )
               
 
 
@@ -289,5 +289,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:32:27 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:36:46 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
