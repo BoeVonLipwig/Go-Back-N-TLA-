@@ -1,4 +1,4 @@
------------------------------- MODULE Reciver ------------------------------
+------------------------------ MODULE Receiver ------------------------------
 EXTENDS Naturals, Integers, TLC, Sequences, Bags, FiniteSets
 
 CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
@@ -245,5 +245,5 @@ Properties == \A x \in {"closed", "closing","SYN-RECIVED", "WAIT-FOR-DATA", "ope
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:00:36 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:11:09 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

@@ -16,39 +16,39 @@ VARIABLES sendDataQueue, \* send data  to dataWire
           windowEnd, \* 
           messOut,
           senderState,
-          reciverState,
+          recieverState,
           synNum,
           reqNum
            
           
           
 
-vars == <<sendDataQueue, receiveDataQueue, receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, reciverState, synNum, reqNum>>
+vars == <<sendDataQueue, receiveDataQueue, receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, recieverState, synNum, reqNum>>
  
 dataWir == INSTANCE DataWire WITH inputW <- sendDataQueue, outputW <- receiveDataQueue
 reqWir == INSTANCE DataWire WITH inputW <- sendReqQueue, outputW <- receiveReqQueue
-sender == INSTANCE Sender WITH sendData <- sendDataQueue, reciveReq <- receiveReqQueue, state <- senderState
-reciver == INSTANCE Reciver WITH sendReq <- sendReqQueue, reciveData <- receiveDataQueue, output <- messOut, state <- reciverState
+sender == INSTANCE Sender WITH sendData <- sendDataQueue, receiveReq <- receiveReqQueue, state <- senderState
+receiver == INSTANCE Receiver WITH sendReq <- sendReqQueue, reciveData <- receiveDataQueue, output <- messOut, state <- recieverState
 
  
 \* The following varibles run the init code in their respective modules
 Init ==  /\ dataWir!Init
          /\ reqWir!Init
          /\ sender!Init
-         /\ reciver!Init
+         /\ receiver!Init
 
 
 \* These are used to help define what the "next" step is and state what variables remain unchanged
 dataChannel ==  /\  dataWir!Next
-                /\  UNCHANGED <<receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, reciverState, synNum, reqNum>>
+                /\  UNCHANGED <<receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, recieverState, synNum, reqNum>>
 
 reqChannel ==  /\  reqWir!Next
-               /\  UNCHANGED <<sendDataQueue, receiveDataQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, reciverState, synNum, reqNum>>
+               /\  UNCHANGED <<sendDataQueue, receiveDataQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, recieverState, synNum, reqNum>>
 
 senderChannel ==   /\  sender!Next
-                   /\  UNCHANGED <<receiveDataQueue, sendReqQueue, requestNum, messOut, reciverState, synNum>>
+                   /\  UNCHANGED <<receiveDataQueue, sendReqQueue, requestNum, messOut, recieverState, synNum>>
 
-reciverChannel == /\  reciver!Next
+receiverChannel == /\  receiver!Next
                   /\  UNCHANGED <<sendDataQueue, receiveReqQueue, sequenceNum, windowStart, windowEnd, senderState, reqNum>>
                   
 ------------------------------------   
@@ -56,7 +56,7 @@ reciverChannel == /\  reciver!Next
 Next ==  \/ dataChannel 
          \/ reqChannel
          \/ senderChannel
-         \/ reciverChannel
+         \/ receiverChannel
 
 Spec == /\ Init /\ [][Next]_vars
         /\ SF_vars(dataChannel /\ Len(receiveDataQueue') = 2  /\ receiveDataQueue'[1] = requestNum)
@@ -65,7 +65,7 @@ Spec == /\ Init /\ [][Next]_vars
            that have been flaged as either strong or weak fairness will eventually 
            be run*)
         /\ sender!Fairness
-        /\ reciver!Fairness
+        /\ receiver!Fairness
         /\ dataWir!Fairness
         /\ reqWir!Fairness
 \*        (* The following line inforce the invariants of the modules. This is used 
@@ -81,12 +81,12 @@ CorrectResult == <>(messOut = MESSAGES)
 
 Properties == /\ CorrectResult
               /\sender!Properties
-              /\reciver!Properties
+              /\receiver!Properties
 
 -------------       
                   
                   
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:23:05 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:12:43 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi

@@ -26,9 +26,9 @@
 			<locationURI>PARENT-1-PROJECT_LOC/DataWire.tla</locationURI>
 		</link>
 		<link>
-			<name>Reciver.tla</name>
+			<name>Receiver.tla</name>
 			<type>1</type>
-			<locationURI>PARENT-1-PROJECT_LOC/Reciver.tla</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/Receiver.tla</locationURI>
 		</link>
 		<link>
 			<name>Sender.tla</name>
