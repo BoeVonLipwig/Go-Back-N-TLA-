@@ -2,7 +2,7 @@
 TLC2 Version 2.13 of 18 July 2018
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 28 and seed -5703039801847462265 with 2 workers on 4 cores with 1205MB heap and 2710MB offheap memory [pid: 21816] (Windows 10 10.0 amd64, Oracle Corporation 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 50 and seed -5916088328338690375 with 2 workers on 4 cores with 1205MB heap and 2710MB offheap memory [pid: 416] (Windows 10 10.0 amd64, Oracle Corporation 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -33,7 +33,7 @@ Semantic processing of module MC
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2019-06-13 02:45:38)
+Starting... (2019-06-13 02:27:25)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2212:0 @!@!@
 Implied-temporal checking--satisfiability problem has 15 branches.
@@ -42,25 +42,25 @@ Implied-temporal checking--satisfiability problem has 15 branches.
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2019-06-13 02:45:39.
+Finished computing initial states: 1 distinct state generated at 2019-06-13 02:27:26.
 @!@!@ENDMSG 2190 @!@!@
 @!@!@STARTMSG 2192:0 @!@!@
-Checking 15 branches of temporal properties for the current state space with 35943 total distinct states at (2019-06-13 02:45:43)
+Checking 15 branches of temporal properties for the current state space with 39585 total distinct states at (2019-06-13 02:27:29)
 @!@!@ENDMSG 2192 @!@!@
 @!@!@STARTMSG 2267:0 @!@!@
-Finished checking temporal properties in 01s at 2019-06-13 02:45:44
+Finished checking temporal properties in 00s at 2019-06-13 02:27:30
 @!@!@ENDMSG 2267 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(37) at 2019-06-13 02:45:44: 6,614 states generated (6,614 s/min), 2,533 distinct states found (2,533 ds/min), 268 states left on queue.
+Progress(38) at 2019-06-13 02:27:30: 7,349 states generated (7,349 s/min), 2,764 distinct states found (2,764 ds/min), 233 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(61) at 2019-06-13 02:45:46: 15,284 states generated, 5,469 distinct states found, 0 states left on queue.
+Progress(61) at 2019-06-13 02:27:31: 15,284 states generated, 5,469 distinct states found, 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2192:0 @!@!@
-Checking 15 branches of temporal properties for the complete state space with 82035 total distinct states at (2019-06-13 02:45:46)
+Checking 15 branches of temporal properties for the complete state space with 82035 total distinct states at (2019-06-13 02:27:31)
 @!@!@ENDMSG 2192 @!@!@
 @!@!@STARTMSG 2267:0 @!@!@
-Finished checking temporal properties in 00s at 2019-06-13 02:45:46
+Finished checking temporal properties in 01s at 2019-06-13 02:27:32
 @!@!@ENDMSG 2267 @!@!@
 @!@!@STARTMSG 2193:0 @!@!@
 Model checking completed. No error has been found.
@@ -69,7 +69,7 @@ Model checking completed. No error has been found.
   calculated (optimistic):  val = 2.9E-12
 @!@!@ENDMSG 2193 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2019-06-13 02:45:46
+The coverage statistics at 2019-06-13 02:27:32
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
 <Init line 36, col 1 to line 36, col 4 of module Ass3SinclaShau>: 1
@@ -84,34 +84,34 @@ The coverage statistics at 2019-06-13 02:45:46
   line 73, col 16 to line 74, col 37 of module Ass3SinclaShau: 1
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<dataChannel line 43, col 1 to line 43, col 11 of module Ass3SinclaShau>: 1381:3156
+<dataChannel line 43, col 1 to line 43, col 11 of module Ass3SinclaShau>: 1382:3156
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 29, col 1 to line 29, col 86 of module Ass3SinclaShau: 122192
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 29, col 45 to line 29, col 57 of module Ass3SinclaShau: 1206274
+  line 29, col 45 to line 29, col 57 of module Ass3SinclaShau: 1206254
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 29, col 71 to line 29, col 86 of module Ass3SinclaShau: 706931
+  line 29, col 71 to line 29, col 86 of module Ass3SinclaShau: 706911
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 60, col 16 to line 60, col 28 of module DataWire: 6523
+  line 60, col 16 to line 60, col 28 of module DataWire: 6521
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 16 to line 60, col 21 of module DataWire: 5471
+  |line 60, col 16 to line 60, col 21 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 25 to line 60, col 28 of module DataWire: 5471
+  |line 60, col 25 to line 60, col 28 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 60, col 33 to line 60, col 46 of module DataWire: 3686
+  line 60, col 33 to line 60, col 46 of module DataWire: 3684
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 33 to line 60, col 39 of module DataWire: 2634
+  |line 60, col 33 to line 60, col 39 of module DataWire: 2632
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 43 to line 60, col 46 of module DataWire: 2634
+  |line 60, col 43 to line 60, col 46 of module DataWire: 2632
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 61, col 16 to line 61, col 32 of module DataWire: 1052
@@ -120,22 +120,22 @@ The coverage statistics at 2019-06-13 02:45:46
   line 62, col 16 to line 62, col 29 of module DataWire: 1052
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 64, col 15 to line 64, col 27 of module DataWire: 6523
+  line 64, col 15 to line 64, col 27 of module DataWire: 6521
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 15 to line 64, col 20 of module DataWire: 5471
+  |line 64, col 15 to line 64, col 20 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 24 to line 64, col 27 of module DataWire: 5471
+  |line 64, col 24 to line 64, col 27 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 64, col 32 to line 64, col 45 of module DataWire: 3686
+  line 64, col 32 to line 64, col 45 of module DataWire: 3684
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 32 to line 64, col 38 of module DataWire: 2634
+  |line 64, col 32 to line 64, col 38 of module DataWire: 2632
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 42 to line 64, col 45 of module DataWire: 2634
+  |line 64, col 42 to line 64, col 45 of module DataWire: 2632
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 65, col 15 to line 65, col 41 of module DataWire: 1052
@@ -144,22 +144,22 @@ The coverage statistics at 2019-06-13 02:45:46
   line 66, col 15 to line 66, col 28 of module DataWire: 1052
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 12 to line 68, col 24 of module DataWire: 6523
+  line 68, col 12 to line 68, col 24 of module DataWire: 6521
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 12 to line 68, col 17 of module DataWire: 5471
+  |line 68, col 12 to line 68, col 17 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 21 to line 68, col 24 of module DataWire: 5471
+  |line 68, col 21 to line 68, col 24 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 29 to line 68, col 42 of module DataWire: 3686
+  line 68, col 29 to line 68, col 42 of module DataWire: 3684
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 29 to line 68, col 35 of module DataWire: 2634
+  |line 68, col 29 to line 68, col 35 of module DataWire: 2632
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 39 to line 68, col 42 of module DataWire: 2634
+  |line 68, col 39 to line 68, col 42 of module DataWire: 2632
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 69, col 12 to line 69, col 26 of module DataWire: 1052
@@ -171,25 +171,25 @@ The coverage statistics at 2019-06-13 02:45:46
   line 44, col 21 to line 44, col 166 of module Ass3SinclaShau: 3156
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<reqChannel line 46, col 1 to line 46, col 10 of module Ass3SinclaShau>: 1973:3141
+<reqChannel line 46, col 1 to line 46, col 10 of module Ass3SinclaShau>: 1969:3141
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 30, col 1 to line 30, col 83 of module Ass3SinclaShau: 1047
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 44 to line 30, col 55 of module Ass3SinclaShau: 17460
+  line 30, col 44 to line 30, col 55 of module Ass3SinclaShau: 17454
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 30, col 69 to line 30, col 83 of module Ass3SinclaShau: 7068
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 60, col 16 to line 60, col 28 of module DataWire: 6518
+  line 60, col 16 to line 60, col 28 of module DataWire: 6516
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 16 to line 60, col 21 of module DataWire: 5471
+  |line 60, col 16 to line 60, col 21 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 25 to line 60, col 28 of module DataWire: 5471
+  |line 60, col 25 to line 60, col 28 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 60, col 33 to line 60, col 46 of module DataWire: 3403
@@ -207,13 +207,13 @@ The coverage statistics at 2019-06-13 02:45:46
   line 62, col 16 to line 62, col 29 of module DataWire: 1047
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 64, col 15 to line 64, col 27 of module DataWire: 6518
+  line 64, col 15 to line 64, col 27 of module DataWire: 6516
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 15 to line 64, col 20 of module DataWire: 5471
+  |line 64, col 15 to line 64, col 20 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 24 to line 64, col 27 of module DataWire: 5471
+  |line 64, col 24 to line 64, col 27 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 64, col 32 to line 64, col 45 of module DataWire: 3403
@@ -231,13 +231,13 @@ The coverage statistics at 2019-06-13 02:45:46
   line 66, col 15 to line 66, col 28 of module DataWire: 1047
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 12 to line 68, col 24 of module DataWire: 6518
+  line 68, col 12 to line 68, col 24 of module DataWire: 6516
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 12 to line 68, col 17 of module DataWire: 5471
+  |line 68, col 12 to line 68, col 17 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 21 to line 68, col 24 of module DataWire: 5471
+  |line 68, col 21 to line 68, col 24 of module DataWire: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 68, col 29 to line 68, col 42 of module DataWire: 3403
@@ -258,7 +258,7 @@ The coverage statistics at 2019-06-13 02:45:46
   line 47, col 20 to line 47, col 167 of module Ass3SinclaShau: 3141
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<senderChannel line 49, col 1 to line 49, col 13 of module Ass3SinclaShau>: 1227:5807
+<senderChannel line 49, col 1 to line 49, col 13 of module Ass3SinclaShau>: 1225:5807
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 31, col 1 to line 31, col 109 of module Ass3SinclaShau: 720
@@ -282,361 +282,361 @@ The coverage statistics at 2019-06-13 02:45:46
   line 31, col 1 to line 31, col 109 of module Ass3SinclaShau: 113
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 44 to line 31, col 56 of module Ass3SinclaShau: 6021
+  line 31, col 44 to line 31, col 56 of module Ass3SinclaShau: 6019
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 31, col 73 to line 31, col 87 of module Ass3SinclaShau: 16154
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 99 to line 31, col 109 of module Ass3SinclaShau: 39295
+  line 31, col 99 to line 31, col 109 of module Ass3SinclaShau: 39249
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 12 to line 169, col 25 of module Sender: 7669
+  line 151, col 12 to line 151, col 25 of module Sender: 7667
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 12 to line 169, col 16 of module Sender: 5471
+  |line 151, col 12 to line 151, col 16 of module Sender: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 31 to line 169, col 45 of module Sender: 4304
+  line 151, col 31 to line 151, col 45 of module Sender: 4304
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 31 to line 169, col 38 of module Sender: 2813
+  |line 151, col 31 to line 151, col 38 of module Sender: 2813
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 42 to line 169, col 45 of module Sender: 2813
+  |line 151, col 42 to line 151, col 45 of module Sender: 2813
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 50 to line 169, col 66 of module Sender: 4490
+  line 151, col 50 to line 151, col 66 of module Sender: 4490
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 50 to line 169, col 59 of module Sender: 2813
+  |line 151, col 50 to line 151, col 59 of module Sender: 2813
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 63 to line 169, col 66 of module Sender: 2813
+  |line 151, col 63 to line 151, col 66 of module Sender: 2813
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 170, col 15 to line 170, col 63 of module Sender: 3168
+  line 152, col 15 to line 152, col 63 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 170, col 15 to line 170, col 31 of module Sender: 3168
+  |line 152, col 15 to line 152, col 31 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 170, col 36 to line 170, col 63 of module Sender: 2647
+  |line 152, col 36 to line 152, col 63 of module Sender: 2647
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 171, col 26 to line 171, col 58 of module Sender: 1403
+  line 153, col 26 to line 153, col 58 of module Sender: 1403
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 172, col 34 to line 172, col 55 of module Sender: 218
+  line 154, col 34 to line 154, col 55 of module Sender: 218
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 173, col 34 to line 173, col 71 of module Sender: 218
+  line 155, col 34 to line 155, col 71 of module Sender: 218
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 174, col 37 to line 174, col 63 of module Sender: 1185
+  line 156, col 37 to line 156, col 63 of module Sender: 1185
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 175, col 42 to line 176, col 72 of module Sender: 718
+  line 157, col 42 to line 158, col 72 of module Sender: 718
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 177, col 45 to line 177, col 48 of module Sender: 467
+  line 159, col 45 to line 159, col 48 of module Sender: 467
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 178, col 45 to line 179, col 69 of module Sender: 467
+  line 160, col 45 to line 161, col 69 of module Sender: 467
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 180, col 34 to line 180, col 47 of module Sender: 1185
+  line 162, col 34 to line 162, col 47 of module Sender: 1185
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 181, col 23 to line 181, col 26 of module Sender: 1765
+  line 163, col 23 to line 163, col 26 of module Sender: 1765
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 182, col 23 to line 182, col 67 of module Sender: 1765
+  line 164, col 23 to line 164, col 67 of module Sender: 1765
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 183, col 12 to line 183, col 29 of module Sender: 3168
+  line 165, col 12 to line 165, col 29 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 184, col 15 to line 184, col 105 of module Sender: 3168
+  line 166, col 15 to line 166, col 105 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 184, col 15 to line 184, col 83 of module Sender: 3168
+  |line 166, col 15 to line 166, col 83 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 184, col 15 to line 184, col 48 of module Sender: 3168
+  ||line 166, col 15 to line 166, col 48 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 184, col 15 to line 184, col 29 of module Sender: 3168
+  |||line 166, col 15 to line 166, col 29 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 184, col 34 to line 184, col 48 of module Sender: 2461
+  |||line 166, col 34 to line 166, col 48 of module Sender: 2461
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 184, col 53 to line 184, col 83 of module Sender: 2461
+  ||line 166, col 53 to line 166, col 83 of module Sender: 2461
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 184, col 88 to line 184, col 105 of module Sender: 2461
+  |line 166, col 88 to line 166, col 105 of module Sender: 2461
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 185, col 23 to line 185, col 72 of module Sender: 2461
+  line 167, col 23 to line 167, col 72 of module Sender: 2461
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 186, col 26 to line 186, col 83 of module Sender: 2461
+  line 168, col 26 to line 168, col 83 of module Sender: 2461
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 186, col 26 to line 186, col 49 of module Sender: 2461
+  |line 168, col 26 to line 168, col 49 of module Sender: 2461
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 186, col 54 to line 186, col 83 of module Sender: 1851
+  |line 168, col 54 to line 168, col 83 of module Sender: 1851
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 187, col 31 to line 187, col 63 of module Sender: 1158
+  line 169, col 31 to line 169, col 63 of module Sender: 1158
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 188, col 31 to line 188, col 60 of module Sender: 1303
+  line 170, col 31 to line 170, col 60 of module Sender: 1303
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 189, col 23 to line 189, col 26 of module Sender: 707
+  line 171, col 23 to line 171, col 26 of module Sender: 707
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 190, col 23 to line 190, col 59 of module Sender: 707
+  line 172, col 23 to line 172, col 59 of module Sender: 707
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 191, col 12 to line 191, col 27 of module Sender: 3168
+  line 173, col 12 to line 173, col 27 of module Sender: 3168
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 193, col 11 to line 193, col 27 of module Sender: 5492
+  line 175, col 11 to line 175, col 27 of module Sender: 5490
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 193, col 11 to line 193, col 15 of module Sender: 5471
+  |line 175, col 11 to line 175, col 15 of module Sender: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 193, col 32 to line 193, col 46 of module Sender: 61
+  line 175, col 32 to line 175, col 46 of module Sender: 59
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 193, col 32 to line 193, col 39 of module Sender: 40
+  |line 175, col 32 to line 175, col 39 of module Sender: 38
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 193, col 43 to line 193, col 46 of module Sender: 40
+  |line 175, col 43 to line 175, col 46 of module Sender: 38
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 194, col 14 to line 194, col 59 of module Sender: 21
+  line 176, col 14 to line 176, col 30 of module Sender: 21
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 194, col 14 to line 194, col 30 of module Sender: 21
+  line 177, col 25 to line 177, col 49 of module Sender: 12
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 194, col 35 to line 194, col 59 of module Sender: 12
+  line 178, col 36 to line 178, col 108 of module Sender: 12
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 195, col 25 to line 195, col 97 of module Sender: 12
+  |line 178, col 36 to line 178, col 73 of module Sender: 12
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 195, col 25 to line 195, col 62 of module Sender: 12
+  ||line 178, col 36 to line 178, col 52 of module Sender: 12
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 195, col 25 to line 195, col 41 of module Sender: 12
+  ||line 178, col 57 to line 178, col 73 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 195, col 46 to line 195, col 62 of module Sender: 6
+  |line 178, col 78 to line 178, col 108 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 195, col 67 to line 195, col 97 of module Sender: 6
+  line 179, col 41 to line 180, col 70 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 196, col 30 to line 197, col 59 of module Sender: 6
+  line 181, col 44 to line 181, col 47 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 198, col 33 to line 198, col 36 of module Sender: 6
+  line 182, col 44 to line 182, col 72 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 199, col 33 to line 199, col 61 of module Sender: 6
+  line 184, col 33 to line 184, col 61 of module Sender: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 200, col 22 to line 200, col 39 of module Sender: 12
+  line 185, col 22 to line 185, col 39 of module Sender: 12
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 201, col 22 to line 201, col 25 of module Sender: 9
+  line 186, col 22 to line 186, col 25 of module Sender: 9
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 202, col 22 to line 202, col 62 of module Sender: 9
+  line 187, col 22 to line 187, col 62 of module Sender: 9
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 203, col 14 to line 203, col 31 of module Sender: 21
+  line 188, col 14 to line 188, col 31 of module Sender: 21
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 204, col 19 to line 204, col 54 of module Sender: 15
+  line 189, col 19 to line 189, col 54 of module Sender: 15
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 205, col 22 to line 205, col 25 of module Sender: 6
+  line 190, col 22 to line 190, col 25 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 206, col 22 to line 206, col 39 of module Sender: 6
+  line 191, col 22 to line 191, col 39 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 207, col 11 to line 207, col 61 of module Sender: 21
+  line 192, col 11 to line 192, col 61 of module Sender: 21
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 209, col 11 to line 209, col 36 of module Sender: 5561
+  line 194, col 11 to line 194, col 36 of module Sender: 5559
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 209, col 11 to line 209, col 15 of module Sender: 5471
+  |line 194, col 11 to line 194, col 15 of module Sender: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 210, col 14 to line 210, col 59 of module Sender: 90
+  line 195, col 14 to line 195, col 30 of module Sender: 90
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 210, col 14 to line 210, col 30 of module Sender: 90
+  line 196, col 25 to line 196, col 49 of module Sender: 56
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 210, col 35 to line 210, col 59 of module Sender: 56
+  line 197, col 36 to line 197, col 83 of module Sender: 56
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 211, col 25 to line 211, col 72 of module Sender: 56
+  |line 197, col 36 to line 197, col 54 of module Sender: 56
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 211, col 25 to line 211, col 43 of module Sender: 56
+  |line 197, col 59 to line 197, col 83 of module Sender: 33
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 211, col 48 to line 211, col 72 of module Sender: 33
+  line 198, col 44 to line 198, col 58 of module Sender: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 212, col 33 to line 212, col 47 of module Sender: 10
+  line 199, col 44 to line 199, col 63 of module Sender: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 213, col 33 to line 213, col 52 of module Sender: 10
+  line 200, col 41 to line 201, col 57 of module Sender: 46
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 214, col 30 to line 215, col 46 of module Sender: 46
+  line 204, col 22 to line 204, col 25 of module Sender: 34
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 216, col 19 to line 217, col 35 of module Sender: 34
+  line 205, col 22 to line 205, col 54 of module Sender: 34
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 218, col 14 to line 218, col 40 of module Sender: 90
+  line 206, col 14 to line 206, col 40 of module Sender: 90
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 219, col 19 to line 219, col 66 of module Sender: 80
+  line 207, col 19 to line 207, col 66 of module Sender: 80
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 220, col 22 to line 220, col 25 of module Sender: 10
+  line 208, col 22 to line 208, col 25 of module Sender: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 221, col 22 to line 221, col 39 of module Sender: 10
+  line 209, col 22 to line 209, col 39 of module Sender: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 222, col 11 to line 222, col 69 of module Sender: 90
+  line 210, col 11 to line 210, col 69 of module Sender: 90
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 224, col 11 to line 224, col 31 of module Sender: 6847
+  line 212, col 11 to line 212, col 31 of module Sender: 6845
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 224, col 11 to line 224, col 15 of module Sender: 5471
+  |line 212, col 11 to line 212, col 15 of module Sender: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 225, col 14 to line 225, col 30 of module Sender: 1376
+  line 213, col 14 to line 213, col 30 of module Sender: 1376
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 226, col 25 to line 226, col 49 of module Sender: 854
+  line 214, col 25 to line 214, col 49 of module Sender: 854
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 227, col 36 to line 227, col 82 of module Sender: 854
+  line 215, col 36 to line 215, col 82 of module Sender: 854
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 227, col 36 to line 227, col 53 of module Sender: 854
+  |line 215, col 36 to line 215, col 53 of module Sender: 854
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 227, col 58 to line 227, col 82 of module Sender: 120
+  |line 215, col 58 to line 215, col 82 of module Sender: 120
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 228, col 41 to line 228, col 70 of module Sender: 120
+  line 216, col 41 to line 216, col 70 of module Sender: 120
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 229, col 41 to line 230, col 57 of module Sender: 734
+  line 217, col 41 to line 218, col 57 of module Sender: 734
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 233, col 19 to line 234, col 35 of module Sender: 522
+  line 221, col 19 to line 222, col 35 of module Sender: 522
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 235, col 11 to line 235, col 28 of module Sender: 1376
+  line 223, col 11 to line 223, col 28 of module Sender: 1376
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 236, col 14 to line 236, col 35 of module Sender: 1376
+  line 224, col 14 to line 224, col 35 of module Sender: 1376
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 237, col 19 to line 237, col 46 of module Sender: 1256
+  line 225, col 19 to line 225, col 46 of module Sender: 1256
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 238, col 22 to line 238, col 25 of module Sender: 120
+  line 226, col 22 to line 226, col 25 of module Sender: 120
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 239, col 22 to line 239, col 39 of module Sender: 120
+  line 227, col 22 to line 227, col 39 of module Sender: 120
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 240, col 11 to line 240, col 69 of module Sender: 1376
+  line 228, col 11 to line 228, col 69 of module Sender: 1376
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 242, col 15 to line 242, col 40 of module Sender: 5711
+  line 230, col 15 to line 230, col 40 of module Sender: 5709
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 242, col 15 to line 242, col 19 of module Sender: 5471
+  |line 230, col 15 to line 230, col 19 of module Sender: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 242, col 45 to line 242, col 60 of module Sender: 6383
+  line 230, col 45 to line 230, col 60 of module Sender: 6381
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 242, col 45 to line 242, col 49 of module Sender: 5471
+  |line 230, col 45 to line 230, col 49 of module Sender: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 243, col 14 to line 243, col 30 of module Sender: 1152
+  line 231, col 14 to line 231, col 30 of module Sender: 1152
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 244, col 14 to line 244, col 38 of module Sender: 1152
+  line 232, col 14 to line 232, col 38 of module Sender: 1152
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 245, col 14 to line 246, col 35 of module Sender: 1152
+  line 233, col 14 to line 234, col 35 of module Sender: 1152
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 50, col 24 to line 50, col 112 of module Ass3SinclaShau: 5807
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<receiverChannel line 52, col 1 to line 52, col 15 of module Ass3SinclaShau>: 887:3181
+<receiverChannel line 52, col 1 to line 52, col 15 of module Ass3SinclaShau>: 892:3179
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 32, col 1 to line 32, col 135 of module Ass3SinclaShau: 1
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 32, col 1 to line 32, col 135 of module Ass3SinclaShau: 2983
+  line 32, col 1 to line 32, col 135 of module Ass3SinclaShau: 2981
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 32, col 1 to line 32, col 135 of module Ass3SinclaShau: 3181
+  line 32, col 1 to line 32, col 135 of module Ass3SinclaShau: 3179
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 32, col 1 to line 32, col 135 of module Ass3SinclaShau: 50
+  line 32, col 1 to line 32, col 135 of module Ass3SinclaShau: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 32, col 76 to line 32, col 91 of module Ass3SinclaShau: 23714
+  line 32, col 76 to line 32, col 91 of module Ass3SinclaShau: 23702
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 32, col 104 to line 32, col 110 of module Ass3SinclaShau: 213
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 32, col 122 to line 32, col 135 of module Ass3SinclaShau: 24442
+  line 32, col 122 to line 32, col 135 of module Ass3SinclaShau: 24428
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 125, col 15 to line 125, col 32 of module Receiver: 7611
+  line 125, col 15 to line 125, col 32 of module Receiver: 7609
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 125, col 15 to line 125, col 25 of module Receiver: 5471
+  |line 125, col 15 to line 125, col 25 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 125, col 29 to line 125, col 32 of module Receiver: 5471
+  |line 125, col 29 to line 125, col 32 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 125, col 37 to line 125, col 50 of module Receiver: 5609
+  line 125, col 37 to line 125, col 50 of module Receiver: 5607
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 125, col 37 to line 125, col 41 of module Receiver: 3469
+  |line 125, col 37 to line 125, col 41 of module Receiver: 3467
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 126, col 18 to line 126, col 46 of module Receiver: 2140
@@ -687,10 +687,10 @@ The coverage statistics at 2019-06-13 02:45:46
   line 140, col 15 to line 140, col 30 of module Receiver: 2140
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 142, col 15 to line 142, col 31 of module Receiver: 5475
+  line 142, col 15 to line 142, col 31 of module Receiver: 5473
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 142, col 15 to line 142, col 19 of module Receiver: 5471
+  |line 142, col 15 to line 142, col 19 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 142, col 36 to line 142, col 53 of module Receiver: 10
@@ -735,37 +735,37 @@ The coverage statistics at 2019-06-13 02:45:46
   line 152, col 15 to line 152, col 57 of module Receiver: 4
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 154, col 18 to line 154, col 39 of module Receiver: 5521
+  line 154, col 18 to line 154, col 39 of module Receiver: 5517
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 154, col 18 to line 154, col 22 of module Receiver: 5471
+  |line 154, col 18 to line 154, col 22 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 154, col 44 to line 154, col 61 of module Receiver: 124
+  line 154, col 44 to line 154, col 61 of module Receiver: 120
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 154, col 44 to line 154, col 54 of module Receiver: 74
+  |line 154, col 44 to line 154, col 54 of module Receiver: 72
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 154, col 58 to line 154, col 61 of module Receiver: 74
+  |line 154, col 58 to line 154, col 61 of module Receiver: 72
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 155, col 21 to line 155, col 46 of module Receiver: 50
+  line 155, col 21 to line 155, col 46 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 156, col 32 to line 156, col 157 of module Receiver: 50
+  line 156, col 32 to line 156, col 157 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 32 to line 156, col 122 of module Receiver: 50
+  |line 156, col 32 to line 156, col 122 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 156, col 32 to line 156, col 95 of module Receiver: 50
+  ||line 156, col 32 to line 156, col 95 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 156, col 32 to line 156, col 73 of module Receiver: 50
+  |||line 156, col 32 to line 156, col 73 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||||line 156, col 32 to line 156, col 51 of module Receiver: 50
+  ||||line 156, col 32 to line 156, col 51 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   ||||line 156, col 56 to line 156, col 73 of module Receiver: 10
@@ -783,16 +783,16 @@ The coverage statistics at 2019-06-13 02:45:46
   line 157, col 37 to line 157, col 63 of module Receiver: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 158, col 37 to line 159, col 53 of module Receiver: 40
+  line 158, col 37 to line 159, col 53 of module Receiver: 38
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 160, col 29 to line 160, col 47 of module Receiver: 50
+  line 160, col 29 to line 160, col 47 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 163, col 21 to line 163, col 43 of module Receiver: 50
+  line 163, col 21 to line 163, col 43 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 164, col 26 to line 164, col 67 of module Receiver: 40
+  line 164, col 26 to line 164, col 67 of module Receiver: 38
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 165, col 29 to line 165, col 32 of module Receiver: 10
@@ -801,22 +801,22 @@ The coverage statistics at 2019-06-13 02:45:46
   line 166, col 29 to line 166, col 45 of module Receiver: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 167, col 18 to line 167, col 59 of module Receiver: 50
+  line 167, col 18 to line 167, col 59 of module Receiver: 48
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 16 to line 169, col 33 of module Receiver: 5594
+  line 169, col 16 to line 169, col 33 of module Receiver: 5592
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 16 to line 169, col 26 of module Receiver: 5471
+  |line 169, col 16 to line 169, col 26 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 30 to line 169, col 33 of module Receiver: 5471
+  |line 169, col 30 to line 169, col 33 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 38 to line 169, col 60 of module Receiver: 3592
+  line 169, col 38 to line 169, col 60 of module Receiver: 3590
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 169, col 38 to line 169, col 42 of module Receiver: 3469
+  |line 169, col 38 to line 169, col 42 of module Receiver: 3467
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 170, col 19 to line 170, col 44 of module Receiver: 123
@@ -846,19 +846,19 @@ The coverage statistics at 2019-06-13 02:45:46
   line 182, col 16 to line 182, col 57 of module Receiver: 123
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 184, col 18 to line 184, col 35 of module Receiver: 6335
+  line 184, col 18 to line 184, col 35 of module Receiver: 6333
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 184, col 18 to line 184, col 28 of module Receiver: 5471
+  |line 184, col 18 to line 184, col 28 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 184, col 32 to line 184, col 35 of module Receiver: 5471
+  |line 184, col 32 to line 184, col 35 of module Receiver: 5469
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 184, col 40 to line 184, col 61 of module Receiver: 4333
+  line 184, col 40 to line 184, col 61 of module Receiver: 4331
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 184, col 40 to line 184, col 44 of module Receiver: 3469
+  |line 184, col 40 to line 184, col 44 of module Receiver: 3467
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 185, col 21 to line 185, col 46 of module Receiver: 864
@@ -897,13 +897,13 @@ The coverage statistics at 2019-06-13 02:45:46
   line 197, col 18 to line 197, col 59 of module Receiver: 864
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 53, col 23 to line 53, col 124 of module Ass3SinclaShau: 3181
+  line 53, col 23 to line 53, col 124 of module Ass3SinclaShau: 3179
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2202:0 @!@!@
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(61) at 2019-06-13 02:45:46: 15,284 states generated (95,974 s/min), 5,469 distinct states found (34,342 ds/min), 0 states left on queue.
+Progress(61) at 2019-06-13 02:27:33: 15,284 states generated (97,932 s/min), 5,469 distinct states found (35,042 ds/min), 0 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
 15284 states generated, 5469 distinct states found, 0 states left on queue.
@@ -915,5 +915,5 @@ The depth of the complete state graph search is 61.
 The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 6 and the 95th percentile is 3).
 @!@!@ENDMSG 2268 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 9909ms at (2019-06-13 02:45:47)
+Finished in 9706ms at (2019-06-13 02:27:33)
 @!@!@ENDMSG 2186 @!@!@

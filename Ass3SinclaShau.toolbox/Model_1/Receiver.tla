@@ -10,7 +10,7 @@ A:
     while TRUE do
         await receiveData # <<>> /\ state = "Open";
         if receiveData[1] # CORRUPT_DATA then
-            \* sender will send -1 if it wants to close the connection
+            \* sender will send FIN if it wants to close the connection and this wil start the 3 way handshake to terminate the connection
             if receiveData[1] = -1 /\ receiveData[2] = "FIN" then
                 state := "FIN_RECEIVED";
             elsif (receiveData[1] = requestNum) then
@@ -223,5 +223,5 @@ Properties == \A x \in {"Closed", "FIN_RECEIVED","SYN_RECEIVED", "WAIT-FOR-DATA"
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:04:34 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 02:28:17 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi
