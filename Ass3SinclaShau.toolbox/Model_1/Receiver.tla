@@ -2,7 +2,7 @@
 EXTENDS Naturals, Integers, TLC, Sequences, Bags, FiniteSets
 
 CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
-(* --algorithm reciver
+(* --algorithm receiver
 variables sendReq = <<>>, receiveData = <<>>, requestNum = 1, output = <<>>, state = "ready", synNum = -1;
 fair process Receive = "receive"
 begin
@@ -11,10 +11,9 @@ A:
         await receiveData # <<>> /\ state = "open";
         if receiveData[1] # CORRUPT_DATA then
             \* sender will send -1 if it wants to close the connection
-            if receiveData[1] = -1 then
-                state := "closing";
-            end if;
-            if (receiveData[1] = requestNum) then
+            if receiveData[1] = -1 /\ receiveData[2] = "FIN" then
+                state := "FIN_RECEIVED";
+            elsif (receiveData[1] = requestNum) then
                 output := output \o <<receiveData[2]>>;
                 requestNum := requestNum + 1;
             end if;
@@ -33,7 +32,7 @@ A:
         if receiveData # CORRUPT_DATA then 
             if receiveData[1] = 1 /\ receiveData[2] = 0 then 
                 synNum := receiveData[3] + 1;
-                state := "SYN-RECIVED";
+                state := "SYN-RECEIVED";
             else 
                 receiveData := <<>>;
             end if;
@@ -47,7 +46,7 @@ fair process SendSYNACK = "sendsyn-ack"
 begin
 A:
     while TRUE do
-        await state = "SYN-RECIVED" /\ receiveData # <<>>;
+        await state = "SYN-RECEIVED" /\ receiveData # <<>>;
         if receiveData # CORRUPT_DATA then
             if Len(receiveData) = 4 /\ receiveData[1] = 0 /\ receiveData[2] = 1 /\ receiveData[3] = synNum /\ receiveData[4] = requestNum + 1 then
                 state := "WAIT-FOR-DATA";
@@ -57,7 +56,7 @@ A:
             receiveData := <<>>;
         end if;
         
-        if state = "SYN-RECIVED" then
+        if state = "SYN-RECEIVED" then
             sendReq := <<1, 1, synNum, requestNum>>;
         end if;
     end while;
@@ -80,51 +79,39 @@ A:
     end while;
 end process;
 
-fair process SendFIN = "sendfin"
+fair process SendFINACK = "sendfinack"
 begin
 A: 
     while TRUE do
         
-        await receiveData # <<>> /\ state = "closing";
+        await receiveData # <<>> /\ state = "FIN_RECEIVED";
+        
         if receiveData # CORRUPT_DATA then 
-            if ToString(receiveData[1]) = "FIN-ACK" then
-                state := "ACK";
+            if receiveData[1] = -3 /\ receiveData[2] = "ACK" then
+                state := "closed";
             end if;
         end if;
         
         
-        if state = "closing" then 
-            sendReq := <<"FIN">>;
+        if state = "FIN_RECEIVED" then 
+            sendReq := <<-2, "FIN-ACK">>;
         end if;
     end while;
 
 end process;
 
-fair process SendACK = "sendack"
-begin
-A: 
-    while TRUE do
-        await state = "ACK" \/ state = "closed";
-        (* since we cant prove this message has been recived by the sender and we cant time this out 
-           we will just send it forever as tla does not allow us to fully implement tcp*)
-        sendReq := <<"ACK">>;
-        state := "closed";
-    end while;
-
-end process;
 end algorithm; 
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Receive at line 10 col 5 changed to A_
-\* Label A of process WaitSYN at line 31 col 5 changed to A_W
-\* Label A of process SendSYNACK at line 49 col 5 changed to A_S
-\* Label A of process WaitData at line 69 col 5 changed to A_Wa
-\* Label A of process SendFIN at line 86 col 5 changed to A_Se
+\* Label A of process WaitSYN at line 30 col 5 changed to A_W
+\* Label A of process SendSYNACK at line 48 col 5 changed to A_S
+\* Label A of process WaitData at line 68 col 5 changed to A_Wa
 VARIABLES sendReq, receiveData, requestNum, output, state, synNum
 
 vars == << sendReq, receiveData, requestNum, output, state, synNum >>
 
-ProcSet == {"receive"} \cup {"waitsyn"} \cup {"sendsyn-ack"} \cup {"waitdata"} \cup {"sendfin"} \cup {"sendack"}
+ProcSet == {"receive"} \cup {"waitsyn"} \cup {"sendsyn-ack"} \cup {"waitdata"} \cup {"sendfinack"}
 
 Init == (* Global variables *)
         /\ sendReq = <<>>
@@ -136,15 +123,15 @@ Init == (* Global variables *)
 
 Receive == /\ receiveData # <<>> /\ state = "open"
            /\ IF receiveData[1] # CORRUPT_DATA
-                 THEN /\ IF receiveData[1] = -1
-                            THEN /\ state' = "closing"
-                            ELSE /\ TRUE
-                                 /\ state' = state
-                      /\ IF (receiveData[1] = requestNum)
-                            THEN /\ output' = output \o <<receiveData[2]>>
-                                 /\ requestNum' = requestNum + 1
-                            ELSE /\ TRUE
+                 THEN /\ IF receiveData[1] = -1 /\ receiveData[2] = "FIN"
+                            THEN /\ state' = "FIN_RECEIVED"
                                  /\ UNCHANGED << requestNum, output >>
+                            ELSE /\ IF (receiveData[1] = requestNum)
+                                       THEN /\ output' = output \o <<receiveData[2]>>
+                                            /\ requestNum' = requestNum + 1
+                                       ELSE /\ TRUE
+                                            /\ UNCHANGED << requestNum, output >>
+                                 /\ state' = state
                       /\ sendReq' = <<requestNum'>>
                  ELSE /\ TRUE
                       /\ UNCHANGED << sendReq, requestNum, output, state >>
@@ -155,7 +142,7 @@ WaitSYN == /\ state = "ready" /\ receiveData # <<>>
            /\ IF receiveData # CORRUPT_DATA
                  THEN /\ IF receiveData[1] = 1 /\ receiveData[2] = 0
                             THEN /\ synNum' = receiveData[3] + 1
-                                 /\ state' = "SYN-RECIVED"
+                                 /\ state' = "SYN-RECEIVED"
                                  /\ UNCHANGED receiveData
                             ELSE /\ receiveData' = <<>>
                                  /\ UNCHANGED << state, synNum >>
@@ -163,7 +150,7 @@ WaitSYN == /\ state = "ready" /\ receiveData # <<>>
                       /\ UNCHANGED << state, synNum >>
            /\ UNCHANGED << sendReq, requestNum, output >>
 
-SendSYNACK == /\ state = "SYN-RECIVED" /\ receiveData # <<>>
+SendSYNACK == /\ state = "SYN-RECEIVED" /\ receiveData # <<>>
               /\ IF receiveData # CORRUPT_DATA
                     THEN /\ IF Len(receiveData) = 4 /\ receiveData[1] = 0 /\ receiveData[2] = 1 /\ receiveData[3] = synNum /\ receiveData[4] = requestNum + 1
                                THEN /\ state' = "WAIT-FOR-DATA"
@@ -172,7 +159,7 @@ SendSYNACK == /\ state = "SYN-RECIVED" /\ receiveData # <<>>
                          /\ receiveData' = <<>>
                     ELSE /\ receiveData' = <<>>
                          /\ state' = state
-              /\ IF state' = "SYN-RECIVED"
+              /\ IF state' = "SYN-RECEIVED"
                     THEN /\ sendReq' = <<1, 1, synNum, requestNum>>
                     ELSE /\ TRUE
                          /\ UNCHANGED sendReq
@@ -193,34 +180,28 @@ WaitData == /\ receiveData # <<>> /\ state = "WAIT-FOR-DATA"
                        /\ UNCHANGED << sendReq, receiveData >>
             /\ UNCHANGED << requestNum, output, synNum >>
 
-SendFIN == /\ receiveData # <<>> /\ state = "closing"
-           /\ IF receiveData # CORRUPT_DATA
-                 THEN /\ IF ToString(receiveData[1]) = "FIN-ACK"
-                            THEN /\ state' = "ACK"
-                            ELSE /\ TRUE
-                                 /\ state' = state
-                 ELSE /\ TRUE
-                      /\ state' = state
-           /\ IF state' = "closing"
-                 THEN /\ sendReq' = <<"FIN">>
-                 ELSE /\ TRUE
-                      /\ UNCHANGED sendReq
-           /\ UNCHANGED << receiveData, requestNum, output, synNum >>
+SendFINACK == /\ receiveData # <<>> /\ state = "FIN_RECEIVED"
+              /\ IF receiveData # CORRUPT_DATA
+                    THEN /\ IF receiveData[1] = -3 /\ receiveData[2] = "ACK"
+                               THEN /\ state' = "closed"
+                               ELSE /\ TRUE
+                                    /\ state' = state
+                    ELSE /\ TRUE
+                         /\ state' = state
+              /\ IF state' = "FIN_RECEIVED"
+                    THEN /\ sendReq' = <<-2, "FIN-ACK">>
+                    ELSE /\ TRUE
+                         /\ UNCHANGED sendReq
+              /\ UNCHANGED << receiveData, requestNum, output, synNum >>
 
-SendACK == /\ state = "ACK" \/ state = "closed"
-           /\ sendReq' = <<"ACK">>
-           /\ state' = "closed"
-           /\ UNCHANGED << receiveData, requestNum, output, synNum >>
-
-Next == Receive \/ WaitSYN \/ SendSYNACK \/ WaitData \/ SendFIN \/ SendACK
+Next == Receive \/ WaitSYN \/ SendSYNACK \/ WaitData \/ SendFINACK
 
 Spec == /\ Init /\ [][Next]_vars
         /\ WF_vars(Receive)
         /\ WF_vars(WaitSYN)
         /\ WF_vars(SendSYNACK)
         /\ WF_vars(WaitData)
-        /\ WF_vars(SendFIN)
-        /\ WF_vars(SendACK)
+        /\ WF_vars(SendFINACK)
 
 \* END TRANSLATION
 \* Checks that all variables remain in valid states
@@ -240,14 +221,13 @@ Fairness == /\ WF_vars(Receive)
             /\ WF_vars(WaitSYN)
             /\ WF_vars(SendSYNACK)
             /\ WF_vars(WaitData)
-            /\ WF_vars(SendFIN)
-            /\ WF_vars(SendACK)
+            /\ WF_vars(SendFINACK)
             
             
             
-Properties == \A x \in {"closed", "closing","SYN-RECIVED", "WAIT-FOR-DATA", "open", "ready"}: <>( state = x )
+Properties == \A x \in {"closed", "closing","SYN-RECEIVED", "WAIT-FOR-DATA", "open", "ready"}: <>( state = x )
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:50:24 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:28:38 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

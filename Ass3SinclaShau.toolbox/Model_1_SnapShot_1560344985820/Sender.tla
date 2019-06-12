@@ -93,14 +93,14 @@ A:
         await state = "closing";
         if receiveReq # <<>> then
             if receiveReq # CORRUPT_DATA then
-                if receiveReq[1] = -2 /\ receiveReq[2] = "FIN-ACK" then 
+                if ToString(receiveReq[1]) = "FIN" then 
                     state := "FIN-ACK";
                 end if;
             end if;
         end if;
-        
+        receiveReq := <<>>;
         if state = "closing" then
-            sendData := <<-1, "FIN">>;
+            sendData := <<-1>>;
         end if;
     end while;
 end process;
@@ -116,11 +116,10 @@ A:
                 state := "closed";
             end if;
         end if;
+        receiveReq := <<>>;
         
-        (* since we cant prove this message has been received by the sender and we cant time this out 
-           we will just send it forever as tla does not allow us to fully implement tcp*)
         if state = "FIN-ACK" then
-            sendData := <<-3, "ACK">>;
+            sendData := <<"FIN-ACK">>;
         end if;
     end while;
 end process;
@@ -218,7 +217,7 @@ ACK == /\ state = "SYN_ACK_receive D"
 FIN == /\ state = "closing"
        /\ IF receiveReq # <<>>
              THEN /\ IF receiveReq # CORRUPT_DATA
-                        THEN /\ IF receiveReq[1] = -2 /\ receiveReq[2] = "FIN-ACK"
+                        THEN /\ IF ToString(receiveReq[1]) = "FIN"
                                    THEN /\ state' = "FIN-ACK"
                                    ELSE /\ TRUE
                                         /\ state' = state
@@ -226,11 +225,12 @@ FIN == /\ state = "closing"
                              /\ state' = state
              ELSE /\ TRUE
                   /\ state' = state
+       /\ receiveReq' = <<>>
        /\ IF state' = "closing"
-             THEN /\ sendData' = <<-1, "FIN">>
+             THEN /\ sendData' = <<-1>>
              ELSE /\ TRUE
                   /\ UNCHANGED sendData
-       /\ UNCHANGED << receiveReq, sequenceNum, windowStart, windowEnd, reqNum >>
+       /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
 FINACK == /\ state = "FIN-ACK" /\ receiveReq # <<>>
           /\ IF receiveReq # CORRUPT_DATA
@@ -240,12 +240,12 @@ FINACK == /\ state = "FIN-ACK" /\ receiveReq # <<>>
                                 /\ state' = state
                 ELSE /\ TRUE
                      /\ state' = state
+          /\ receiveReq' = <<>>
           /\ IF state' = "FIN-ACK"
-                THEN /\ sendData' = <<-3, "ACK">>
+                THEN /\ sendData' = <<"FIN-ACK">>
                 ELSE /\ TRUE
                      /\ UNCHANGED sendData
-          /\ UNCHANGED << receiveReq, sequenceNum, windowStart, windowEnd, 
-                          reqNum >>
+          /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
 Next == Send \/ SYN \/ ACK \/ FIN \/ FINACK
 
@@ -289,5 +289,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:28:46 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:07:25 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
