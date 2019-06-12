@@ -32,12 +32,9 @@ A:
             if reciveData[1] = 1 /\ reciveData[2] = 0 then 
                 synNum := reciveData[3] + 1;
                 state := "SYN-RECIVED";
-            else 
-                reciveData := <<>>;
             end if;
-        else 
-            reciveData := <<>>;
         end if;
+        reciveData := <<>>;
     end while;
 end process;
 
@@ -49,12 +46,9 @@ A:
         if reciveData # CORRUPT_DATA then
             if Len(reciveData) = 4 /\ reciveData[1] = 0 /\ reciveData[2] = 1 /\ reciveData[3] = synNum /\ reciveData[4] = requestNum + 1 then
                 state := "open";
-            else 
-                reciveData := <<>>;
             end if;
-        else
-            reciveData := <<>>;
         end if;
+        reciveData := <<>>;
         
         if state = "SYN-RECIVED" then 
             sendReq := <<1, 1, synNum, requestNum>>
@@ -102,22 +96,22 @@ WaitSYN == /\ state = "closed" /\ reciveData # <<>>
                  THEN /\ IF reciveData[1] = 1 /\ reciveData[2] = 0
                             THEN /\ synNum' = reciveData[3] + 1
                                  /\ state' = "SYN-RECIVED"
-                                 /\ UNCHANGED reciveData
-                            ELSE /\ reciveData' = <<>>
+                            ELSE /\ TRUE
                                  /\ UNCHANGED << state, synNum >>
-                 ELSE /\ reciveData' = <<>>
+                 ELSE /\ TRUE
                       /\ UNCHANGED << state, synNum >>
+           /\ reciveData' = <<>>
            /\ UNCHANGED << sendReq, requestNum, output >>
 
 SendSYNACK == /\ state = "SYN-RECIVED" /\ reciveData # <<>>
               /\ IF reciveData # CORRUPT_DATA
                     THEN /\ IF Len(reciveData) = 4 /\ reciveData[1] = 0 /\ reciveData[2] = 1 /\ reciveData[3] = synNum /\ reciveData[4] = requestNum + 1
                                THEN /\ state' = "open"
-                                    /\ UNCHANGED reciveData
-                               ELSE /\ reciveData' = <<>>
+                               ELSE /\ TRUE
                                     /\ state' = state
-                    ELSE /\ reciveData' = <<>>
+                    ELSE /\ TRUE
                          /\ state' = state
+              /\ reciveData' = <<>>
               /\ IF state' = "SYN-RECIVED"
                     THEN /\ sendReq' = <<1, 1, synNum, requestNum>>
                     ELSE /\ TRUE
@@ -152,5 +146,5 @@ Fairness == /\ WF_vars(Recive)
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:02:09 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 21:59:40 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

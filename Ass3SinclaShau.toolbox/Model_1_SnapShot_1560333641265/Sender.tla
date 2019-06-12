@@ -50,8 +50,8 @@ A:
                     state := "SYN_ACK_RECIVED";
                 end if;
             end if;
-            reciveReq := <<>>;
         end if;
+        reciveReq := <<>>;
         
         \* spam SYN constantly until successful 
         if state = "opening" then
@@ -70,12 +70,9 @@ A:
         if reciveReq # CORRUPT_DATA then 
             if reciveReq[1] = 1 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1 then 
                 state := "open"
-            else 
-                reciveReq := <<>>;
             end if;
-        else 
-            reciveReq := <<>>;
        end if;
+       reciveReq := <<>>;
        
        if state = "SYN_ACK_RECIVED" then 
            sendData := <<0, 1, sequenceNum + 1, reqNum>>;
@@ -143,9 +140,9 @@ SYN == /\ state = "opening" /\ sendData = <<>>
                                         /\ UNCHANGED << state, reqNum >>
                         ELSE /\ TRUE
                              /\ UNCHANGED << state, reqNum >>
-                  /\ reciveReq' = <<>>
              ELSE /\ TRUE
-                  /\ UNCHANGED << reciveReq, state, reqNum >>
+                  /\ UNCHANGED << state, reqNum >>
+       /\ reciveReq' = <<>>
        /\ IF state' = "opening"
              THEN /\ sendData' = <<1, 0, sequenceNum>>
              ELSE /\ TRUE
@@ -156,11 +153,11 @@ ACK == /\ state = "SYN_ACK_RECIVED" /\ reciveReq # <<>>
        /\ IF reciveReq # CORRUPT_DATA
              THEN /\ IF reciveReq[1] = 1 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1
                         THEN /\ state' = "open"
-                             /\ UNCHANGED reciveReq
-                        ELSE /\ reciveReq' = <<>>
+                        ELSE /\ TRUE
                              /\ state' = state
-             ELSE /\ reciveReq' = <<>>
+             ELSE /\ TRUE
                   /\ state' = state
+       /\ reciveReq' = <<>>
        /\ IF state' = "SYN_ACK_RECIVED"
              THEN /\ sendData' = <<0, 1, sequenceNum + 1, reqNum>>
              ELSE /\ TRUE
@@ -204,5 +201,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:02:35 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:00:33 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
