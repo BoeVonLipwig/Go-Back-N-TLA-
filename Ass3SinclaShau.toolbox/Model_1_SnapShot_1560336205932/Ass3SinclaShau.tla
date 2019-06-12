@@ -31,7 +31,7 @@ reqWir == INSTANCE DataWire WITH inputW <- sendReqQueue, outputW <- receiveReqQu
 sender == INSTANCE Sender WITH sendData <- sendDataQueue, reciveReq <- receiveReqQueue, toSend <- mess, state <- senderState
 reciver == INSTANCE Reciver WITH sendReq <- sendReqQueue, reciveData <- receiveDataQueue, output <- messOut, state <- reciverState
 
-
+ 
 \* The following varibles run the init code in their respective modules
 Init ==  /\ dataWir!Init
          /\ reqWir!Init
@@ -87,5 +87,5 @@ Properties == /\ CorrectResult
                   
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 21:14:46 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:27:33 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi
