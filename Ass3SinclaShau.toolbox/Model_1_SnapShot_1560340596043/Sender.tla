@@ -3,7 +3,7 @@ EXTENDS Naturals, Integers, TLC, Sequences, Bags, FiniteSets
 CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
 (* --algorithm sender
 variables sendData = <<>>, reciveReq = <<>>, state = "opening", 
-sequenceNum = 1, windowStart = 1, windowEnd = WINDOW_SIZE+1, reqNum = -2;
+sequenceNum = 1, windowStart = 1, windowEnd = WINDOW_SIZE+1, reqNum = -1;
 
 define
     MIN(x,y)  == IF (x < y) THEN x ELSE y 
@@ -90,11 +90,11 @@ fair process FIN = "fin"
 begin 
 A: 
     while TRUE do 
-        await state = "closing";
+        await state = "closing" /\ reciveReq # <<>>;
         
         if reciveReq # CORRUPT_DATA then
             if reciveReq[1] = "FIN" then 
-                state := "FIN-ACK";
+                state := "FIN-ACK"
             end if;
         end if;
         reciveReq := <<>>;
@@ -150,7 +150,7 @@ Init == (* Global variables *)
         /\ sequenceNum = 1
         /\ windowStart = 1
         /\ windowEnd = WINDOW_SIZE+1
-        /\ reqNum = -2
+        /\ reqNum = -1
 
 Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
@@ -213,7 +213,7 @@ ACK == /\ state = "SYN_ACK_RECIVED"
                   /\ UNCHANGED sendData
        /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
-FIN == /\ state = "closing"
+FIN == /\ state = "closing" /\ reciveReq # <<>>
        /\ IF reciveReq # CORRUPT_DATA
              THEN /\ IF reciveReq[1] = "FIN"
                         THEN /\ state' = "FIN-ACK"
@@ -283,5 +283,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:59:35 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 23:53:57 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

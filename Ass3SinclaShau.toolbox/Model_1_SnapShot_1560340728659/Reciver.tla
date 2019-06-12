@@ -3,7 +3,7 @@ EXTENDS Naturals, Integers, TLC, Sequences, Bags, FiniteSets
 
 CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
 (* --algorithm reciver
-variables sendReq = <<>>, reciveData = <<>>, requestNum = 1, output = <<>>, state = "ready", synNum = -2;
+variables sendReq = <<>>, reciveData = <<>>, requestNum = 1, output = <<>>, state = "ready", synNum = -1;
 fair process Recive = "recive"
 begin
 A:
@@ -132,7 +132,7 @@ Init == (* Global variables *)
         /\ requestNum = 1
         /\ output = <<>>
         /\ state = "ready"
-        /\ synNum = -2
+        /\ synNum = -1
 
 Recive == /\ reciveData # <<>> /\ state = "open"
           /\ IF reciveData[1] # CORRUPT_DATA
@@ -245,5 +245,5 @@ Properties == \A x \in {"closed", "closing","SYN-RECIVED", "WAIT-FOR-DATA", "ope
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:59:28 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 23:56:26 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

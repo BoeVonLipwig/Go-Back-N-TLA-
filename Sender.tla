@@ -16,18 +16,17 @@ A:
     while TRUE do
         await state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>);
         if reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA then 
-            if reciveReq[1] = -1 (*Len(MESSAGES)*) then 
-\*                state := "closing";
-                skip;
-            end if;
-            if reciveReq[1] > windowStart then
+            if reciveReq[1] = Len(MESSAGES) then 
+                state := "closing";
+            \* check for error here later
+            elsif reciveReq[1] > windowStart then
                 windowEnd := MIN(WINDOW_SIZE + reciveReq[1], Len(MESSAGES));
                 windowStart := reciveReq[1];
             end if;
         end if;
         reciveReq := <<>>;
 
-        if sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1 then
+        if sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1 /\ state # "closing" then
             sendData := <<sequenceNum, MESSAGES[sequenceNum]>>;
             if sequenceNum < windowEnd /\ sequenceNum > windowStart - 1 then
                 sequenceNum := sequenceNum + 1;
@@ -87,12 +86,52 @@ A:
     end while;
 end process;
 
+fair process FIN = "fin"
+begin 
+A: 
+    while TRUE do 
+        await state = "closing";
+        
+        if reciveReq # CORRUPT_DATA then
+            if reciveReq[1] = "FIN" then 
+                state := "FIN-ACK";
+            end if;
+        end if;
+        
+        reciveReq := <<>>;
+        if state = "closing" then
+            sendData := <<-1>>;
+        end if;
+    end while;
+end process;
+
+fair process FINACK = "finack"
+begin 
+A: 
+    while TRUE do 
+        await state = "FIN-ACK" /\ reciveReq # <<>>;
+        
+        if reciveReq # CORRUPT_DATA then
+            if reciveReq[1] = "ACK" then 
+                state := "closed";
+            end if;
+        end if;
+        reciveReq := <<>>;
+        
+        if state = "FIN-ACK" then
+            sendData := <<"FIN-ACK">>;
+        end if;
+    end while;
+end process;
+
 
 end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Send at line 16 col 5 changed to A_
-\* Label A of process SYN at line 45 col 5 changed to A_S
+\* Label A of process SYN at line 44 col 5 changed to A_S
+\* Label A of process ACK at line 68 col 5 changed to A_A
+\* Label A of process FIN at line 92 col 5 changed to A_F
 VARIABLES sendData, reciveReq, state, sequenceNum, windowStart, windowEnd, 
           reqNum
 
@@ -103,7 +142,7 @@ MIN(x,y)  == IF (x < y) THEN x ELSE y
 vars == << sendData, reciveReq, state, sequenceNum, windowStart, windowEnd, 
            reqNum >>
 
-ProcSet == {"send"} \cup {"syn"} \cup {"ack"}
+ProcSet == {"send"} \cup {"syn"} \cup {"ack"} \cup {"fin"} \cup {"finack"}
 
 Init == (* Global variables *)
         /\ sendData = <<>>
@@ -116,25 +155,27 @@ Init == (* Global variables *)
 
 Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
-              THEN /\ IF reciveReq[1] = -1
-                         THEN /\ TRUE
-                         ELSE /\ TRUE
-                   /\ IF reciveReq[1] > windowStart
-                         THEN /\ windowEnd' = MIN(WINDOW_SIZE + reciveReq[1], Len(MESSAGES))
-                              /\ windowStart' = reciveReq[1]
-                         ELSE /\ TRUE
+              THEN /\ IF reciveReq[1] = Len(MESSAGES)
+                         THEN /\ state' = "closing"
                               /\ UNCHANGED << windowStart, windowEnd >>
+                         ELSE /\ IF reciveReq[1] > windowStart
+                                    THEN /\ windowEnd' = MIN(WINDOW_SIZE + reciveReq[1], Len(MESSAGES))
+                                         /\ windowStart' = reciveReq[1]
+                                    ELSE /\ TRUE
+                                         /\ UNCHANGED << windowStart, 
+                                                         windowEnd >>
+                              /\ state' = state
               ELSE /\ TRUE
-                   /\ UNCHANGED << windowStart, windowEnd >>
+                   /\ UNCHANGED << state, windowStart, windowEnd >>
         /\ reciveReq' = <<>>
-        /\ IF sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1
+        /\ IF sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1 /\ state' # "closing"
               THEN /\ sendData' = <<sequenceNum, MESSAGES[sequenceNum]>>
                    /\ IF sequenceNum < windowEnd' /\ sequenceNum > windowStart' - 1
                          THEN /\ sequenceNum' = sequenceNum + 1
                          ELSE /\ sequenceNum' = windowStart'
               ELSE /\ TRUE
                    /\ UNCHANGED << sendData, sequenceNum >>
-        /\ UNCHANGED << state, reqNum >>
+        /\ UNCHANGED reqNum
 
 SYN == /\ state = "opening" /\ sendData = <<>>
        /\ IF reciveReq # <<>>
@@ -173,12 +214,44 @@ ACK == /\ state = "SYN_ACK_RECIVED"
                   /\ UNCHANGED sendData
        /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
-Next == Send \/ SYN \/ ACK
+FIN == /\ state = "closing"
+       /\ IF reciveReq # CORRUPT_DATA
+             THEN /\ IF reciveReq[1] = "FIN"
+                        THEN /\ state' = "FIN-ACK"
+                        ELSE /\ TRUE
+                             /\ state' = state
+             ELSE /\ TRUE
+                  /\ state' = state
+       /\ reciveReq' = <<>>
+       /\ IF state' = "closing"
+             THEN /\ sendData' = <<-1>>
+             ELSE /\ TRUE
+                  /\ UNCHANGED sendData
+       /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
+
+FINACK == /\ state = "FIN-ACK" /\ reciveReq # <<>>
+          /\ IF reciveReq # CORRUPT_DATA
+                THEN /\ IF reciveReq[1] = "ACK"
+                           THEN /\ state' = "closed"
+                           ELSE /\ TRUE
+                                /\ state' = state
+                ELSE /\ TRUE
+                     /\ state' = state
+          /\ reciveReq' = <<>>
+          /\ IF state' = "FIN-ACK"
+                THEN /\ sendData' = <<"FIN-ACK">>
+                ELSE /\ TRUE
+                     /\ UNCHANGED sendData
+          /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
+
+Next == Send \/ SYN \/ ACK \/ FIN \/ FINACK
 
 Spec == /\ Init /\ [][Next]_vars
         /\ WF_vars(Send)
         /\ WF_vars(SYN)
         /\ WF_vars(ACK)
+        /\ WF_vars(FIN)
+        /\ WF_vars(FINACK)
 
 \* END TRANSLATION
 
@@ -201,7 +274,7 @@ Invariants == \*/\ TypeOK
               /\ WinEndOK
               /\ SeqNumOK
 
-Properties == \A x \in {"opening", "SYN_ACK_RECIVED", "open" }: <>( state = x )
+Properties == \A x \in {"opening", "SYN_ACK_RECIVED", "open","closing", "closed", "FIN-ACK" }: <>( state = x )
               
 
 
@@ -211,5 +284,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:19:51 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:03:10 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
