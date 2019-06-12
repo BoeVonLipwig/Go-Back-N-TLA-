@@ -185,10 +185,9 @@ Fairness == /\ WF_vars(Recive)
             /\ WF_vars(WaitSYN)
             /\ WF_vars(SendSYNACK)
             /\ WF_vars(WaitData)
-            
-Properties == \A x \in {"closed","SYN-RECIVED", "WAIT-FOR-DATA", "open"}: <>( state = x )
+ 
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:18:20 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 23:00:34 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

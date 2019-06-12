@@ -18,10 +18,12 @@ A:
                 output := output \o <<reciveData[2]>>;
                 requestNum := requestNum + 1;
             end if;
+           
+            reciveData := <<>>;
             sendReq := <<requestNum>>;
         
         end if;
-        reciveData := <<>>;
+        
     end while;
     
 end process;
@@ -85,8 +87,8 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Recive at line 10 col 5 changed to A_
-\* Label A of process WaitSYN at line 32 col 5 changed to A_W
-\* Label A of process SendSYNACK at line 50 col 5 changed to A_S
+\* Label A of process WaitSYN at line 34 col 5 changed to A_W
+\* Label A of process SendSYNACK at line 52 col 5 changed to A_S
 VARIABLES sendReq, reciveData, requestNum, output, state, synNum
 
 vars == << sendReq, reciveData, requestNum, output, state, synNum >>
@@ -111,10 +113,10 @@ Recive == /\ reciveData # <<>> /\ state = "open"
                                 /\ requestNum' = requestNum + 1
                            ELSE /\ TRUE
                                 /\ UNCHANGED << requestNum, output >>
+                     /\ reciveData' = <<>>
                      /\ sendReq' = <<requestNum'>>
                 ELSE /\ TRUE
-                     /\ UNCHANGED << sendReq, requestNum, output >>
-          /\ reciveData' = <<>>
+                     /\ UNCHANGED << sendReq, reciveData, requestNum, output >>
           /\ UNCHANGED << state, synNum >>
 
 WaitSYN == /\ state = "closed" /\ reciveData # <<>>
@@ -185,10 +187,9 @@ Fairness == /\ WF_vars(Recive)
             /\ WF_vars(WaitSYN)
             /\ WF_vars(SendSYNACK)
             /\ WF_vars(WaitData)
-            
-Properties == \A x \in {"closed","SYN-RECIVED", "WAIT-FOR-DATA", "open"}: <>( state = x )
+ 
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:18:20 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:59:03 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

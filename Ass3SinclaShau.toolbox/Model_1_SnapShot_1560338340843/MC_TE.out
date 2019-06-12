@@ -1,0 +1,65 @@
+@!@!@STARTMSG 2262:0 @!@!@
+TLC2 Version 2.13 of 18 July 2018
+@!@!@ENDMSG 2262 @!@!@
+@!@!@STARTMSG 2187:0 @!@!@
+Running breadth-first search Model-Checking with fp 81 and seed 4399267535353437211 with 2 workers on 4 cores with 1205MB heap and 2710MB offheap memory [pid: 15684] (Windows 10 10.0 amd64, Oracle Corporation 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+@!@!@ENDMSG 2187 @!@!@
+@!@!@STARTMSG 2220:0 @!@!@
+Starting SANY...
+@!@!@ENDMSG 2220 @!@!@
+Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\MC.tla
+Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\Ass3SinclaShau.tla
+Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualisation\tlatools\class\tla2sany\StandardModules\TLC.tla
+Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualisation\tlatools\class\tla2sany\StandardModules\Naturals.tla
+Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualisation\tlatools\class\tla2sany\StandardModules\Integers.tla
+Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualisation\tlatools\class\tla2sany\StandardModules\Sequences.tla
+Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualisation\tlatools\class\tla2sany\StandardModules\Bags.tla
+Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualisation\tlatools\class\tla2sany\StandardModules\FiniteSets.tla
+Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\DataWire.tla
+Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\Sender.tla
+Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\Reciver.tla
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module Bags
+Semantic processing of module DataWire
+Semantic processing of module Sender
+Semantic processing of module Reciver
+Semantic processing of module Ass3SinclaShau
+Semantic processing of module MC
+@!@!@STARTMSG 2219:0 @!@!@
+SANY finished.
+@!@!@ENDMSG 2219 @!@!@
+@!@!@STARTMSG 2185:0 @!@!@
+Starting... (2019-06-12 23:18:58)
+@!@!@ENDMSG 2185 @!@!@
+@!@!@STARTMSG 2212:0 @!@!@
+Implied-temporal checking--satisfiability problem has 8 branches.
+@!@!@ENDMSG 2212 @!@!@
+@!@!@STARTMSG 2189:0 @!@!@
+Computing initial states...
+@!@!@ENDMSG 2189 @!@!@
+@!@!@STARTMSG 2102:1 @!@!@
+current state is not a legal state
+While working on the initial state:
+/\ senderState = "opening"
+/\ mess = null
+/\ receiveDataQueue = <<>>
+/\ messOut = <<>>
+/\ sendReqQueue = <<>>
+/\ requestNum = 1
+/\ reqNum = -1
+/\ synNum = -1
+/\ receiveReqQueue = <<>>
+/\ windowStart = 1
+/\ reciverState = "closed"
+/\ sequenceNum = 1
+/\ windowEnd = 4
+/\ sendDataQueue = <<>>
+
+@!@!@ENDMSG 2102 @!@!@
+@!@!@STARTMSG 2186:0 @!@!@
+Finished in 2538ms at (2019-06-12 23:18:59)
+@!@!@ENDMSG 2186 @!@!@

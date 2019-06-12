@@ -14,6 +14,7 @@ VARIABLES sendDataQueue, \* send data  to dataWire
           sequenceNum, \*
           windowStart, \*
           windowEnd, \* 
+          mess,                 \* message input to  sender process
           messOut,
           senderState,
           reciverState,
@@ -23,11 +24,11 @@ VARIABLES sendDataQueue, \* send data  to dataWire
           
           
 
-vars == <<sendDataQueue, receiveDataQueue, receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, reciverState, synNum, reqNum>>
+vars == <<sendDataQueue, receiveDataQueue, receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, mess, messOut, senderState, reciverState, synNum, reqNum>>
  
 dataWir == INSTANCE DataWire WITH inputW <- sendDataQueue, outputW <- receiveDataQueue
 reqWir == INSTANCE DataWire WITH inputW <- sendReqQueue, outputW <- receiveReqQueue
-sender == INSTANCE Sender WITH sendData <- sendDataQueue, reciveReq <- receiveReqQueue, state <- senderState
+sender == INSTANCE Sender WITH sendData <- sendDataQueue, reciveReq <- receiveReqQueue, toSend <- mess, state <- senderState
 reciver == INSTANCE Reciver WITH sendReq <- sendReqQueue, reciveData <- receiveDataQueue, output <- messOut, state <- reciverState
 
  
@@ -40,16 +41,16 @@ Init ==  /\ dataWir!Init
 
 \* These are used to help define what the "next" step is and state what variables remain unchanged
 dataChannel ==  /\  dataWir!Next
-                /\  UNCHANGED <<receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, reciverState, synNum, reqNum>>
+                /\  UNCHANGED <<receiveReqQueue, sendReqQueue, requestNum, sequenceNum, windowStart, windowEnd, mess, messOut, senderState, reciverState, synNum, reqNum>>
 
 reqChannel ==  /\  reqWir!Next
-               /\  UNCHANGED <<sendDataQueue, receiveDataQueue, requestNum, sequenceNum, windowStart, windowEnd, messOut, senderState, reciverState, synNum, reqNum>>
+               /\  UNCHANGED <<sendDataQueue, receiveDataQueue, requestNum, sequenceNum, windowStart, windowEnd, mess, messOut, senderState, reciverState, synNum, reqNum>>
 
 senderChannel ==   /\  sender!Next
                    /\  UNCHANGED <<receiveDataQueue, sendReqQueue, requestNum, messOut, reciverState, synNum>>
 
 reciverChannel == /\  reciver!Next
-                  /\  UNCHANGED <<sendDataQueue, receiveReqQueue, sequenceNum, windowStart, windowEnd, senderState, reqNum>>
+                  /\  UNCHANGED <<sendDataQueue, receiveReqQueue, sequenceNum, windowStart, windowEnd, mess , senderState, reqNum>>
                   
 ------------------------------------   
 \* defines the next step of the algorithim as being the next step of any one of these
@@ -88,5 +89,5 @@ Properties == /\ CorrectResult
                   
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:23:05 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 23:07:56 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi

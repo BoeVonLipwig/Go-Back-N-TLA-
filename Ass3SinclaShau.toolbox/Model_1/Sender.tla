@@ -2,7 +2,7 @@
 EXTENDS Naturals, Integers, TLC, Sequences, Bags, FiniteSets
 CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
 (* --algorithm sender
-variables sendData = <<>>, reciveReq = <<>>, toSend = MESSAGES, state = "opening", 
+variables sendData = <<>>, reciveReq = <<>>, state = "opening", 
 sequenceNum = 1, windowStart = 1, windowEnd = WINDOW_SIZE+1, reqNum = -1;
 
 define
@@ -16,7 +16,8 @@ A:
     while TRUE do
         await state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>);
         if reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA then 
-            if reciveReq[1] = -1 then 
+            if reciveReq[1] = -1 (*Len(MESSAGES)*) then 
+\*                state := "closing";
                 skip;
             end if;
             if reciveReq[1] > windowStart then
@@ -26,8 +27,8 @@ A:
         end if;
         reciveReq := <<>>;
 
-        if sendData = <<>> /\ toSend # <<>> /\ sequenceNum < Len(toSend) + 1 then
-            sendData := <<sequenceNum, toSend[sequenceNum]>>;
+        if sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1 then
+            sendData := <<sequenceNum, MESSAGES[sequenceNum]>>;
             if sequenceNum < windowEnd /\ sequenceNum > windowStart - 1 then
                 sequenceNum := sequenceNum + 1;
             else
@@ -91,23 +92,22 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Send at line 16 col 5 changed to A_
-\* Label A of process SYN at line 44 col 5 changed to A_S
-VARIABLES sendData, reciveReq, toSend, state, sequenceNum, windowStart, 
-          windowEnd, reqNum
+\* Label A of process SYN at line 45 col 5 changed to A_S
+VARIABLES sendData, reciveReq, state, sequenceNum, windowStart, windowEnd, 
+          reqNum
 
 (* define statement *)
 MIN(x,y)  == IF (x < y) THEN x ELSE y
 
 
-vars == << sendData, reciveReq, toSend, state, sequenceNum, windowStart, 
-           windowEnd, reqNum >>
+vars == << sendData, reciveReq, state, sequenceNum, windowStart, windowEnd, 
+           reqNum >>
 
 ProcSet == {"send"} \cup {"syn"} \cup {"ack"}
 
 Init == (* Global variables *)
         /\ sendData = <<>>
         /\ reciveReq = <<>>
-        /\ toSend = MESSAGES
         /\ state = "opening"
         /\ sequenceNum = 1
         /\ windowStart = 1
@@ -127,14 +127,14 @@ Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
               ELSE /\ TRUE
                    /\ UNCHANGED << windowStart, windowEnd >>
         /\ reciveReq' = <<>>
-        /\ IF sendData = <<>> /\ toSend # <<>> /\ sequenceNum < Len(toSend) + 1
-              THEN /\ sendData' = <<sequenceNum, toSend[sequenceNum]>>
+        /\ IF sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1
+              THEN /\ sendData' = <<sequenceNum, MESSAGES[sequenceNum]>>
                    /\ IF sequenceNum < windowEnd' /\ sequenceNum > windowStart' - 1
                          THEN /\ sequenceNum' = sequenceNum + 1
                          ELSE /\ sequenceNum' = windowStart'
               ELSE /\ TRUE
                    /\ UNCHANGED << sendData, sequenceNum >>
-        /\ UNCHANGED << toSend, state, reqNum >>
+        /\ UNCHANGED << state, reqNum >>
 
 SYN == /\ state = "opening" /\ sendData = <<>>
        /\ IF reciveReq # <<>>
@@ -153,7 +153,7 @@ SYN == /\ state = "opening" /\ sendData = <<>>
              THEN /\ sendData' = <<1, 0, sequenceNum>>
              ELSE /\ TRUE
                   /\ UNCHANGED sendData
-       /\ UNCHANGED << toSend, sequenceNum, windowStart, windowEnd >>
+       /\ UNCHANGED << sequenceNum, windowStart, windowEnd >>
 
 ACK == /\ state = "SYN_ACK_RECIVED"
        /\ IF reciveReq # <<>>
@@ -171,7 +171,7 @@ ACK == /\ state = "SYN_ACK_RECIVED"
              THEN /\ sendData' = <<0, 1, sequenceNum + 1, reqNum>>
              ELSE /\ TRUE
                   /\ UNCHANGED sendData
-       /\ UNCHANGED << toSend, sequenceNum, windowStart, windowEnd, reqNum >>
+       /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
 Next == Send \/ SYN \/ ACK
 
@@ -200,7 +200,8 @@ Invariants == \*/\ TypeOK
               /\ WinStrOK
               /\ WinEndOK
               /\ SeqNumOK
-              
+
+Properties == \A x \in {"opening", "SYN_ACK_RECIVED", "open" }: <>( state = x )
               
 
 
@@ -210,5 +211,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:27:26 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 23:19:51 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

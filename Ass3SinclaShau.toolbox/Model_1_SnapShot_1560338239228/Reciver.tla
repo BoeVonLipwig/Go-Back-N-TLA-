@@ -12,7 +12,7 @@ A:
         \* sender will send -1 if it wants to close the connection
         if reciveData[1] # CORRUPT_DATA then
             if reciveData[1] = -1 then
-                skip;
+                state := "closing";
             end if; 
             if (reciveData[1] = requestNum) then
                 output := output \o <<reciveData[2]>>;
@@ -81,6 +81,15 @@ A:
     end while;
 end process;
 
+\*fair process Closing = "closing"
+\*begin
+\*A: 
+\*    while TRUE do
+\*        
+\*    end while;
+\*
+\*end process;
+
 end algorithm; 
 *)
 \* BEGIN TRANSLATION
@@ -104,8 +113,9 @@ Init == (* Global variables *)
 Recive == /\ reciveData # <<>> /\ state = "open"
           /\ IF reciveData[1] # CORRUPT_DATA
                 THEN /\ IF reciveData[1] = -1
-                           THEN /\ TRUE
+                           THEN /\ state' = "closing"
                            ELSE /\ TRUE
+                                /\ state' = state
                      /\ IF (reciveData[1] = requestNum)
                            THEN /\ output' = output \o <<reciveData[2]>>
                                 /\ requestNum' = requestNum + 1
@@ -113,9 +123,9 @@ Recive == /\ reciveData # <<>> /\ state = "open"
                                 /\ UNCHANGED << requestNum, output >>
                      /\ sendReq' = <<requestNum'>>
                 ELSE /\ TRUE
-                     /\ UNCHANGED << sendReq, requestNum, output >>
+                     /\ UNCHANGED << sendReq, requestNum, output, state >>
           /\ reciveData' = <<>>
-          /\ UNCHANGED << state, synNum >>
+          /\ UNCHANGED synNum
 
 WaitSYN == /\ state = "closed" /\ reciveData # <<>>
            /\ IF reciveData # CORRUPT_DATA
@@ -190,5 +200,5 @@ Properties == \A x \in {"closed","SYN-RECIVED", "WAIT-FOR-DATA", "open"}: <>( st
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:18:20 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 23:17:10 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

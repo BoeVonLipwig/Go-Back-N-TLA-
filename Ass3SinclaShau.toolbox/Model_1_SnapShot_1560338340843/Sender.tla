@@ -17,8 +17,7 @@ A:
         await state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>);
         if reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA then 
             if reciveReq[1] = -1 (*Len(MESSAGES)*) then 
-\*                state := "closing";
-                skip;
+                state := "closing";
             end if;
             if reciveReq[1] > windowStart then
                 windowEnd := MIN(WINDOW_SIZE + reciveReq[1], Len(MESSAGES));
@@ -92,7 +91,7 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Send at line 16 col 5 changed to A_
-\* Label A of process SYN at line 45 col 5 changed to A_S
+\* Label A of process SYN at line 44 col 5 changed to A_S
 VARIABLES sendData, reciveReq, state, sequenceNum, windowStart, windowEnd, 
           reqNum
 
@@ -117,15 +116,16 @@ Init == (* Global variables *)
 Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
               THEN /\ IF reciveReq[1] = -1
-                         THEN /\ TRUE
+                         THEN /\ state' = "closing"
                          ELSE /\ TRUE
+                              /\ state' = state
                    /\ IF reciveReq[1] > windowStart
                          THEN /\ windowEnd' = MIN(WINDOW_SIZE + reciveReq[1], Len(MESSAGES))
                               /\ windowStart' = reciveReq[1]
                          ELSE /\ TRUE
                               /\ UNCHANGED << windowStart, windowEnd >>
               ELSE /\ TRUE
-                   /\ UNCHANGED << windowStart, windowEnd >>
+                   /\ UNCHANGED << state, windowStart, windowEnd >>
         /\ reciveReq' = <<>>
         /\ IF sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1
               THEN /\ sendData' = <<sequenceNum, MESSAGES[sequenceNum]>>
@@ -134,7 +134,7 @@ Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
                          ELSE /\ sequenceNum' = windowStart'
               ELSE /\ TRUE
                    /\ UNCHANGED << sendData, sequenceNum >>
-        /\ UNCHANGED << state, reqNum >>
+        /\ UNCHANGED reqNum
 
 SYN == /\ state = "opening" /\ sendData = <<>>
        /\ IF reciveReq # <<>>
@@ -201,7 +201,7 @@ Invariants == \*/\ TypeOK
               /\ WinEndOK
               /\ SeqNumOK
 
-Properties == \A x \in {"opening", "SYN_ACK_RECIVED", "open" }: <>( state = x )
+Properties == \A x \in {"opening", "SYN_ACK_RECIVED", "open"}: <>( state = x )
               
 
 
@@ -211,5 +211,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 23:19:51 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 23:18:52 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
