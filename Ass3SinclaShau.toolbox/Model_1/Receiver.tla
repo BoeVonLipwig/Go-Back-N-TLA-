@@ -3,12 +3,12 @@ EXTENDS Naturals, Integers, TLC, Sequences, Bags, FiniteSets
 
 CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
 (* --algorithm receiver
-variables sendReq = <<>>, receiveData = <<>>, requestNum = 1, output = <<>>, state = "ready", synNum = -1;
+variables sendReq = <<>>, receiveData = <<>>, requestNum = 1, output = <<>>, state = "Waiting", synNum = -1;
 fair process Receive = "receive"
 begin
 A:
     while TRUE do
-        await receiveData # <<>> /\ state = "open";
+        await receiveData # <<>> /\ state = "Open";
         if receiveData[1] # CORRUPT_DATA then
             \* sender will send -1 if it wants to close the connection
             if receiveData[1] = -1 /\ receiveData[2] = "FIN" then
@@ -28,11 +28,11 @@ fair process WaitSYN = "waitsyn"
 begin
 A:
     while TRUE do
-        await state = "ready" /\ receiveData # <<>>;
+        await state = "Waiting" /\ receiveData # <<>>;
         if receiveData # CORRUPT_DATA then 
             if receiveData[1] = 1 /\ receiveData[2] = 0 then 
                 synNum := receiveData[3] + 1;
-                state := "SYN-RECEIVED";
+                state := "SYN_RECEIVED";
             else 
                 receiveData := <<>>;
             end if;
@@ -46,7 +46,7 @@ fair process SendSYNACK = "sendsyn-ack"
 begin
 A:
     while TRUE do
-        await state = "SYN-RECEIVED" /\ receiveData # <<>>;
+        await state = "SYN_RECEIVED" /\ receiveData # <<>>;
         if receiveData # CORRUPT_DATA then
             if Len(receiveData) = 4 /\ receiveData[1] = 0 /\ receiveData[2] = 1 /\ receiveData[3] = synNum /\ receiveData[4] = requestNum + 1 then
                 state := "WAIT-FOR-DATA";
@@ -56,7 +56,7 @@ A:
             receiveData := <<>>;
         end if;
         
-        if state = "SYN-RECEIVED" then
+        if state = "SYN_RECEIVED" then
             sendReq := <<1, 1, synNum, requestNum>>;
         end if;
     end while;
@@ -69,7 +69,7 @@ A:
         await receiveData # <<>> /\ state = "WAIT-FOR-DATA";
         if receiveData # CORRUPT_DATA then 
             if receiveData[1] = requestNum then
-                state := "open";
+                state := "Open";
             end if;
         end if;
         
@@ -89,7 +89,7 @@ A:
         
         if receiveData # CORRUPT_DATA then 
             if receiveData[1] = -3 /\ receiveData[2] = "ACK" then
-                state := "closed";
+                state := "Closed";
             end if;
         end if;
         receiveData := <<>>;
@@ -119,10 +119,10 @@ Init == (* Global variables *)
         /\ receiveData = <<>>
         /\ requestNum = 1
         /\ output = <<>>
-        /\ state = "ready"
+        /\ state = "Waiting"
         /\ synNum = -1
 
-Receive == /\ receiveData # <<>> /\ state = "open"
+Receive == /\ receiveData # <<>> /\ state = "Open"
            /\ IF receiveData[1] # CORRUPT_DATA
                  THEN /\ IF receiveData[1] = -1 /\ receiveData[2] = "FIN"
                             THEN /\ state' = "FIN_RECEIVED"
@@ -139,11 +139,11 @@ Receive == /\ receiveData # <<>> /\ state = "open"
            /\ receiveData' = <<>>
            /\ UNCHANGED synNum
 
-WaitSYN == /\ state = "ready" /\ receiveData # <<>>
+WaitSYN == /\ state = "Waiting" /\ receiveData # <<>>
            /\ IF receiveData # CORRUPT_DATA
                  THEN /\ IF receiveData[1] = 1 /\ receiveData[2] = 0
                             THEN /\ synNum' = receiveData[3] + 1
-                                 /\ state' = "SYN-RECEIVED"
+                                 /\ state' = "SYN_RECEIVED"
                                  /\ UNCHANGED receiveData
                             ELSE /\ receiveData' = <<>>
                                  /\ UNCHANGED << state, synNum >>
@@ -151,7 +151,7 @@ WaitSYN == /\ state = "ready" /\ receiveData # <<>>
                       /\ UNCHANGED << state, synNum >>
            /\ UNCHANGED << sendReq, requestNum, output >>
 
-SendSYNACK == /\ state = "SYN-RECEIVED" /\ receiveData # <<>>
+SendSYNACK == /\ state = "SYN_RECEIVED" /\ receiveData # <<>>
               /\ IF receiveData # CORRUPT_DATA
                     THEN /\ IF Len(receiveData) = 4 /\ receiveData[1] = 0 /\ receiveData[2] = 1 /\ receiveData[3] = synNum /\ receiveData[4] = requestNum + 1
                                THEN /\ state' = "WAIT-FOR-DATA"
@@ -160,7 +160,7 @@ SendSYNACK == /\ state = "SYN-RECEIVED" /\ receiveData # <<>>
                          /\ receiveData' = <<>>
                     ELSE /\ receiveData' = <<>>
                          /\ state' = state
-              /\ IF state' = "SYN-RECEIVED"
+              /\ IF state' = "SYN_RECEIVED"
                     THEN /\ sendReq' = <<1, 1, synNum, requestNum>>
                     ELSE /\ TRUE
                          /\ UNCHANGED sendReq
@@ -169,7 +169,7 @@ SendSYNACK == /\ state = "SYN-RECEIVED" /\ receiveData # <<>>
 WaitData == /\ receiveData # <<>> /\ state = "WAIT-FOR-DATA"
             /\ IF receiveData # CORRUPT_DATA
                   THEN /\ IF receiveData[1] = requestNum
-                             THEN /\ state' = "open"
+                             THEN /\ state' = "Open"
                              ELSE /\ TRUE
                                   /\ state' = state
                   ELSE /\ TRUE
@@ -184,7 +184,7 @@ WaitData == /\ receiveData # <<>> /\ state = "WAIT-FOR-DATA"
 SendFINACK == /\ receiveData # <<>> /\ state = "FIN_RECEIVED"
               /\ IF receiveData # CORRUPT_DATA
                     THEN /\ IF receiveData[1] = -3 /\ receiveData[2] = "ACK"
-                               THEN /\ state' = "closed"
+                               THEN /\ state' = "Closed"
                                ELSE /\ TRUE
                                     /\ state' = state
                     ELSE /\ TRUE
@@ -207,16 +207,8 @@ Spec == /\ Init /\ [][Next]_vars
 
 \* END TRANSLATION
 \* Checks that all variables remain in valid states
-
-\*TypeOK == /\ \/ output = <<>>
-\*             \/ \A i \in DOMAIN output : output[i] \in MESSAGE_TYPES
-\*          /\ receiveData = <<>>
-\*             \/ \A i \in DOMAIN receiveData : receiveData[i] \in MESSAGE_TYPES
-
           
-          
-Invariants == \*/\ TypeOK
-              /\ requestNum < Len(MESSAGES)
+Invariants == /\ requestNum < Len(MESSAGES)
               /\ requestNum > 0
 
 Fairness == /\ WF_vars(Receive)
@@ -227,9 +219,9 @@ Fairness == /\ WF_vars(Receive)
             
             
             
-Properties == \A x \in {"closed", "FIN_RECEIVED","SYN-RECEIVED", "WAIT-FOR-DATA", "open", "ready"}: <>( state = x )
+Properties == \A x \in {"Closed", "FIN_RECEIVED","SYN_RECEIVED", "WAIT-FOR-DATA", "Open", "Waiting"}: <>( state = x )
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:44:05 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 02:04:34 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

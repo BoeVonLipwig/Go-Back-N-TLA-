@@ -109,12 +109,12 @@ fair process FINACK = "finack"
 begin 
 A: 
     while TRUE do 
-        await (state = "RECEIVED_FIN-ACK" \/ state = "Closed");
+        await (state = "RECEIVED_FIN-ACK" \/ state = "closed") /\ receiveReq # <<>>;
         
         (* since we cant prove this message has been received by the sender and we cant time this out 
            we will just send it forever as tla does not allow us to fully implement tcp*)
         
-        state := "Closed";
+        state := "closed";
         sendData := <<-3, "ACK">>;
     end while;
 end process;
@@ -227,8 +227,8 @@ FIN == /\ state = "SENDING_FIN"
                   /\ UNCHANGED sendData
        /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
-FINACK == /\ (state = "RECEIVED_FIN-ACK" \/ state = "Closed")
-          /\ state' = "Closed"
+FINACK == /\ (state = "RECEIVED_FIN-ACK" \/ state = "closed") /\ receiveReq # <<>>
+          /\ state' = "closed"
           /\ sendData' = <<-3, "ACK">>
           /\ UNCHANGED << receiveReq, sequenceNum, windowStart, windowEnd, 
                           reqNum >>
@@ -245,6 +245,8 @@ Spec == /\ Init /\ [][Next]_vars
 \* END TRANSLATION
 
 \* checks that the message we are trying to send is of the correcdt type
+\*TypeOK == /\ \/ toSend = <<>>
+\*             \/ \A i \in DOMAIN toSend : toSend[i] \in MESSAGE_TYPES
              
 WinStrOK == /\ windowStart < Len(MESSAGES) + 1 
 
@@ -256,11 +258,12 @@ SeqNumOK == /\ sequenceNum > 0
             /\ sequenceNum < windowEnd 
             /\ sequenceNum < Len(MESSAGES) + 1 
 
-Invariants == /\ WinStrOK
+Invariants == \*/\ TypeOK
+              /\ WinStrOK
               /\ WinEndOK
               /\ SeqNumOK
 
-Properties == \A x \in {"RECEIVED_FIN-ACK", "SYN_ACK_RECEIVED", "open", "opening", "Closed", "SENDING_FIN" }: <>( state = x )
+Properties == \A x \in {"RECEIVED_FIN-ACK", "SYN_ACK_RECEIVED", "open", "opening", "closed", "SENDING_FIN" }: <>( state = x )
               
 
 
@@ -272,5 +275,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:04:40 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:55:18 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
