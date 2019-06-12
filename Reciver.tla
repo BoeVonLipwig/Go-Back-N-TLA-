@@ -75,6 +75,9 @@ A:
             if reciveData[1] = requestNum then
                 state := "open";
             end if;
+            reciveData := <<>>;
+        else 
+            reciveData := <<>>;
         end if;
         if state = "WAIT-FOR-DATA" then 
             sendReq := <<requestNum>>;
@@ -151,13 +154,14 @@ WaitData == /\ reciveData # <<>> /\ state = "WAIT-FOR-DATA"
                              THEN /\ state' = "open"
                              ELSE /\ TRUE
                                   /\ state' = state
-                  ELSE /\ TRUE
+                       /\ reciveData' = <<>>
+                  ELSE /\ reciveData' = <<>>
                        /\ state' = state
             /\ IF state' = "WAIT-FOR-DATA"
                   THEN /\ sendReq' = <<requestNum>>
                   ELSE /\ TRUE
                        /\ UNCHANGED sendReq
-            /\ UNCHANGED << reciveData, requestNum, output, synNum >>
+            /\ UNCHANGED << requestNum, output, synNum >>
 
 Next == Recive \/ WaitSYN \/ SendSYNACK \/ WaitData
 
@@ -189,5 +193,5 @@ Fairness == /\ WF_vars(Recive)
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:45:37 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:50:48 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi
