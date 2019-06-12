@@ -56,7 +56,7 @@ Next ==  \/ dataChannel
          \/ reciverChannel
 
 Spec == /\ Init /\ [][Next]_vars
-        /\ SF_vars(dataChannel /\ Len(receiveReqQueue') = 2  /\ receiveDataQueue'[1] = requestNum)
+        /\ SF_vars(dataChannel /\ Len(receiveDataQueue') = 2  /\ receiveDataQueue'[1] = requestNum)
         (* The following lines inforce the fairness properties of the modules.
            This means that for each of these modules the defined proccess within 
            that have been flaged as either strong or weak fairness will eventually 
@@ -83,5 +83,5 @@ Properties == /\ CorrectResult
                   
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 16:28:30 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 16:41:58 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi

@@ -49,5 +49,5 @@
     <stringAttribute key="specName" value="Ass3SinclaShau"/>
     <stringAttribute key="tlcResourcesProfile" value="local custom"/>
     <stringAttribute key="view" value=""/>
-    <booleanAttribute key="visualizeStateGraph" value="true"/>
+    <booleanAttribute key="visualizeStateGraph" value="false"/>
 </launchConfiguration>

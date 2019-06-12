@@ -2,20 +2,20 @@
 EXTENDS Ass3SinclaShau, TLC
 
 \* CONSTANT definitions @modelParameterConstants:0MESSAGE_TYPES
-const_1560228233004123000 == 
-{"a","b","c"}
+const_156031452171542000 == 
+{"a","b","c","d","e","f","g"}
 ----
 
 \* CONSTANT definitions @modelParameterConstants:2WINDOW_SIZE
-const_1560228233004124000 == 
+const_156031452171543000 == 
 3
 ----
 
 \* CONSTANT definitions @modelParameterConstants:3MESSAGES
-const_1560228233004125000 == 
+const_156031452171544000 == 
 <<"a","b","c","d","e">>
 ----
 
 =============================================================================
 \* Modification History
-\* Created Tue Jun 11 16:43:53 NZST 2019 by sdmsi
+\* Created Wed Jun 12 16:42:01 NZST 2019 by sdmsi
