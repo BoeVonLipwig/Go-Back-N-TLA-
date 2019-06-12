@@ -7,7 +7,7 @@ sequenceNum = 1, windowStart = 1, windowEnd = WINDOW_SIZE+1, reqNum = -1;
 
 define
     MIN(x,y)  == IF (x < y) THEN x ELSE y 
-end define;
+end define; 
 
 fair process Send = "send"
 begin
@@ -210,5 +210,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:17:57 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:27:26 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

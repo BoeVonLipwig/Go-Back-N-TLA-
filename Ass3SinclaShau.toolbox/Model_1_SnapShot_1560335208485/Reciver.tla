@@ -13,20 +13,15 @@ A:
         if reciveData[1] # CORRUPT_DATA then
             if reciveData[1] = -1 then
                 skip;
-            end if; 
-           
+            end if;
             if (reciveData[1] = requestNum) then
                 output := output \o <<reciveData[2]>>;
                 requestNum := requestNum + 1;
             end if;
-           
-            reciveData := <<>>;
-            sendReq := <<requestNum>>;
-        
+        reciveData := <<>>;
+        sendReq := <<requestNum>>;
         end if;
-        
     end while;
-    
 end process;
 
 fair process WaitSYN = "waitsyn"
@@ -55,8 +50,9 @@ A:
         if reciveData # CORRUPT_DATA then
             if Len(reciveData) = 4 /\ reciveData[1] = 0 /\ reciveData[2] = 1 /\ reciveData[3] = synNum /\ reciveData[4] = requestNum + 1 then
                 state := "open";
+            else 
+                reciveData := <<>>;
             end if;
-            reciveData := <<>>;
         else 
             reciveData := <<>>;
         end if;
@@ -73,7 +69,7 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Recive at line 10 col 5 changed to A_
-\* Label A of process WaitSYN at line 35 col 5 changed to A_W
+\* Label A of process WaitSYN at line 30 col 5 changed to A_W
 VARIABLES sendReq, reciveData, requestNum, output, state, synNum
 
 vars == << sendReq, reciveData, requestNum, output, state, synNum >>
@@ -120,9 +116,9 @@ SendSYNACK == /\ state = "SYN-RECIVED" /\ reciveData # <<>>
               /\ IF reciveData # CORRUPT_DATA
                     THEN /\ IF Len(reciveData) = 4 /\ reciveData[1] = 0 /\ reciveData[2] = 1 /\ reciveData[3] = synNum /\ reciveData[4] = requestNum + 1
                                THEN /\ state' = "open"
-                               ELSE /\ TRUE
+                                    /\ UNCHANGED reciveData
+                               ELSE /\ reciveData' = <<>>
                                     /\ state' = state
-                         /\ reciveData' = <<>>
                     ELSE /\ reciveData' = <<>>
                          /\ state' = state
               /\ IF state' = "SYN-RECIVED"
@@ -161,5 +157,5 @@ Fairness == /\ WF_vars(Recive)
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:29:45 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:26:34 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi
