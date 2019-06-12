@@ -225,9 +225,9 @@ Fairness == /\ WF_vars(Receive)
             
             
             
-Properties == \A x \in {"closed", "FIN_RECEIVED","SYN-RECEIVED", "WAIT-FOR-DATA", "open", "ready"}: <>( state = x )
+Properties == \A x \in {"closed", "closing","SYN-RECEIVED", "WAIT-FOR-DATA", "open", "ready"}: <>( state = x )
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:33:28 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:28:38 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

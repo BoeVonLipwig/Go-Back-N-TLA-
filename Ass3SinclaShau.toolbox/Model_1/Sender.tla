@@ -47,7 +47,7 @@ A:
             if receiveReq # CORRUPT_DATA then 
                 if receiveReq[1] = 1 /\ receiveReq[2] = 1 /\ receiveReq[3] = sequenceNum + 1 then 
                     reqNum := receiveReq[4] + 1;
-                    state := "SYN_ACK_receive D";
+                    state := "SYN_ACK_received";
                 end if;
             end if;
             receiveReq := <<>>;
@@ -66,7 +66,7 @@ fair process ACK = "ack"
 begin 
 A: 
     while TRUE do 
-        await state = "SYN_ACK_receive D";
+        await state = "SYN_ACK_received";
         \*wait for real data
         if receiveReq # <<>> then 
             if receiveReq # CORRUPT_DATA then 
@@ -183,7 +183,7 @@ SYN == /\ state = "opening" /\ sendData = <<>>
              THEN /\ IF receiveReq # CORRUPT_DATA
                         THEN /\ IF receiveReq[1] = 1 /\ receiveReq[2] = 1 /\ receiveReq[3] = sequenceNum + 1
                                    THEN /\ reqNum' = receiveReq[4] + 1
-                                        /\ state' = "SYN_ACK_receive D"
+                                        /\ state' = "SYN_ACK_received"
                                    ELSE /\ TRUE
                                         /\ UNCHANGED << state, reqNum >>
                         ELSE /\ TRUE
@@ -197,7 +197,7 @@ SYN == /\ state = "opening" /\ sendData = <<>>
                   /\ UNCHANGED sendData
        /\ UNCHANGED << sequenceNum, windowStart, windowEnd >>
 
-ACK == /\ state = "SYN_ACK_receive D"
+ACK == /\ state = "SYN_ACK_received"
        /\ IF receiveReq # <<>>
              THEN /\ IF receiveReq # CORRUPT_DATA
                         THEN /\ IF Len(receiveReq) = 1 /\ receiveReq[1] = reqNum -1
@@ -277,7 +277,7 @@ Invariants == \*/\ TypeOK
               /\ WinEndOK
               /\ SeqNumOK
 
-Properties == \A x \in {"opening", "SYN_ACK_receive D", "open","closing", "closed", "FIN-ACK" }: <>( state = x )
+Properties == \A x \in {"FIN-ACK", "SYN_ACK_receive", "open","opening", "closed", "closing" }: <>( state = x )
               
 
 
@@ -289,5 +289,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:28:46 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:32:27 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
