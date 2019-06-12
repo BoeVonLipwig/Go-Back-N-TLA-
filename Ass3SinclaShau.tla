@@ -15,7 +15,9 @@ VARIABLES sendDataQueue, \* send data  to dataWire
           windowStart, \*
           windowEnd, \* 
           mess,                 \* message input to  sender process
-          messOut
+          messOut,
+          senderState,
+          reciverState
            
           
           
@@ -24,8 +26,8 @@ vars == <<sendDataQueue, receiveDataQueue, receiveReqQueue, sendReqQueue, reques
  
 dataWir == INSTANCE DataWire WITH inputW <- sendDataQueue, outputW <- receiveDataQueue
 reqWir == INSTANCE DataWire WITH inputW <- sendReqQueue, outputW <- receiveReqQueue
-sender == INSTANCE Sender WITH sendData <- sendDataQueue, reciveReq <- receiveReqQueue, toSend <- mess
-reciver == INSTANCE Reciver WITH sendReq <- sendReqQueue, reciveData <- receiveDataQueue, output <- messOut
+sender == INSTANCE Sender WITH sendData <- sendDataQueue, reciveReq <- receiveReqQueue, toSend <- mess, state <- senderState
+reciver == INSTANCE Reciver WITH sendReq <- sendReqQueue, reciveData <- receiveDataQueue, output <- messOut, state <- reciverState
 
 
 \* The following varibles run the init code in their respective modules
@@ -83,5 +85,5 @@ Properties == /\ CorrectResult
                   
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 16:41:58 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 18:53:31 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi
