@@ -16,7 +16,7 @@ A:
     while TRUE do
         await state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>);
         if reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA then 
-            if reciveReq[1] = Len(MESSAGES) then 
+            if reciveReq[1] = Len(MESSAGES)+1 then 
                 state := "closing";
             \* check for error here later
             elsif reciveReq[1] > windowStart then
@@ -155,7 +155,7 @@ Init == (* Global variables *)
 
 Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
-              THEN /\ IF reciveReq[1] = Len(MESSAGES)
+              THEN /\ IF reciveReq[1] = Len(MESSAGES)+1
                          THEN /\ state' = "closing"
                               /\ UNCHANGED << windowStart, windowEnd >>
                          ELSE /\ IF reciveReq[1] > windowStart
@@ -284,5 +284,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:03:10 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:05:37 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
