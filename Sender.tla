@@ -16,7 +16,9 @@ end define;
 fair process Send = "send"
 begin
 A:
-(*When the wire is empty and there is data to send, send the data*)
+(* When the wire is empty and there is data to send, send the data.
+   I purposely dont reset the sequence number to the request number 
+   when it is recived as in a real network that would be less efficent*)
     while TRUE do 
         \* this line makes sure that the following code is only exicuted when the connection is active
         await state = "Open" /\ (sendData = <<>> \/ receiveReq # <<>>);
@@ -34,6 +36,7 @@ A:
         receiveReq := <<>>; 
         \*This section sends the data and updates the sequence number as nessacary
         if sendData = <<>> /\ MESSAGES # <<>> /\ sequenceNum < Len(MESSAGES) + 1 /\ state # "closing" then
+        \* sends the next bit of data in the window
             sendData := <<sequenceNum, MESSAGES[sequenceNum]>>;
             if sequenceNum < windowEnd /\ sequenceNum > windowStart - 1 then
                 sequenceNum := sequenceNum + 1;
@@ -288,5 +291,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:53:26 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 03:01:25 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
