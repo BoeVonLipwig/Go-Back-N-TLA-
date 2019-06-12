@@ -16,7 +16,7 @@ A:
     while TRUE do
         await state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>);
         if reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA then 
-            if reciveReq[1] = -1 then 
+            if reciveReq[1] = "closing" then 
                 skip;
             end if;
             if reciveReq[1] > windowStart then
@@ -67,10 +67,9 @@ begin
 A: 
     while TRUE do 
         await state = "SYN_ACK_RECIVED";
-        \*wait for real data
         if reciveReq # <<>> then 
             if reciveReq # CORRUPT_DATA then 
-                if Len(reciveReq) = 1 /\ reciveReq[1] = reqNum -1 then 
+                if reciveReq[1] = 0 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1 /\ reciveReq[4] = reqNum then 
                     state := "open"
                 else 
                     reciveReq := <<>>;
@@ -79,7 +78,6 @@ A:
                 reciveReq := <<>>;
             end if;
        end if;
-       \* spam ACK
        if state = "SYN_ACK_RECIVED" then 
            sendData := <<0, 1, sequenceNum + 1, reqNum>>;
        end if;
@@ -116,7 +114,7 @@ Init == (* Global variables *)
 
 Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
-              THEN /\ IF reciveReq[1] = -1
+              THEN /\ IF reciveReq[1] = "closing"
                          THEN /\ TRUE
                          ELSE /\ TRUE
                    /\ IF reciveReq[1] > windowStart
@@ -158,7 +156,7 @@ SYN == /\ state = "opening" /\ sendData = <<>>
 ACK == /\ state = "SYN_ACK_RECIVED"
        /\ IF reciveReq # <<>>
              THEN /\ IF reciveReq # CORRUPT_DATA
-                        THEN /\ IF Len(reciveReq) = 1 /\ reciveReq[1] = reqNum -1
+                        THEN /\ IF reciveReq[1] = 0 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1 /\ reciveReq[4] = reqNum
                                    THEN /\ state' = "open"
                                         /\ UNCHANGED reciveReq
                                    ELSE /\ reciveReq' = <<>>
@@ -210,5 +208,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:17:57 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:08:44 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

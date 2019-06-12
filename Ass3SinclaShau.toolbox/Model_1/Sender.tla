@@ -16,7 +16,7 @@ A:
     while TRUE do
         await state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>);
         if reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA then 
-            if reciveReq[1] = "closing" then 
+            if reciveReq[1] = -1 then 
                 skip;
             end if;
             if reciveReq[1] > windowStart then
@@ -66,17 +66,20 @@ fair process ACK = "ack"
 begin 
 A: 
     while TRUE do 
-        await state = "SYN_ACK_RECIVED" /\ reciveReq # <<>>;
-        if reciveReq # CORRUPT_DATA then 
-            if reciveReq[1] = 1 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1 then 
-                state := "open"
+        await state = "SYN_ACK_RECIVED";
+        \*wait for real data
+        if reciveReq # <<>> then 
+            if reciveReq # CORRUPT_DATA then 
+                if Len(reciveReq) = 1 /\ reciveReq[1] = reqNum -1 then 
+                    state := "open"
+                else 
+                    reciveReq := <<>>;
+                end if;
             else 
                 reciveReq := <<>>;
             end if;
-        else 
-            reciveReq := <<>>;
        end if;
-       
+       \* spam ACK
        if state = "SYN_ACK_RECIVED" then 
            sendData := <<0, 1, sequenceNum + 1, reqNum>>;
        end if;
@@ -113,7 +116,7 @@ Init == (* Global variables *)
 
 Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
-              THEN /\ IF reciveReq[1] = "closing"
+              THEN /\ IF reciveReq[1] = -1
                          THEN /\ TRUE
                          ELSE /\ TRUE
                    /\ IF reciveReq[1] > windowStart
@@ -152,15 +155,18 @@ SYN == /\ state = "opening" /\ sendData = <<>>
                   /\ UNCHANGED sendData
        /\ UNCHANGED << toSend, sequenceNum, windowStart, windowEnd >>
 
-ACK == /\ state = "SYN_ACK_RECIVED" /\ reciveReq # <<>>
-       /\ IF reciveReq # CORRUPT_DATA
-             THEN /\ IF reciveReq[1] = 1 /\ reciveReq[2] = 1 /\ reciveReq[3] = sequenceNum + 1
-                        THEN /\ state' = "open"
-                             /\ UNCHANGED reciveReq
+ACK == /\ state = "SYN_ACK_RECIVED"
+       /\ IF reciveReq # <<>>
+             THEN /\ IF reciveReq # CORRUPT_DATA
+                        THEN /\ IF Len(reciveReq) = 1 /\ reciveReq[1] = reqNum -1
+                                   THEN /\ state' = "open"
+                                        /\ UNCHANGED reciveReq
+                                   ELSE /\ reciveReq' = <<>>
+                                        /\ state' = state
                         ELSE /\ reciveReq' = <<>>
                              /\ state' = state
-             ELSE /\ reciveReq' = <<>>
-                  /\ state' = state
+             ELSE /\ TRUE
+                  /\ UNCHANGED << reciveReq, state >>
        /\ IF state' = "SYN_ACK_RECIVED"
              THEN /\ sendData' = <<0, 1, sequenceNum + 1, reqNum>>
              ELSE /\ TRUE
@@ -204,5 +210,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:02:35 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:17:57 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

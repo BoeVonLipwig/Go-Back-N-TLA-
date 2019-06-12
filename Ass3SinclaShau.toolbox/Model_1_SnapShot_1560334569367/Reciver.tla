@@ -9,8 +9,7 @@ begin
 A:
     while TRUE do
         await reciveData # <<>> /\ state = "open";
-        \* sender will send -1 if it wants to close the connection
-        if reciveData[1] = -1 then
+        if reciveData[1] = "closing" then
             skip;
         end if;
         if reciveData[1] # CORRUPT_DATA then
@@ -66,7 +65,7 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Recive at line 10 col 5 changed to A_
-\* Label A of process WaitSYN at line 30 col 5 changed to A_W
+\* Label A of process WaitSYN at line 29 col 5 changed to A_W
 VARIABLES sendReq, reciveData, requestNum, output, state, synNum
 
 vars == << sendReq, reciveData, requestNum, output, state, synNum >>
@@ -82,7 +81,7 @@ Init == (* Global variables *)
         /\ synNum = -1
 
 Recive == /\ reciveData # <<>> /\ state = "open"
-          /\ IF reciveData[1] = -1
+          /\ IF reciveData[1] = "closing"
                 THEN /\ TRUE
                 ELSE /\ TRUE
           /\ IF reciveData[1] # CORRUPT_DATA
@@ -154,5 +153,5 @@ Fairness == /\ WF_vars(Recive)
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:17:02 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:15:59 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

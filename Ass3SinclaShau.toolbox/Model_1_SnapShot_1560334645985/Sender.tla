@@ -116,7 +116,7 @@ Init == (* Global variables *)
 
 Send == /\ state = "open" /\ (sendData = <<>> \/ reciveReq # <<>>)
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
-              THEN /\ IF reciveReq[1] = -1
+              THEN /\ IF reciveReq[1] = "closing"
                          THEN /\ TRUE
                          ELSE /\ TRUE
                    /\ IF reciveReq[1] > windowStart
@@ -210,5 +210,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 22:17:57 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 22:17:12 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
