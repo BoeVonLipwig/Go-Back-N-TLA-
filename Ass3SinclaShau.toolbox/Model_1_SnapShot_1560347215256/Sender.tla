@@ -119,7 +119,7 @@ A:
         
         (* since we cant prove this message has been received by the sender and we cant time this out 
            we will just send it forever as tla does not allow us to fully implement tcp*)
-        if state = "RECEIVED_FIN-ACK" then
+        if state = "FIN-ACK" then
             sendData := <<-3, "ACK">>;
         end if;
     end while;
@@ -241,7 +241,7 @@ FINACK == /\ state = "RECEIVED_FIN-ACK" /\ receiveReq # <<>>
                                 /\ state' = state
                 ELSE /\ TRUE
                      /\ state' = state
-          /\ IF state' = "RECEIVED_FIN-ACK"
+          /\ IF state' = "FIN-ACK"
                 THEN /\ sendData' = <<-3, "ACK">>
                 ELSE /\ TRUE
                      /\ UNCHANGED sendData
@@ -290,5 +290,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:47:33 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:46:42 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

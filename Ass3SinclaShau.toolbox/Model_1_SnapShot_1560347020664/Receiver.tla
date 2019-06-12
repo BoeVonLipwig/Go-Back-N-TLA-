@@ -92,7 +92,7 @@ A:
                 state := "closed";
             end if;
         end if;
-        receiveData := <<>>;
+        
         
         if state = "FIN_RECEIVED" then 
             sendReq := <<-2, "FIN-ACK">>;
@@ -189,12 +189,11 @@ SendFINACK == /\ receiveData # <<>> /\ state = "FIN_RECEIVED"
                                     /\ state' = state
                     ELSE /\ TRUE
                          /\ state' = state
-              /\ receiveData' = <<>>
               /\ IF state' = "FIN_RECEIVED"
                     THEN /\ sendReq' = <<-2, "FIN-ACK">>
                     ELSE /\ TRUE
                          /\ UNCHANGED sendReq
-              /\ UNCHANGED << requestNum, output, synNum >>
+              /\ UNCHANGED << receiveData, requestNum, output, synNum >>
 
 Next == Receive \/ WaitSYN \/ SendSYNACK \/ WaitData \/ SendFINACK
 
@@ -231,5 +230,5 @@ Properties == \A x \in {"closed", "FIN_RECEIVED","SYN-RECEIVED", "WAIT-FOR-DATA"
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:44:05 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:43:26 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

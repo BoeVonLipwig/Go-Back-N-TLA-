@@ -17,7 +17,7 @@ A:
         await state = "open" /\ (sendData = <<>> \/ receiveReq # <<>>);
         if receiveReq # <<>> /\ receiveReq[1] # CORRUPT_DATA then 
             if receiveReq[1] = Len(MESSAGES) + 1 then 
-                state := "SENDING_FIN";
+                state := "closing";
             \* check for error here later
             elsif receiveReq[1] > windowStart then
                 windowEnd := MIN(WINDOW_SIZE + receiveReq[1], Len(MESSAGES));
@@ -90,7 +90,7 @@ fair process FIN = "fin"
 begin 
 A: 
     while TRUE do 
-        await state = "SENDING_FIN";
+        await state = "closing";
         if receiveReq # <<>> then
             if receiveReq # CORRUPT_DATA then
                 if receiveReq[1] = -2 /\ receiveReq[2] = "FIN-ACK" then 
@@ -99,7 +99,7 @@ A:
             end if;
         end if;
         receiveReq := <<>>;
-        if state = "SENDING_FIN" then
+        if state = "closing" then
             sendData := <<-1, "FIN">>;
         end if;
     end while;
@@ -119,7 +119,7 @@ A:
         
         (* since we cant prove this message has been received by the sender and we cant time this out 
            we will just send it forever as tla does not allow us to fully implement tcp*)
-        if state = "RECEIVED_FIN-ACK" then
+        if state = "FIN-ACK" then
             sendData := <<-3, "ACK">>;
         end if;
     end while;
@@ -157,7 +157,7 @@ Init == (* Global variables *)
 Send == /\ state = "open" /\ (sendData = <<>> \/ receiveReq # <<>>)
         /\ IF receiveReq # <<>> /\ receiveReq[1] # CORRUPT_DATA
               THEN /\ IF receiveReq[1] = Len(MESSAGES) + 1
-                         THEN /\ state' = "SENDING_FIN"
+                         THEN /\ state' = "closing"
                               /\ UNCHANGED << windowStart, windowEnd >>
                          ELSE /\ IF receiveReq[1] > windowStart
                                     THEN /\ windowEnd' = MIN(WINDOW_SIZE + receiveReq[1], Len(MESSAGES))
@@ -215,7 +215,7 @@ ACK == /\ state = "SYN_ACK_RECEIVED"
                   /\ UNCHANGED sendData
        /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
-FIN == /\ state = "SENDING_FIN"
+FIN == /\ state = "closing"
        /\ IF receiveReq # <<>>
              THEN /\ IF receiveReq # CORRUPT_DATA
                         THEN /\ IF receiveReq[1] = -2 /\ receiveReq[2] = "FIN-ACK"
@@ -227,7 +227,7 @@ FIN == /\ state = "SENDING_FIN"
              ELSE /\ TRUE
                   /\ state' = state
        /\ receiveReq' = <<>>
-       /\ IF state' = "SENDING_FIN"
+       /\ IF state' = "closing"
              THEN /\ sendData' = <<-1, "FIN">>
              ELSE /\ TRUE
                   /\ UNCHANGED sendData
@@ -241,7 +241,7 @@ FINACK == /\ state = "RECEIVED_FIN-ACK" /\ receiveReq # <<>>
                                 /\ state' = state
                 ELSE /\ TRUE
                      /\ state' = state
-          /\ IF state' = "RECEIVED_FIN-ACK"
+          /\ IF state' = "FIN-ACK"
                 THEN /\ sendData' = <<-3, "ACK">>
                 ELSE /\ TRUE
                      /\ UNCHANGED sendData
@@ -278,7 +278,7 @@ Invariants == \*/\ TypeOK
               /\ WinEndOK
               /\ SeqNumOK
 
-Properties == \A x \in {"RECEIVED_FIN-ACK", "SYN_ACK_RECEIVED", "open", "opening", "closed", "SENDING_FIN" }: <>( state = x )
+Properties == \A x \in {"RECEIVED_FIN-ACK", "SYN_ACK_RECEIVED", "open", "opening", "closed", "closing" }: <>( state = x )
               
 
 
@@ -290,5 +290,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:47:33 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:45:27 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
