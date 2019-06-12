@@ -2,7 +2,7 @@
 TLC2 Version 2.13 of 18 July 2018
 @!@!@ENDMSG 2262 @!@!@
 @!@!@STARTMSG 2187:0 @!@!@
-Running breadth-first search Model-Checking with fp 47 and seed 7780141863216202856 with 2 workers on 4 cores with 1205MB heap and 2710MB offheap memory [pid: 5676] (Windows 10 10.0 amd64, Oracle Corporation 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
+Running breadth-first search Model-Checking with fp 94 and seed -632923085684563768 with 2 workers on 4 cores with 1205MB heap and 2710MB offheap memory [pid: 24092] (Windows 10 10.0 amd64, Oracle Corporation 11.0.3 x86_64, OffHeapDiskFPSet, DiskStateQueue).
 @!@!@ENDMSG 2187 @!@!@
 @!@!@STARTMSG 2220:0 @!@!@
 Starting SANY...
@@ -17,7 +17,7 @@ Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualis
 Parsing file D:\Current work\489\tlaplus-master\tlaplus-master2\git\tla-visualisation\tlatools\class\tla2sany\StandardModules\FiniteSets.tla
 Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\DataWire.tla
 Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\Sender.tla
-Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\Reciver.tla
+Parsing file E:\421\Assignment 3\Ass3SinclaShau.toolbox\Model_1\Receiver.tla
 Semantic processing of module Naturals
 Semantic processing of module Integers
 Semantic processing of module Sequences
@@ -26,14 +26,14 @@ Semantic processing of module TLC
 Semantic processing of module Bags
 Semantic processing of module DataWire
 Semantic processing of module Sender
-Semantic processing of module Reciver
+Semantic processing of module Receiver
 Semantic processing of module Ass3SinclaShau
 Semantic processing of module MC
 @!@!@STARTMSG 2219:0 @!@!@
 SANY finished.
 @!@!@ENDMSG 2219 @!@!@
 @!@!@STARTMSG 2185:0 @!@!@
-Starting... (2019-06-13 00:05:41)
+Starting... (2019-06-13 00:23:31)
 @!@!@ENDMSG 2185 @!@!@
 @!@!@STARTMSG 2212:0 @!@!@
 Implied-temporal checking--satisfiability problem has 13 branches.
@@ -42,20 +42,19 @@ Implied-temporal checking--satisfiability problem has 13 branches.
 Computing initial states...
 @!@!@ENDMSG 2189 @!@!@
 @!@!@STARTMSG 2190:0 @!@!@
-Finished computing initial states: 1 distinct state generated at 2019-06-13 00:05:42.
+Finished computing initial states: 1 distinct state generated at 2019-06-13 00:23:33.
 @!@!@ENDMSG 2190 @!@!@
-@!@!@STARTMSG 1000:1 @!@!@
-TLC threw an unexpected exception.
-This was probably caused by an error in the spec or model.
-See the User Output or TLC Console for clues to what happened.
-The exception was a java.lang.RuntimeException
-: Attempted to apply tuple
-<<>>
-to integer 1 which is out of domain.
-@!@!@ENDMSG 1000 @!@!@
-@!@!@STARTMSG 2121:1 @!@!@
-The behavior up to this point is:
-@!@!@ENDMSG 2121 @!@!@
+@!@!@STARTMSG 2192:0 @!@!@
+Checking 13 branches of temporal properties for the current state space with 27700 total distinct states at (2019-06-13 00:23:36)
+@!@!@ENDMSG 2192 @!@!@
+@!@!@STARTMSG 2116:1 @!@!@
+Temporal properties were violated.
+
+@!@!@ENDMSG 2116 @!@!@
+@!@!@STARTMSG 2264:1 @!@!@
+The following behavior constitutes a counter-example:
+
+@!@!@ENDMSG 2264 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
 1: <Initial predicate>
 /\ senderState = "opening"
@@ -67,14 +66,14 @@ The behavior up to this point is:
 /\ synNum = -1
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "ready"
+/\ recieverState = "ready"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-2: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
+2: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
 /\ senderState = "opening"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
@@ -84,14 +83,14 @@ The behavior up to this point is:
 /\ synNum = -1
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "ready"
+/\ recieverState = "ready"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<1, 0, 1>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-3: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
+3: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
 /\ senderState = "opening"
 /\ receiveDataQueue = <<1, 0, 1>>
 /\ messOut = <<>>
@@ -101,14 +100,14 @@ The behavior up to this point is:
 /\ synNum = -1
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "ready"
+/\ recieverState = "ready"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-4: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
+4: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
 /\ senderState = "opening"
 /\ receiveDataQueue = <<1, 0, 1>>
 /\ messOut = <<>>
@@ -118,14 +117,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "SYN-RECIVED"
+/\ recieverState = "SYN-RECIVED"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-5: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
+5: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
 /\ senderState = "opening"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
@@ -135,14 +134,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "SYN-RECIVED"
+/\ recieverState = "SYN-RECIVED"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-6: <reqChannel line 45, col 16 to line 46, col 165 of module Ass3SinclaShau>
+6: <reqChannel line 45, col 16 to line 46, col 166 of module Ass3SinclaShau>
 /\ senderState = "opening"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
@@ -152,15 +151,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<1, 1, 2, 1>>
 /\ windowStart = 1
-/\ reciverState = "SYN-RECIVED"
+/\ recieverState = "SYN-RECIVED"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-7: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+7: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<>>
@@ -169,15 +168,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "SYN-RECIVED"
+/\ recieverState = "SYN-RECIVED"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-8: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+8: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<>>
@@ -186,15 +185,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "SYN-RECIVED"
+/\ recieverState = "SYN-RECIVED"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<0, 1, 2, 2>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-9: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+9: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<0, 1, 2, 2>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<>>
@@ -203,15 +202,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "SYN-RECIVED"
+/\ recieverState = "SYN-RECIVED"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-10: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+10: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<0, 1, 2, 2>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<>>
@@ -220,15 +219,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "SYN-RECIVED"
+/\ recieverState = "SYN-RECIVED"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<0, 1, 2, 2>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-11: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+11: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<>>
@@ -237,15 +236,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<0, 1, 2, 2>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-12: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+12: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<0, 1, 2, 2>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<>>
@@ -254,15 +253,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-13: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+13: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<1>>
@@ -271,15 +270,15 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-14: <reqChannel line 45, col 16 to line 46, col 165 of module Ass3SinclaShau>
-/\ senderState = "SYN_ACK_RECIVED"
+14: <reqChannel line 45, col 16 to line 46, col 166 of module Ass3SinclaShau>
+/\ senderState = "SYN_ACK_receive D"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
 /\ sendReqQueue = <<>>
@@ -288,14 +287,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<1>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-15: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
+15: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
@@ -305,14 +304,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<1>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 1
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-16: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
+16: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<>>
@@ -322,14 +321,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 2
 /\ windowEnd = 4
 /\ sendDataQueue = <<1, "a">>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-17: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
+17: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<1, "a">>
 /\ messOut = <<>>
@@ -339,14 +338,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 2
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-18: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
+18: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<1, "a">>
 /\ messOut = <<>>
@@ -356,14 +355,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "WAIT-FOR-DATA"
+/\ recieverState = "WAIT-FOR-DATA"
 /\ sequenceNum = 3
 /\ windowEnd = 4
 /\ sendDataQueue = <<2, "b">>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-19: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
+19: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<1, "a">>
 /\ messOut = <<>>
@@ -373,14 +372,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "open"
+/\ recieverState = "open"
 /\ sequenceNum = 3
 /\ windowEnd = 4
 /\ sendDataQueue = <<2, "b">>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-20: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
+20: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<"a">>
@@ -390,14 +389,14 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "open"
+/\ recieverState = "open"
 /\ sequenceNum = 3
 /\ windowEnd = 4
 /\ sendDataQueue = <<2, "b">>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-21: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
+21: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<2, "b">>
 /\ messOut = <<"a">>
@@ -407,150 +406,133 @@ The behavior up to this point is:
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "open"
+/\ recieverState = "open"
 /\ sequenceNum = 3
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-22: <reqChannel line 45, col 16 to line 46, col 165 of module Ass3SinclaShau>
+22: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
 /\ senderState = "open"
-/\ receiveDataQueue = <<2, "b">>
-/\ messOut = <<"a">>
-/\ sendReqQueue = <<>>
-/\ requestNum = 2
+/\ receiveDataQueue = <<>>
+/\ messOut = <<"a", "b">>
+/\ sendReqQueue = <<3>>
+/\ requestNum = 3
 /\ reqNum = 2
 /\ synNum = 2
-/\ receiveReqQueue = <<2>>
+/\ receiveReqQueue = <<>>
 /\ windowStart = 1
-/\ reciverState = "open"
+/\ recieverState = "open"
 /\ sequenceNum = 3
 /\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-23: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
+23: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
 /\ senderState = "open"
-/\ receiveDataQueue = <<2, "b">>
-/\ messOut = <<"a">>
+/\ receiveDataQueue = <<>>
+/\ messOut = <<"a", "b">>
+/\ sendReqQueue = <<3>>
+/\ requestNum = 3
+/\ reqNum = 2
+/\ synNum = 2
+/\ receiveReqQueue = <<>>
+/\ windowStart = 1
+/\ recieverState = "open"
+/\ sequenceNum = 4
+/\ windowEnd = 4
+/\ sendDataQueue = <<3, "c">>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+24: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
+/\ senderState = "open"
+/\ receiveDataQueue = <<3, "c">>
+/\ messOut = <<"a", "b">>
+/\ sendReqQueue = <<3>>
+/\ requestNum = 3
+/\ reqNum = 2
+/\ synNum = 2
+/\ receiveReqQueue = <<>>
+/\ windowStart = 1
+/\ recieverState = "open"
+/\ sequenceNum = 4
+/\ windowEnd = 4
+/\ sendDataQueue = <<>>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+25: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
+/\ senderState = "open"
+/\ receiveDataQueue = <<>>
+/\ messOut = <<"a", "b", "c">>
+/\ sendReqQueue = <<4>>
+/\ requestNum = 4
+/\ reqNum = 2
+/\ synNum = 2
+/\ receiveReqQueue = <<>>
+/\ windowStart = 1
+/\ recieverState = "open"
+/\ sequenceNum = 4
+/\ windowEnd = 4
+/\ sendDataQueue = <<>>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+26: <reqChannel line 45, col 16 to line 46, col 166 of module Ass3SinclaShau>
+/\ senderState = "open"
+/\ receiveDataQueue = <<>>
+/\ messOut = <<"a", "b", "c">>
 /\ sendReqQueue = <<>>
-/\ requestNum = 2
+/\ requestNum = 4
 /\ reqNum = 2
 /\ synNum = 2
-/\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
+/\ receiveReqQueue = <<4>>
+/\ windowStart = 1
+/\ recieverState = "open"
 /\ sequenceNum = 4
-/\ windowEnd = 5
-/\ sendDataQueue = <<3, "c">>
-
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-24: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
-/\ senderState = "open"
-/\ receiveDataQueue = <<>>
-/\ messOut = <<"a", "b">>
-/\ sendReqQueue = <<3>>
-/\ requestNum = 3
-/\ reqNum = 2
-/\ synNum = 2
-/\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 4
-/\ windowEnd = 5
-/\ sendDataQueue = <<3, "c">>
-
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-25: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
-/\ senderState = "open"
-/\ receiveDataQueue = <<3, "c">>
-/\ messOut = <<"a", "b">>
-/\ sendReqQueue = <<3>>
-/\ requestNum = 3
-/\ reqNum = 2
-/\ synNum = 2
-/\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 4
-/\ windowEnd = 5
+/\ windowEnd = 4
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-26: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
+27: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
 /\ senderState = "open"
-/\ receiveDataQueue = <<3, "c">>
-/\ messOut = <<"a", "b">>
-/\ sendReqQueue = <<3>>
-/\ requestNum = 3
+/\ receiveDataQueue = <<>>
+/\ messOut = <<"a", "b", "c">>
+/\ sendReqQueue = <<>>
+/\ requestNum = 4
 /\ reqNum = 2
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
+/\ windowStart = 4
+/\ recieverState = "open"
 /\ sequenceNum = 5
 /\ windowEnd = 5
 /\ sendDataQueue = <<4, "d">>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-27: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
-/\ senderState = "open"
-/\ receiveDataQueue = <<>>
-/\ messOut = <<"a", "b", "c">>
-/\ sendReqQueue = <<4>>
-/\ requestNum = 4
-/\ reqNum = 2
-/\ synNum = 2
-/\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 5
-/\ windowEnd = 5
-/\ sendDataQueue = <<4, "d">>
-
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-28: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
+28: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<4, "d">>
 /\ messOut = <<"a", "b", "c">>
-/\ sendReqQueue = <<4>>
+/\ sendReqQueue = <<>>
 /\ requestNum = 4
 /\ reqNum = 2
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
+/\ windowStart = 4
+/\ recieverState = "open"
 /\ sequenceNum = 5
 /\ windowEnd = 5
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-29: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
-/\ senderState = "open"
-/\ receiveDataQueue = <<4, "d">>
-/\ messOut = <<"a", "b", "c">>
-/\ sendReqQueue = <<4>>
-/\ requestNum = 4
-/\ reqNum = 2
-/\ synNum = 2
-/\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 2
-/\ windowEnd = 5
-/\ sendDataQueue = <<5, "e">>
-
-@!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2217:4 @!@!@
-30: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
+29: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<"a", "b", "c", "d">>
@@ -559,15 +541,32 @@ The behavior up to this point is:
 /\ reqNum = 2
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 2
+/\ windowStart = 4
+/\ recieverState = "open"
+/\ sequenceNum = 5
+/\ windowEnd = 5
+/\ sendDataQueue = <<>>
+
+@!@!@ENDMSG 2217 @!@!@
+@!@!@STARTMSG 2217:4 @!@!@
+30: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
+/\ senderState = "open"
+/\ receiveDataQueue = <<>>
+/\ messOut = <<"a", "b", "c", "d">>
+/\ sendReqQueue = <<5>>
+/\ requestNum = 5
+/\ reqNum = 2
+/\ synNum = 2
+/\ receiveReqQueue = <<>>
+/\ windowStart = 4
+/\ recieverState = "open"
+/\ sequenceNum = 4
 /\ windowEnd = 5
 /\ sendDataQueue = <<5, "e">>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-31: <dataChannel line 42, col 17 to line 43, col 164 of module Ass3SinclaShau>
+31: <dataChannel line 42, col 17 to line 43, col 165 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<5, "e">>
 /\ messOut = <<"a", "b", "c", "d">>
@@ -576,15 +575,15 @@ The behavior up to this point is:
 /\ reqNum = 2
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 2
+/\ windowStart = 4
+/\ recieverState = "open"
+/\ sequenceNum = 4
 /\ windowEnd = 5
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-32: <reciverChannel line 51, col 19 to line 52, col 124 of module Ass3SinclaShau>
+32: <receiverChannel line 51, col 20 to line 52, col 124 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<"a", "b", "c", "d", "e">>
@@ -593,15 +592,15 @@ The behavior up to this point is:
 /\ reqNum = 2
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 2
+/\ windowStart = 4
+/\ recieverState = "open"
+/\ sequenceNum = 4
 /\ windowEnd = 5
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-33: <reqChannel line 45, col 16 to line 46, col 165 of module Ass3SinclaShau>
+33: <reqChannel line 45, col 16 to line 46, col 166 of module Ass3SinclaShau>
 /\ senderState = "open"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<"a", "b", "c", "d", "e">>
@@ -610,15 +609,15 @@ The behavior up to this point is:
 /\ reqNum = 2
 /\ synNum = 2
 /\ receiveReqQueue = <<6>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 2
+/\ windowStart = 4
+/\ recieverState = "open"
+/\ sequenceNum = 4
 /\ windowEnd = 5
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
 @!@!@STARTMSG 2217:4 @!@!@
-34: <senderChannel line 48, col 20 to line 49, col 110 of module Ass3SinclaShau>
+34: <senderChannel line 48, col 20 to line 49, col 111 of module Ass3SinclaShau>
 /\ senderState = "closing"
 /\ receiveDataQueue = <<>>
 /\ messOut = <<"a", "b", "c", "d", "e">>
@@ -627,367 +626,354 @@ The behavior up to this point is:
 /\ reqNum = 2
 /\ synNum = 2
 /\ receiveReqQueue = <<>>
-/\ windowStart = 2
-/\ reciverState = "open"
-/\ sequenceNum = 2
+/\ windowStart = 4
+/\ recieverState = "open"
+/\ sequenceNum = 4
 /\ windowEnd = 5
 /\ sendDataQueue = <<>>
 
 @!@!@ENDMSG 2217 @!@!@
-@!@!@STARTMSG 2103:1 @!@!@
-The error occurred when TLC was evaluating the nested
-expressions at the following positions:
-0. Line 48, column 20 to line 49, column 110 in Ass3SinclaShau
-1. Line 48, column 24 to line 48, column 34 in Ass3SinclaShau
-2. Line 30, column 1 to line 30, column 108 in Ass3SinclaShau
-3. Line 247, column 9 to line 247, column 43 in Sender
-4. Line 247, column 9 to line 247, column 33 in Sender
-5. Line 247, column 31 to line 247, column 33 in Sender
-6. Line 217, column 8 to line 230, column 69 in Sender
-7. Line 217, column 11 to line 217, column 27 in Sender
-8. Line 218, column 11 to line 224, column 35 in Sender
-9. Line 219, column 19 to line 222, column 46 in Sender
-10. Line 219, column 22 to line 222, column 46 in Sender
-11. Line 219, column 25 to line 219, column 44 in Sender
-12. Line 219, column 25 to line 219, column 36 in Sender
-
-
-@!@!@ENDMSG 2103 @!@!@
+@!@!@STARTMSG 2218:4 @!@!@
+35: Stuttering
+@!@!@ENDMSG 2218 @!@!@
+@!@!@STARTMSG 2267:0 @!@!@
+Finished checking temporal properties in 00s at 2019-06-13 00:23:36
+@!@!@ENDMSG 2267 @!@!@
 @!@!@STARTMSG 2201:0 @!@!@
-The coverage statistics at 2019-06-13 00:05:44
+The coverage statistics at 2019-06-13 00:23:36
 @!@!@ENDMSG 2201 @!@!@
 @!@!@STARTMSG 2773:0 @!@!@
 <Init line 35, col 1 to line 35, col 4 of module Ass3SinclaShau>: 2
 @!@!@ENDMSG 2773 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 35, col 10 to line 38, col 24 of module Ass3SinclaShau: 2
+  line 35, col 10 to line 38, col 25 of module Ass3SinclaShau: 2
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<dataChannel line 42, col 1 to line 42, col 11 of module Ass3SinclaShau>: 521:1131
+<dataChannel line 42, col 1 to line 42, col 11 of module Ass3SinclaShau>: 577:1368
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 28, col 1 to line 28, col 86 of module Ass3SinclaShau: 34294
+  line 28, col 1 to line 28, col 86 of module Ass3SinclaShau: 40726
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 28, col 45 to line 28, col 57 of module Ass3SinclaShau: 342808
+  line 28, col 45 to line 28, col 57 of module Ass3SinclaShau: 399243
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 28, col 71 to line 28, col 86 of module Ass3SinclaShau: 195620
+  line 28, col 71 to line 28, col 86 of module Ass3SinclaShau: 227586
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 60, col 16 to line 60, col 28 of module DataWire: 2170
+  line 60, col 16 to line 60, col 28 of module DataWire: 2572
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 16 to line 60, col 21 of module DataWire: 1793
+  |line 60, col 16 to line 60, col 21 of module DataWire: 2116
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 25 to line 60, col 28 of module DataWire: 1793
+  |line 60, col 25 to line 60, col 28 of module DataWire: 2116
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 60, col 33 to line 60, col 46 of module DataWire: 1199
+  line 60, col 33 to line 60, col 46 of module DataWire: 1419
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 33 to line 60, col 39 of module DataWire: 822
+  |line 60, col 33 to line 60, col 39 of module DataWire: 963
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 43 to line 60, col 46 of module DataWire: 822
+  |line 60, col 43 to line 60, col 46 of module DataWire: 963
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 61, col 16 to line 61, col 32 of module DataWire: 377
+  line 61, col 16 to line 61, col 32 of module DataWire: 456
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 62, col 16 to line 62, col 29 of module DataWire: 377
+  line 62, col 16 to line 62, col 29 of module DataWire: 456
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 64, col 15 to line 64, col 27 of module DataWire: 2170
+  line 64, col 15 to line 64, col 27 of module DataWire: 2572
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 15 to line 64, col 20 of module DataWire: 1793
+  |line 64, col 15 to line 64, col 20 of module DataWire: 2116
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 24 to line 64, col 27 of module DataWire: 1793
+  |line 64, col 24 to line 64, col 27 of module DataWire: 2116
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 64, col 32 to line 64, col 45 of module DataWire: 1199
+  line 64, col 32 to line 64, col 45 of module DataWire: 1419
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 32 to line 64, col 38 of module DataWire: 822
+  |line 64, col 32 to line 64, col 38 of module DataWire: 963
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 42 to line 64, col 45 of module DataWire: 822
+  |line 64, col 42 to line 64, col 45 of module DataWire: 963
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 65, col 15 to line 65, col 41 of module DataWire: 377
+  line 65, col 15 to line 65, col 41 of module DataWire: 456
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 66, col 15 to line 66, col 28 of module DataWire: 377
+  line 66, col 15 to line 66, col 28 of module DataWire: 456
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 12 to line 68, col 24 of module DataWire: 2170
+  line 68, col 12 to line 68, col 24 of module DataWire: 2572
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 12 to line 68, col 17 of module DataWire: 1793
+  |line 68, col 12 to line 68, col 17 of module DataWire: 2116
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 21 to line 68, col 24 of module DataWire: 1793
+  |line 68, col 21 to line 68, col 24 of module DataWire: 2116
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 29 to line 68, col 42 of module DataWire: 1199
+  line 68, col 29 to line 68, col 42 of module DataWire: 1419
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 29 to line 68, col 35 of module DataWire: 822
+  |line 68, col 29 to line 68, col 35 of module DataWire: 963
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 39 to line 68, col 42 of module DataWire: 822
+  |line 68, col 39 to line 68, col 42 of module DataWire: 963
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 69, col 12 to line 69, col 26 of module DataWire: 377
+  line 69, col 12 to line 69, col 26 of module DataWire: 456
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 70, col 12 to line 70, col 25 of module DataWire: 377
+  line 70, col 12 to line 70, col 25 of module DataWire: 456
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 43, col 21 to line 43, col 164 of module Ass3SinclaShau: 1131
+  line 43, col 21 to line 43, col 165 of module Ass3SinclaShau: 1368
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<reqChannel line 45, col 1 to line 45, col 10 of module Ass3SinclaShau>: 836:1152
+<reqChannel line 45, col 1 to line 45, col 10 of module Ass3SinclaShau>: 965:1386
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 29, col 1 to line 29, col 83 of module Ass3SinclaShau: 384
+  line 29, col 1 to line 29, col 83 of module Ass3SinclaShau: 462
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 29, col 44 to line 29, col 55 of module Ass3SinclaShau: 5739
+  line 29, col 44 to line 29, col 55 of module Ass3SinclaShau: 6786
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 29, col 69 to line 29, col 83 of module Ass3SinclaShau: 1992
+  line 29, col 69 to line 29, col 83 of module Ass3SinclaShau: 2415
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 60, col 16 to line 60, col 28 of module DataWire: 2169
+  line 60, col 16 to line 60, col 28 of module DataWire: 2570
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 16 to line 60, col 21 of module DataWire: 1785
+  |line 60, col 16 to line 60, col 21 of module DataWire: 2108
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 25 to line 60, col 28 of module DataWire: 1785
+  |line 60, col 25 to line 60, col 28 of module DataWire: 2108
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 60, col 33 to line 60, col 46 of module DataWire: 1048
+  line 60, col 33 to line 60, col 46 of module DataWire: 1267
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 33 to line 60, col 39 of module DataWire: 664
+  |line 60, col 33 to line 60, col 39 of module DataWire: 805
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 60, col 43 to line 60, col 46 of module DataWire: 664
+  |line 60, col 43 to line 60, col 46 of module DataWire: 805
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 61, col 16 to line 61, col 32 of module DataWire: 384
+  line 61, col 16 to line 61, col 32 of module DataWire: 462
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 62, col 16 to line 62, col 29 of module DataWire: 384
+  line 62, col 16 to line 62, col 29 of module DataWire: 462
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 64, col 15 to line 64, col 27 of module DataWire: 2169
+  line 64, col 15 to line 64, col 27 of module DataWire: 2570
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 15 to line 64, col 20 of module DataWire: 1785
+  |line 64, col 15 to line 64, col 20 of module DataWire: 2108
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 24 to line 64, col 27 of module DataWire: 1785
+  |line 64, col 24 to line 64, col 27 of module DataWire: 2108
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 64, col 32 to line 64, col 45 of module DataWire: 1048
+  line 64, col 32 to line 64, col 45 of module DataWire: 1267
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 32 to line 64, col 38 of module DataWire: 664
+  |line 64, col 32 to line 64, col 38 of module DataWire: 805
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 64, col 42 to line 64, col 45 of module DataWire: 664
+  |line 64, col 42 to line 64, col 45 of module DataWire: 805
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 65, col 15 to line 65, col 41 of module DataWire: 384
+  line 65, col 15 to line 65, col 41 of module DataWire: 462
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 66, col 15 to line 66, col 28 of module DataWire: 384
+  line 66, col 15 to line 66, col 28 of module DataWire: 462
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 12 to line 68, col 24 of module DataWire: 2169
+  line 68, col 12 to line 68, col 24 of module DataWire: 2570
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 12 to line 68, col 17 of module DataWire: 1785
+  |line 68, col 12 to line 68, col 17 of module DataWire: 2108
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 21 to line 68, col 24 of module DataWire: 1785
+  |line 68, col 21 to line 68, col 24 of module DataWire: 2108
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 68, col 29 to line 68, col 42 of module DataWire: 1048
+  line 68, col 29 to line 68, col 42 of module DataWire: 1267
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 29 to line 68, col 35 of module DataWire: 664
+  |line 68, col 29 to line 68, col 35 of module DataWire: 805
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 68, col 39 to line 68, col 42 of module DataWire: 664
+  |line 68, col 39 to line 68, col 42 of module DataWire: 805
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 69, col 12 to line 69, col 26 of module DataWire: 384
+  line 69, col 12 to line 69, col 26 of module DataWire: 462
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 70, col 12 to line 70, col 25 of module DataWire: 384
+  line 70, col 12 to line 70, col 25 of module DataWire: 462
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 46, col 20 to line 46, col 165 of module Ass3SinclaShau: 1152
+  line 46, col 20 to line 46, col 166 of module Ass3SinclaShau: 1386
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<senderChannel line 48, col 1 to line 48, col 13 of module Ass3SinclaShau>: 405:1851
+<senderChannel line 48, col 1 to line 48, col 13 of module Ass3SinclaShau>: 466:2223
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 1 to line 30, col 108 of module Ass3SinclaShau: 469
+  line 30, col 1 to line 30, col 109 of module Ass3SinclaShau: 548
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 1 to line 30, col 108 of module Ass3SinclaShau: 7441
+  line 30, col 1 to line 30, col 109 of module Ass3SinclaShau: 8784
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 1 to line 30, col 108 of module Ass3SinclaShau: 2386
+  line 30, col 1 to line 30, col 109 of module Ass3SinclaShau: 2808
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 1 to line 30, col 108 of module Ass3SinclaShau: 5230
+  line 30, col 1 to line 30, col 109 of module Ass3SinclaShau: 6185
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 1 to line 30, col 108 of module Ass3SinclaShau: 1422
+  line 30, col 1 to line 30, col 109 of module Ass3SinclaShau: 1710
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 1 to line 30, col 108 of module Ass3SinclaShau: 1351
+  line 30, col 1 to line 30, col 109 of module Ass3SinclaShau: 1590
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 1 to line 30, col 108 of module Ass3SinclaShau: 118
+  line 30, col 1 to line 30, col 109 of module Ass3SinclaShau: 188
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 44 to line 30, col 56 of module Ass3SinclaShau: 3399
+  line 30, col 44 to line 30, col 56 of module Ass3SinclaShau: 3977
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 72 to line 30, col 86 of module Ass3SinclaShau: 7354
+  line 30, col 73 to line 30, col 87 of module Ass3SinclaShau: 8719
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 30, col 98 to line 30, col 108 of module Ass3SinclaShau: 11122
+  line 30, col 99 to line 30, col 109 of module Ass3SinclaShau: 13215
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 156, col 12 to line 156, col 25 of module Sender: 3005
+  line 156, col 12 to line 156, col 25 of module Sender: 3540
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 12 to line 156, col 16 of module Sender: 1781
+  |line 156, col 12 to line 156, col 16 of module Sender: 2104
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 156, col 31 to line 156, col 45 of module Sender: 2495
+  line 156, col 31 to line 156, col 45 of module Sender: 2912
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 31 to line 156, col 38 of module Sender: 1626
+  |line 156, col 31 to line 156, col 38 of module Sender: 1892
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 42 to line 156, col 45 of module Sender: 1626
+  |line 156, col 42 to line 156, col 45 of module Sender: 1892
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 156, col 50 to line 156, col 65 of module Sender: 2473
+  line 156, col 50 to line 156, col 66 of module Sender: 2900
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 50 to line 156, col 58 of module Sender: 1626
+  |line 156, col 50 to line 156, col 59 of module Sender: 1892
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 62 to line 156, col 65 of module Sender: 1626
+  |line 156, col 63 to line 156, col 66 of module Sender: 1892
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 157, col 15 to line 157, col 61 of module Sender: 1716
+  line 157, col 15 to line 157, col 63 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 157, col 15 to line 157, col 30 of module Sender: 1716
+  |line 157, col 15 to line 157, col 31 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 157, col 35 to line 157, col 61 of module Sender: 1339
+  |line 157, col 36 to line 157, col 63 of module Sender: 1600
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 158, col 26 to line 158, col 55 of module Sender: 690
+  line 158, col 26 to line 158, col 56 of module Sender: 825
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 159, col 34 to line 159, col 51 of module Sender: 12
+  line 159, col 34 to line 159, col 51 of module Sender: 29
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 160, col 34 to line 160, col 71 of module Sender: 12
+  line 160, col 34 to line 160, col 71 of module Sender: 29
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 161, col 37 to line 161, col 62 of module Sender: 678
+  line 161, col 37 to line 161, col 63 of module Sender: 796
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 162, col 42 to line 163, col 71 of module Sender: 467
+  line 162, col 42 to line 163, col 72 of module Sender: 546
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 164, col 45 to line 164, col 48 of module Sender: 211
+  line 164, col 45 to line 164, col 48 of module Sender: 250
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 165, col 45 to line 166, col 69 of module Sender: 211
+  line 165, col 45 to line 166, col 69 of module Sender: 250
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 167, col 34 to line 167, col 47 of module Sender: 678
+  line 167, col 34 to line 167, col 47 of module Sender: 796
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 168, col 23 to line 168, col 26 of module Sender: 1026
+  line 168, col 23 to line 168, col 26 of module Sender: 1203
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 23 to line 169, col 67 of module Sender: 1026
+  line 169, col 23 to line 169, col 67 of module Sender: 1203
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 170, col 12 to line 170, col 28 of module Sender: 1716
+  line 170, col 12 to line 170, col 29 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 171, col 15 to line 171, col 105 of module Sender: 1716
+  line 171, col 15 to line 171, col 105 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 171, col 15 to line 171, col 83 of module Sender: 1716
+  |line 171, col 15 to line 171, col 83 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 171, col 15 to line 171, col 48 of module Sender: 1716
+  ||line 171, col 15 to line 171, col 48 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 171, col 15 to line 171, col 29 of module Sender: 1716
+  |||line 171, col 15 to line 171, col 29 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 171, col 34 to line 171, col 48 of module Sender: 1361
+  |||line 171, col 34 to line 171, col 48 of module Sender: 1612
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 171, col 53 to line 171, col 83 of module Sender: 1361
+  ||line 171, col 53 to line 171, col 83 of module Sender: 1612
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 171, col 88 to line 171, col 105 of module Sender: 1361
+  |line 171, col 88 to line 171, col 105 of module Sender: 1612
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 172, col 23 to line 172, col 72 of module Sender: 1351
+  line 172, col 23 to line 172, col 72 of module Sender: 1590
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 173, col 26 to line 173, col 83 of module Sender: 1351
+  line 173, col 26 to line 173, col 83 of module Sender: 1590
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 173, col 26 to line 173, col 49 of module Sender: 1351
+  |line 173, col 26 to line 173, col 49 of module Sender: 1590
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 173, col 54 to line 173, col 83 of module Sender: 1130
+  |line 173, col 54 to line 173, col 83 of module Sender: 1323
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 174, col 31 to line 174, col 63 of module Sender: 773
+  line 174, col 31 to line 174, col 63 of module Sender: 901
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 175, col 31 to line 175, col 60 of module Sender: 578
+  line 175, col 31 to line 175, col 60 of module Sender: 689
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 176, col 23 to line 176, col 26 of module Sender: 365
+  line 176, col 23 to line 176, col 26 of module Sender: 438
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 177, col 23 to line 177, col 59 of module Sender: 365
+  line 177, col 23 to line 177, col 59 of module Sender: 438
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 178, col 12 to line 178, col 27 of module Sender: 1716
+  line 178, col 12 to line 178, col 27 of module Sender: 2028
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 180, col 11 to line 180, col 27 of module Sender: 1821
+  line 180, col 11 to line 180, col 27 of module Sender: 2144
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 180, col 11 to line 180, col 15 of module Sender: 1781
+  |line 180, col 11 to line 180, col 15 of module Sender: 2104
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 180, col 32 to line 180, col 46 of module Sender: 97
@@ -999,103 +985,103 @@ The coverage statistics at 2019-06-13 00:05:44
   |line 180, col 43 to line 180, col 46 of module Sender: 57
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 181, col 14 to line 181, col 29 of module Sender: 40
+  line 181, col 14 to line 181, col 30 of module Sender: 40
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 182, col 25 to line 182, col 48 of module Sender: 23
+  line 182, col 25 to line 182, col 49 of module Sender: 13
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 183, col 36 to line 183, col 105 of module Sender: 23
+  line 183, col 36 to line 183, col 108 of module Sender: 13
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 183, col 36 to line 183, col 71 of module Sender: 23
+  |line 183, col 36 to line 183, col 73 of module Sender: 13
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 183, col 36 to line 183, col 51 of module Sender: 23
+  ||line 183, col 36 to line 183, col 52 of module Sender: 13
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 183, col 56 to line 183, col 71 of module Sender: 12
+  ||line 183, col 57 to line 183, col 73 of module Sender: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 183, col 76 to line 183, col 105 of module Sender: 12
+  |line 183, col 78 to line 183, col 108 of module Sender: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 184, col 41 to line 185, col 69 of module Sender: 12
+  line 184, col 41 to line 185, col 71 of module Sender: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 186, col 44 to line 186, col 47 of module Sender: 11
+  line 186, col 44 to line 186, col 47 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 187, col 44 to line 187, col 72 of module Sender: 11
+  line 187, col 44 to line 187, col 72 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 189, col 33 to line 189, col 61 of module Sender: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 190, col 22 to line 190, col 38 of module Sender: 23
+  line 190, col 22 to line 190, col 39 of module Sender: 13
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 191, col 22 to line 191, col 25 of module Sender: 17
+  line 191, col 22 to line 191, col 25 of module Sender: 27
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 192, col 22 to line 192, col 61 of module Sender: 17
+  line 192, col 22 to line 192, col 62 of module Sender: 27
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 193, col 14 to line 193, col 31 of module Sender: 40
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 194, col 19 to line 194, col 54 of module Sender: 28
+  line 194, col 19 to line 194, col 54 of module Sender: 33
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 195, col 22 to line 195, col 25 of module Sender: 12
+  line 195, col 22 to line 195, col 25 of module Sender: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 196, col 22 to line 196, col 39 of module Sender: 12
+  line 196, col 22 to line 196, col 39 of module Sender: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 197, col 11 to line 197, col 61 of module Sender: 40
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 199, col 11 to line 199, col 35 of module Sender: 1876
+  line 199, col 11 to line 199, col 37 of module Sender: 2253
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 199, col 11 to line 199, col 15 of module Sender: 1781
+  |line 199, col 11 to line 199, col 15 of module Sender: 2104
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 200, col 14 to line 200, col 29 of module Sender: 95
+  line 200, col 14 to line 200, col 30 of module Sender: 149
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 201, col 25 to line 201, col 48 of module Sender: 57
+  line 201, col 25 to line 201, col 49 of module Sender: 97
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 202, col 36 to line 202, col 81 of module Sender: 57
+  line 202, col 36 to line 202, col 83 of module Sender: 97
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 202, col 36 to line 202, col 53 of module Sender: 57
+  |line 202, col 36 to line 202, col 54 of module Sender: 97
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 202, col 58 to line 202, col 81 of module Sender: 34
+  |line 202, col 59 to line 202, col 83 of module Sender: 50
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 203, col 44 to line 203, col 58 of module Sender: 11
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 204, col 44 to line 204, col 62 of module Sender: 11
+  line 204, col 44 to line 204, col 63 of module Sender: 11
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 205, col 41 to line 206, col 57 of module Sender: 46
+  line 205, col 41 to line 206, col 57 of module Sender: 86
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 209, col 22 to line 209, col 25 of module Sender: 38
+  line 209, col 22 to line 209, col 25 of module Sender: 52
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 210, col 22 to line 210, col 53 of module Sender: 38
+  line 210, col 22 to line 210, col 54 of module Sender: 52
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 211, col 14 to line 211, col 39 of module Sender: 95
+  line 211, col 14 to line 211, col 41 of module Sender: 149
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 212, col 19 to line 212, col 66 of module Sender: 84
+  line 212, col 19 to line 212, col 66 of module Sender: 138
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
   line 213, col 22 to line 213, col 25 of module Sender: 11
@@ -1104,302 +1090,308 @@ The coverage statistics at 2019-06-13 00:05:44
   line 214, col 22 to line 214, col 39 of module Sender: 11
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 215, col 11 to line 215, col 69 of module Sender: 95
+  line 215, col 11 to line 215, col 69 of module Sender: 149
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 217, col 11 to line 217, col 27 of module Sender: 1781
+  line 217, col 11 to line 217, col 27 of module Sender: 2110
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 218, col 11 to line 224, col 35 of module Sender: 3
+  |line 217, col 11 to line 217, col 15 of module Sender: 2104
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 229, col 22 to line 229, col 39 of module Sender: 0
+  line 218, col 11 to line 227, col 35 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 230, col 11 to line 230, col 69 of module Sender: 0
+  line 228, col 11 to line 228, col 28 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 232, col 14 to line 232, col 50 of module Sender: 1778
+  line 229, col 14 to line 229, col 31 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 244, col 25 to line 244, col 42 of module Sender: 0
+  line 230, col 19 to line 230, col 39 of module Sender: 6
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 245, col 14 to line 245, col 72 of module Sender: 0
+  line 232, col 22 to line 232, col 39 of module Sender: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 49, col 24 to line 49, col 110 of module Ass3SinclaShau: 1851
+  line 233, col 11 to line 233, col 69 of module Sender: 6
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 235, col 14 to line 235, col 51 of module Sender: 2104
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 247, col 25 to line 247, col 42 of module Sender: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 248, col 14 to line 248, col 72 of module Sender: 0
+@!@!@ENDMSG 2221 @!@!@
+@!@!@STARTMSG 2221:0 @!@!@
+  line 49, col 24 to line 49, col 111 of module Ass3SinclaShau: 2223
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2772:0 @!@!@
-<reciverChannel line 51, col 1 to line 51, col 14 of module Ass3SinclaShau>: 269:1014
+<receiverChannel line 51, col 1 to line 51, col 15 of module Ass3SinclaShau>: 288:1224
 @!@!@ENDMSG 2772 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 1 to line 31, col 130 of module Ass3SinclaShau: 1391
+  line 31, col 1 to line 31, col 133 of module Ass3SinclaShau: 1651
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 1 to line 31, col 130 of module Ass3SinclaShau: 1014
+  line 31, col 1 to line 31, col 133 of module Ass3SinclaShau: 1224
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 1 to line 31, col 130 of module Ass3SinclaShau: 50
+  line 31, col 1 to line 31, col 133 of module Ass3SinclaShau: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 73 to line 31, col 88 of module Ass3SinclaShau: 7743
+  line 31, col 75 to line 31, col 90 of module Ass3SinclaShau: 9323
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 101 to line 31, col 107 of module Ass3SinclaShau: 160
+  line 31, col 103 to line 31, col 109 of module Ass3SinclaShau: 172
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 31, col 119 to line 31, col 130 of module Ass3SinclaShau: 10909
+  line 31, col 121 to line 31, col 133 of module Ass3SinclaShau: 13011
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 137, col 14 to line 137, col 30 of module Reciver: 2601
+  line 138, col 14 to line 138, col 30 of module Receiver: 3081
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 137, col 14 to line 137, col 23 of module Reciver: 1767
+  |line 138, col 14 to line 138, col 23 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 137, col 27 to line 137, col 30 of module Reciver: 1767
+  |line 138, col 27 to line 138, col 30 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 137, col 35 to line 137, col 48 of module Reciver: 1848
+  line 138, col 35 to line 138, col 48 of module Receiver: 2212
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 137, col 35 to line 137, col 39 of module Reciver: 1014
+  |line 138, col 35 to line 138, col 39 of module Receiver: 1224
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 138, col 17 to line 138, col 44 of module Reciver: 834
+  line 139, col 17 to line 139, col 44 of module Receiver: 988
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 139, col 28 to line 139, col 45 of module Reciver: 471
+  line 140, col 28 to line 140, col 45 of module Receiver: 561
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 141, col 36 to line 141, col 69 of module Reciver: 0
+  line 142, col 36 to line 142, col 78 of module Receiver: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 142, col 40 to line 142, col 65 of module Reciver: 471
+  line 143, col 40 to line 143, col 65 of module Receiver: 561
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 143, col 44 to line 144, col 74 of module Reciver: 160
+  line 144, col 44 to line 145, col 74 of module Receiver: 172
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 145, col 47 to line 145, col 50 of module Reciver: 311
+  line 146, col 47 to line 146, col 50 of module Receiver: 389
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 146, col 47 to line 146, col 80 of module Reciver: 311
+  line 147, col 47 to line 147, col 80 of module Receiver: 389
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 147, col 36 to line 147, col 49 of module Reciver: 471
+  line 148, col 36 to line 148, col 61 of module Receiver: 561
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 148, col 25 to line 148, col 50 of module Reciver: 471
+  line 149, col 36 to line 149, col 49 of module Receiver: 561
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 149, col 25 to line 149, col 28 of module Reciver: 363
+  line 150, col 25 to line 150, col 28 of module Receiver: 427
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 150, col 25 to line 150, col 74 of module Reciver: 363
+  line 151, col 25 to line 151, col 74 of module Receiver: 427
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 151, col 14 to line 151, col 31 of module Reciver: 834
+  line 152, col 14 to line 152, col 31 of module Receiver: 988
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 152, col 14 to line 152, col 29 of module Reciver: 834
+  line 153, col 14 to line 153, col 29 of module Receiver: 988
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 154, col 15 to line 154, col 29 of module Reciver: 1772
+  line 155, col 15 to line 155, col 29 of module Receiver: 2103
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 154, col 15 to line 154, col 19 of module Reciver: 1767
+  |line 155, col 15 to line 155, col 19 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 154, col 34 to line 154, col 50 of module Reciver: 12
+  line 155, col 34 to line 155, col 50 of module Receiver: 22
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 154, col 34 to line 154, col 43 of module Reciver: 7
+  |line 155, col 34 to line 155, col 43 of module Receiver: 12
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 154, col 47 to line 154, col 50 of module Reciver: 7
+  |line 155, col 47 to line 155, col 50 of module Receiver: 12
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 155, col 18 to line 155, col 42 of module Reciver: 5
+  line 156, col 18 to line 156, col 42 of module Receiver: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 156, col 29 to line 156, col 66 of module Reciver: 5
+  line 157, col 29 to line 157, col 66 of module Receiver: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 29 to line 156, col 45 of module Reciver: 5
+  |line 157, col 29 to line 157, col 45 of module Receiver: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 156, col 50 to line 156, col 66 of module Reciver: 3
+  |line 157, col 50 to line 157, col 66 of module Receiver: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 157, col 37 to line 157, col 63 of module Reciver: 3
+  line 158, col 37 to line 158, col 63 of module Receiver: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 158, col 37 to line 158, col 58 of module Reciver: 3
+  line 159, col 37 to line 159, col 58 of module Receiver: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 159, col 37 to line 159, col 56 of module Reciver: 3
+  line 160, col 37 to line 160, col 56 of module Receiver: 7
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 160, col 37 to line 160, col 54 of module Reciver: 2
+  line 161, col 37 to line 161, col 54 of module Receiver: 3
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 161, col 37 to line 161, col 65 of module Reciver: 2
+  line 162, col 37 to line 162, col 65 of module Receiver: 3
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 163, col 26 to line 163, col 54 of module Reciver: 0
+  line 164, col 26 to line 164, col 54 of module Receiver: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 164, col 15 to line 164, col 57 of module Reciver: 5
+  line 165, col 15 to line 165, col 57 of module Receiver: 10
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 166, col 18 to line 166, col 38 of module Reciver: 1817
+  line 167, col 18 to line 167, col 38 of module Receiver: 2177
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 166, col 18 to line 166, col 22 of module Reciver: 1767
+  |line 167, col 18 to line 167, col 22 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 166, col 43 to line 166, col 59 of module Reciver: 139
+  line 167, col 43 to line 167, col 59 of module Receiver: 208
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 166, col 43 to line 166, col 52 of module Reciver: 89
+  |line 167, col 43 to line 167, col 52 of module Receiver: 124
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 166, col 56 to line 166, col 59 of module Reciver: 89
+  |line 167, col 56 to line 167, col 59 of module Receiver: 124
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 167, col 21 to line 167, col 45 of module Reciver: 50
+  line 168, col 21 to line 168, col 45 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 168, col 32 to line 168, col 152 of module Reciver: 50
+  line 169, col 32 to line 169, col 152 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 168, col 32 to line 168, col 118 of module Reciver: 50
+  |line 169, col 32 to line 169, col 118 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 168, col 32 to line 168, col 92 of module Reciver: 50
+  ||line 169, col 32 to line 169, col 92 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 168, col 32 to line 168, col 71 of module Reciver: 50
+  |||line 169, col 32 to line 169, col 71 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||||line 168, col 32 to line 168, col 50 of module Reciver: 50
+  ||||line 169, col 32 to line 169, col 50 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||||line 168, col 55 to line 168, col 71 of module Reciver: 11
+  ||||line 169, col 55 to line 169, col 71 of module Receiver: 35
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |||line 168, col 76 to line 168, col 92 of module Reciver: 11
+  |||line 169, col 76 to line 169, col 92 of module Receiver: 35
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  ||line 168, col 97 to line 168, col 118 of module Reciver: 11
+  ||line 169, col 97 to line 169, col 118 of module Receiver: 35
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 168, col 123 to line 168, col 152 of module Reciver: 11
+  |line 169, col 123 to line 169, col 152 of module Receiver: 35
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 169, col 37 to line 169, col 63 of module Reciver: 11
+  line 170, col 37 to line 170, col 63 of module Receiver: 35
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 170, col 37 to line 171, col 53 of module Reciver: 39
+  line 171, col 37 to line 172, col 53 of module Receiver: 49
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 172, col 29 to line 172, col 46 of module Reciver: 50
+  line 173, col 29 to line 173, col 46 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 175, col 21 to line 175, col 42 of module Reciver: 50
+  line 176, col 21 to line 176, col 42 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 176, col 26 to line 176, col 67 of module Reciver: 39
+  line 177, col 26 to line 177, col 67 of module Receiver: 49
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 177, col 29 to line 177, col 32 of module Reciver: 11
+  line 178, col 29 to line 178, col 32 of module Receiver: 35
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 178, col 29 to line 178, col 45 of module Reciver: 11
+  line 179, col 29 to line 179, col 45 of module Receiver: 35
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 179, col 18 to line 179, col 59 of module Reciver: 50
+  line 180, col 18 to line 180, col 59 of module Receiver: 84
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 181, col 16 to line 181, col 32 of module Reciver: 1892
+  line 182, col 16 to line 182, col 32 of module Receiver: 2235
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 181, col 16 to line 181, col 25 of module Reciver: 1767
+  |line 182, col 16 to line 182, col 25 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 181, col 29 to line 181, col 32 of module Reciver: 1767
+  |line 182, col 29 to line 182, col 32 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 181, col 37 to line 181, col 59 of module Reciver: 1139
+  line 182, col 37 to line 182, col 59 of module Receiver: 1366
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  |line 181, col 37 to line 181, col 41 of module Reciver: 1014
+  |line 182, col 37 to line 182, col 41 of module Receiver: 1224
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 182, col 19 to line 182, col 43 of module Reciver: 125
+  line 183, col 19 to line 183, col 43 of module Receiver: 142
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 183, col 30 to line 183, col 55 of module Reciver: 125
+  line 184, col 30 to line 184, col 55 of module Receiver: 142
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 184, col 35 to line 184, col 52 of module Reciver: 11
+  line 185, col 35 to line 185, col 52 of module Receiver: 11
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 185, col 35 to line 186, col 51 of module Reciver: 114
+  line 186, col 35 to line 187, col 51 of module Receiver: 131
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 189, col 19 to line 189, col 42 of module Reciver: 125
+  line 190, col 19 to line 190, col 42 of module Receiver: 142
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 190, col 24 to line 191, col 44 of module Reciver: 114
+  line 191, col 24 to line 192, col 44 of module Receiver: 131
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 192, col 27 to line 192, col 30 of module Reciver: 11
+  line 193, col 27 to line 193, col 30 of module Receiver: 11
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 193, col 27 to line 193, col 61 of module Reciver: 11
+  line 194, col 27 to line 194, col 61 of module Receiver: 11
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 194, col 16 to line 194, col 57 of module Reciver: 125
+  line 195, col 16 to line 195, col 57 of module Receiver: 142
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 196, col 15 to line 196, col 31 of module Reciver: 1767
+  line 197, col 15 to line 197, col 31 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 196, col 36 to line 196, col 52 of module Reciver: 1014
+  line 197, col 36 to line 197, col 52 of module Receiver: 1224
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 207, col 26 to line 207, col 42 of module Reciver: 0
+  line 208, col 26 to line 208, col 42 of module Receiver: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 208, col 15 to line 208, col 68 of module Reciver: 0
+  line 209, col 15 to line 209, col 68 of module Receiver: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 210, col 15 to line 210, col 51 of module Reciver: 1767
+  line 211, col 15 to line 211, col 51 of module Receiver: 2093
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 213, col 15 to line 213, col 68 of module Reciver: 0
+  line 214, col 15 to line 214, col 68 of module Receiver: 0
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2221:0 @!@!@
-  line 52, col 23 to line 52, col 124 of module Ass3SinclaShau: 1014
+  line 52, col 23 to line 52, col 124 of module Ass3SinclaShau: 1224
 @!@!@ENDMSG 2221 @!@!@
 @!@!@STARTMSG 2202:0 @!@!@
 End of statistics.
 @!@!@ENDMSG 2202 @!@!@
 @!@!@STARTMSG 2200:0 @!@!@
-Progress(35) at 2019-06-13 00:05:45: 5,054 states generated (61,822 s/min), 2,032 distinct states found (24,856 ds/min), 288 states left on queue.
+Progress(36) at 2019-06-13 00:23:37: 5,865 states generated (52,319 s/min), 2,297 distinct states found (20,490 ds/min), 289 states left on queue.
 @!@!@ENDMSG 2200 @!@!@
 @!@!@STARTMSG 2199:0 @!@!@
-5054 states generated, 2032 distinct states found, 288 states left on queue.
+5865 states generated, 2297 distinct states found, 289 states left on queue.
 @!@!@ENDMSG 2199 @!@!@
-@!@!@STARTMSG 2194:0 @!@!@
-The depth of the complete state graph search is 35.
-@!@!@ENDMSG 2194 @!@!@
-@!@!@STARTMSG 2268:0 @!@!@
-The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 6 and the 95th percentile is 4).
-@!@!@ENDMSG 2268 @!@!@
 @!@!@STARTMSG 2186:0 @!@!@
-Finished in 5342ms at (2019-06-13 00:05:45)
+Finished in 6870ms at (2019-06-13 00:23:37)
 @!@!@ENDMSG 2186 @!@!@

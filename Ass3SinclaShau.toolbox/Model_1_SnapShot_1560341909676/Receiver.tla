@@ -13,13 +13,12 @@ A:
             \* sender will send -1 if it wants to close the connection
             if reciveData[1] = -1 then
                 state := "closing";
-            else
-                if (reciveData[1] = requestNum) then
-                    output := output \o <<reciveData[2]>>;
-                    requestNum := requestNum + 1;
-                end if;
-                sendReq := <<requestNum>>;
+            elsif (reciveData[1] = requestNum) then
+                output := output \o <<reciveData[2]>>;
+                requestNum := requestNum + 1;
             end if;
+            sendReq := <<requestNum>>;
+        
         end if;
         reciveData := <<>>;
     end while;
@@ -117,10 +116,10 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 \* Label A of process Recive at line 10 col 5 changed to A_
-\* Label A of process WaitSYN at line 32 col 5 changed to A_W
-\* Label A of process SendSYNACK at line 50 col 5 changed to A_S
-\* Label A of process WaitData at line 70 col 5 changed to A_Wa
-\* Label A of process SendFIN at line 87 col 5 changed to A_Se
+\* Label A of process WaitSYN at line 31 col 5 changed to A_W
+\* Label A of process SendSYNACK at line 49 col 5 changed to A_S
+\* Label A of process WaitData at line 69 col 5 changed to A_Wa
+\* Label A of process SendFIN at line 86 col 5 changed to A_Se
 VARIABLES sendReq, reciveData, requestNum, output, state, synNum
 
 vars == << sendReq, reciveData, requestNum, output, state, synNum >>
@@ -139,14 +138,14 @@ Recive == /\ reciveData # <<>> /\ state = "open"
           /\ IF reciveData[1] # CORRUPT_DATA
                 THEN /\ IF reciveData[1] = -1
                            THEN /\ state' = "closing"
-                                /\ UNCHANGED << sendReq, requestNum, output >>
+                                /\ UNCHANGED << requestNum, output >>
                            ELSE /\ IF (reciveData[1] = requestNum)
                                       THEN /\ output' = output \o <<reciveData[2]>>
                                            /\ requestNum' = requestNum + 1
                                       ELSE /\ TRUE
                                            /\ UNCHANGED << requestNum, output >>
-                                /\ sendReq' = <<requestNum'>>
                                 /\ state' = state
+                     /\ sendReq' = <<requestNum'>>
                 ELSE /\ TRUE
                      /\ UNCHANGED << sendReq, requestNum, output, state >>
           /\ reciveData' = <<>>
@@ -246,5 +245,5 @@ Properties == \A x \in {"closed", "closing","SYN-RECIVED", "WAIT-FOR-DATA", "ope
 
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:20:25 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:11:09 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

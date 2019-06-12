@@ -91,13 +91,13 @@ begin
 A: 
     while TRUE do 
         await state = "closing";
-        if receiveReq # <<>> then
-            if receiveReq # CORRUPT_DATA then
-                if receiveReq[1] = "FIN" then 
-                    state := "FIN-ACK";
-                end if;
+        
+        if receiveReq # CORRUPT_DATA then
+            if receiveReq[1] = "FIN" then 
+                state := "FIN-ACK";
             end if;
         end if;
+        
         receiveReq := <<>>;
         if state = "closing" then
             sendData := <<-1>>;
@@ -215,12 +215,9 @@ ACK == /\ state = "SYN_ACK_receive D"
        /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
 FIN == /\ state = "closing"
-       /\ IF receiveReq # <<>>
-             THEN /\ IF receiveReq # CORRUPT_DATA
-                        THEN /\ IF receiveReq[1] = "FIN"
-                                   THEN /\ state' = "FIN-ACK"
-                                   ELSE /\ TRUE
-                                        /\ state' = state
+       /\ IF receiveReq # CORRUPT_DATA
+             THEN /\ IF receiveReq[1] = "FIN"
+                        THEN /\ state' = "FIN-ACK"
                         ELSE /\ TRUE
                              /\ state' = state
              ELSE /\ TRUE
@@ -287,5 +284,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(ACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 00:23:26 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 00:09:44 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
