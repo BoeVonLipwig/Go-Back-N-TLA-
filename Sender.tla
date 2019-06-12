@@ -2,7 +2,7 @@
 EXTENDS Naturals, Integers, TLC, Sequences, Bags, FiniteSets
 CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
 (* --algorithm sender
-variables sendData = <<>>, receiveReq = <<>>, state = "opening", 
+variables sendData = <<>>, receiveReq = <<>>, state = "Opening", 
 sequenceNum = 1, windowStart = 1, windowEnd = WINDOW_SIZE+1, reqNum = -1;
 
 define
@@ -14,7 +14,7 @@ begin
 A:
 (*When the wire is empty and there is data to send, send the data*)
     while TRUE do
-        await state = "open" /\ (sendData = <<>> \/ receiveReq # <<>>);
+        await state = "Open" /\ (sendData = <<>> \/ receiveReq # <<>>);
         if receiveReq # <<>> /\ receiveReq[1] # CORRUPT_DATA then 
             if receiveReq[1] = Len(MESSAGES) + 1 then 
                 state := "SENDING_FIN";
@@ -42,7 +42,7 @@ fair process SYN = "syn"
 begin
 A:
     while TRUE do
-        await state = "opening" /\ sendData = <<>>;
+        await state = "Opening" /\ sendData = <<>>;
         if receiveReq # <<>> then 
             if receiveReq # CORRUPT_DATA then 
                 if receiveReq[1] = 1 /\ receiveReq[2] = 1 /\ receiveReq[3] = sequenceNum + 1 then 
@@ -54,7 +54,7 @@ A:
         end if;
         
         \* spam SYN constantly until successful 
-        if state = "opening" then
+        if state = "Opening" then
             sendData := <<1, 0, sequenceNum>>;
         end if;
         
@@ -71,7 +71,7 @@ A:
         if receiveReq # <<>> then 
             if receiveReq # CORRUPT_DATA then 
                 if Len(receiveReq) = 1 /\ receiveReq[1] = reqNum -1 then 
-                    state := "open"
+                    state := "Open"
                 else 
                     receiveReq := <<>>;
                 end if;
@@ -142,13 +142,13 @@ ProcSet == {"send"} \cup {"syn"} \cup {"ack"} \cup {"fin"} \cup {"finack"}
 Init == (* Global variables *)
         /\ sendData = <<>>
         /\ receiveReq = <<>>
-        /\ state = "opening"
+        /\ state = "Opening"
         /\ sequenceNum = 1
         /\ windowStart = 1
         /\ windowEnd = WINDOW_SIZE+1
         /\ reqNum = -1
 
-Send == /\ state = "open" /\ (sendData = <<>> \/ receiveReq # <<>>)
+Send == /\ state = "Open" /\ (sendData = <<>> \/ receiveReq # <<>>)
         /\ IF receiveReq # <<>> /\ receiveReq[1] # CORRUPT_DATA
               THEN /\ IF receiveReq[1] = Len(MESSAGES) + 1
                          THEN /\ state' = "SENDING_FIN"
@@ -172,7 +172,7 @@ Send == /\ state = "open" /\ (sendData = <<>> \/ receiveReq # <<>>)
                    /\ UNCHANGED << sendData, sequenceNum >>
         /\ UNCHANGED reqNum
 
-SYN == /\ state = "opening" /\ sendData = <<>>
+SYN == /\ state = "Opening" /\ sendData = <<>>
        /\ IF receiveReq # <<>>
              THEN /\ IF receiveReq # CORRUPT_DATA
                         THEN /\ IF receiveReq[1] = 1 /\ receiveReq[2] = 1 /\ receiveReq[3] = sequenceNum + 1
@@ -185,7 +185,7 @@ SYN == /\ state = "opening" /\ sendData = <<>>
                   /\ receiveReq' = <<>>
              ELSE /\ TRUE
                   /\ UNCHANGED << receiveReq, state, reqNum >>
-       /\ IF state' = "opening"
+       /\ IF state' = "Opening"
              THEN /\ sendData' = <<1, 0, sequenceNum>>
              ELSE /\ TRUE
                   /\ UNCHANGED sendData
@@ -195,7 +195,7 @@ ACK == /\ state = "SYN_ACK_RECEIVED"
        /\ IF receiveReq # <<>>
              THEN /\ IF receiveReq # CORRUPT_DATA
                         THEN /\ IF Len(receiveReq) = 1 /\ receiveReq[1] = reqNum -1
-                                   THEN /\ state' = "open"
+                                   THEN /\ state' = "Open"
                                         /\ UNCHANGED receiveReq
                                    ELSE /\ receiveReq' = <<>>
                                         /\ state' = state
@@ -260,7 +260,7 @@ Invariants == /\ WinStrOK
               /\ WinEndOK
               /\ SeqNumOK
 
-Properties == \A x \in {"RECEIVED_FIN-ACK", "SYN_ACK_RECEIVED", "open", "opening", "Closed", "SENDING_FIN" }: <>( state = x )
+Properties == \A x \in {"RECEIVED_FIN-ACK", "SYN_ACK_RECEIVED", "Open", "Opening", "Closed", "SENDING_FIN" }: <>( state = x )
               
 
 
@@ -272,5 +272,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:04:40 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 02:06:02 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi

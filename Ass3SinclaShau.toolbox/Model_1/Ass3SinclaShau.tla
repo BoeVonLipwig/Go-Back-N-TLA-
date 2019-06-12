@@ -70,9 +70,8 @@ Spec == /\ Init /\ [][Next]_vars
         /\ reqWir!Fairness
 \*        (* The following line inforce the invariants of the modules. This is used 
 \*           for type checking*)
-\*        /\ sender!Invariants
-\*        /\ receiveWir!Invariants
-\*        /\ dataWir!Invariants
+        /\ sender!Invariants
+        /\ receiver!Invariants
        
 ---------
 \* This is used to check that the final output matches the orignal input
@@ -88,5 +87,5 @@ Properties == /\CorrectResult
                   
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:04:48 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 02:08:30 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi
