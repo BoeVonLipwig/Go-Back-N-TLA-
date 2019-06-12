@@ -109,13 +109,19 @@ fair process FINACK = "finack"
 begin 
 A: 
     while TRUE do 
-        await (state = "RECEIVED_FIN-ACK" \/ state = "closed") /\ receiveReq # <<>>;
+        await state = "RECEIVED_FIN-ACK" /\ receiveReq # <<>>;
         
+        if receiveReq # CORRUPT_DATA then
+            if receiveReq[1] = -3 /\ receiveReq[2] = "ACK" then 
+                state := "closed";
+            end if;
+        end if;
+        receiveReq := <<>>;
         (* since we cant prove this message has been received by the sender and we cant time this out 
            we will just send it forever as tla does not allow us to fully implement tcp*)
-        
-        state := "closed";
-        sendData := <<-3, "ACK">>;
+        if state = "RECEIVED_FIN-ACK" then
+            sendData := <<-3, "ACK">>;
+        end if;
     end while;
 end process;
 
@@ -227,11 +233,20 @@ FIN == /\ state = "SENDING_FIN"
                   /\ UNCHANGED sendData
        /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
-FINACK == /\ (state = "RECEIVED_FIN-ACK" \/ state = "closed") /\ receiveReq # <<>>
-          /\ state' = "closed"
-          /\ sendData' = <<-3, "ACK">>
-          /\ UNCHANGED << receiveReq, sequenceNum, windowStart, windowEnd, 
-                          reqNum >>
+FINACK == /\ state = "RECEIVED_FIN-ACK" /\ receiveReq # <<>>
+          /\ IF receiveReq # CORRUPT_DATA
+                THEN /\ IF receiveReq[1] = -3 /\ receiveReq[2] = "ACK"
+                           THEN /\ state' = "closed"
+                           ELSE /\ TRUE
+                                /\ state' = state
+                ELSE /\ TRUE
+                     /\ state' = state
+          /\ receiveReq' = <<>>
+          /\ IF state' = "RECEIVED_FIN-ACK"
+                THEN /\ sendData' = <<-3, "ACK">>
+                ELSE /\ TRUE
+                     /\ UNCHANGED sendData
+          /\ UNCHANGED << sequenceNum, windowStart, windowEnd, reqNum >>
 
 Next == Send \/ SYN \/ ACK \/ FIN \/ FINACK
 
@@ -275,5 +290,5 @@ Fairness == /\ WF_vars(Send)
             /\ WF_vars(FINACK)
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 01:55:18 NZST 2019 by sdmsi
+\* Last modified Thu Jun 13 01:52:28 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
