@@ -9,7 +9,7 @@ begin
 A:
     while TRUE do
         await reciveData # <<>>;
-        if reciveData[1] # CORRUPT_DATA (* /\  rn = request number *)then
+        if reciveData[1] # CORRUPT_DATA then
             if (reciveData[1] = requestNum) then
                 output := output \o <<reciveData[2]>>;
                 requestNum := requestNum + 1;
@@ -70,5 +70,5 @@ Fairness == /\ WF_vars(Recive)
 
 =============================================================================
 \* Modification History
-\* Last modified Wed Jun 12 12:56:20 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 13:16:05 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:49 NZST 2019 by sdmsi

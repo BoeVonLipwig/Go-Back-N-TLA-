@@ -81,7 +81,8 @@ TypeOK == /\ \/ outputW = <<>>
              \/ \A i \in DOMAIN outputW : outputW[i] \in MESSAGE_TYPES 
              \/ \A i \in DOMAIN inputW : inputW[i] \in {}
               
-Invariants == /\ TypeOK
+Invariants == TRUE
+            \*/\ TypeOK
 
 \* Transfer is strongly fair
 Fairness == /\ SF_vars(Transfer)
@@ -89,7 +90,7 @@ Fairness == /\ SF_vars(Transfer)
 \* This has been directly coppied from abp assignment 2
 =============================================================================
 \* Modification History
-\* Last modified Tue Jun 11 02:19:34 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 13:07:01 NZST 2019 by sdmsi
 \* Last modified Sun May 19 20:08:04 NZST 2019 by sinclashau
 \* Last modified Sun May 19 19:25:11 NZST 2019 by sinclashau
 \* Last modified Sun May 19 19:24:52 NZST 2019 by sinclashau

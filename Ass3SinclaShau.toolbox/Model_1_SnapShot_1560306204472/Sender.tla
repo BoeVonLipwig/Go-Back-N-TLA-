@@ -5,6 +5,10 @@ CONSTANT CORRUPT_DATA, WINDOW_SIZE, MESSAGES, MESSAGE_TYPES
 variables sendData = <<>>, reciveReq = <<>>, toSend = MESSAGES, 
 sequenceNum = 1, windowStart = 1, windowEnd = WINDOW_SIZE+1;
 
+define
+    MIN(x,y)  == IF (x < y) THEN x ELSE y 
+end define;
+
 fair process Send = "send"
 begin
 A:
@@ -13,17 +17,21 @@ A:
         await sendData = <<>> \/ reciveReq # <<>>;
         if reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA then 
             if reciveReq[1] > windowStart then
-                windowEnd := (windowEnd - windowStart) + reciveReq[1];
+                windowEnd := MIN(WINDOW_SIZE + reciveReq[1], Len(MESSAGES));
                 windowStart := reciveReq[1];
             end if;
         end if;
         reciveReq := <<>>;
-        
-        if sendData = <<>> /\ toSend # <<>> then
+
+        if sendData = <<>> /\ toSend # <<>> /\ sequenceNum < Len(toSend) + 1 then
             sendData := <<sequenceNum, toSend[sequenceNum]>>;
-            toSend := Tail(toSend);
-            sequenceNum := sequenceNum + 1;
+            if sequenceNum < windowEnd /\ sequenceNum > windowStart - 1 then
+                sequenceNum := sequenceNum + 1;
+            else
+                sequenceNum := windowStart;
+            end if;
         end if;
+        
     end while;
 end process;
 
@@ -31,6 +39,10 @@ end algorithm;
 *)
 \* BEGIN TRANSLATION
 VARIABLES sendData, reciveReq, toSend, sequenceNum, windowStart, windowEnd
+
+(* define statement *)
+MIN(x,y)  == IF (x < y) THEN x ELSE y
+
 
 vars == << sendData, reciveReq, toSend, sequenceNum, windowStart, windowEnd
         >>
@@ -48,19 +60,21 @@ Init == (* Global variables *)
 Send == /\ sendData = <<>> \/ reciveReq # <<>>
         /\ IF reciveReq # <<>> /\ reciveReq[1] # CORRUPT_DATA
               THEN /\ IF reciveReq[1] > windowStart
-                         THEN /\ windowEnd' = (windowEnd - windowStart) + reciveReq[1]
+                         THEN /\ windowEnd' = MIN(WINDOW_SIZE + reciveReq[1], Len(MESSAGES))
                               /\ windowStart' = reciveReq[1]
                          ELSE /\ TRUE
                               /\ UNCHANGED << windowStart, windowEnd >>
               ELSE /\ TRUE
                    /\ UNCHANGED << windowStart, windowEnd >>
         /\ reciveReq' = <<>>
-        /\ IF sendData = <<>> /\ toSend # <<>>
+        /\ IF sendData = <<>> /\ toSend # <<>> /\ sequenceNum < Len(toSend) + 1
               THEN /\ sendData' = <<sequenceNum, toSend[sequenceNum]>>
-                   /\ toSend' = Tail(toSend)
-                   /\ sequenceNum' = sequenceNum + 1
+                   /\ IF sequenceNum < windowEnd' /\ sequenceNum > windowStart' - 1
+                         THEN /\ sequenceNum' = sequenceNum + 1
+                         ELSE /\ sequenceNum' = windowStart'
               ELSE /\ TRUE
-                   /\ UNCHANGED << sendData, toSend, sequenceNum >>
+                   /\ UNCHANGED << sendData, sequenceNum >>
+        /\ UNCHANGED toSend
 
 Next == Send
 
@@ -95,5 +109,5 @@ Invariants == \*/\ TypeOK
 Fairness == /\ WF_vars(Send)
 =============================================================================
 \* Modification History
-\* Last modified Tue Jun 11 16:30:51 NZST 2019 by sdmsi
+\* Last modified Wed Jun 12 14:23:12 NZST 2019 by sdmsi
 \* Created Mon Jun 10 00:58:39 NZST 2019 by sdmsi
