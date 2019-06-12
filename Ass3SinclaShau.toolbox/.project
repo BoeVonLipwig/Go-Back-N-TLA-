@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>Ass3SinclaShau</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>toolbox.builder.TLAParserBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>toolbox.natures.TLANature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>Ass3SinclaShau.tla</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Ass3SinclaShau.tla</locationURI>
+		</link>
+		<link>
+			<name>DataWire.tla</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/DataWire.tla</locationURI>
+		</link>
+		<link>
+			<name>Reciver.tla</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Reciver.tla</locationURI>
+		</link>
+		<link>
+			<name>Sender.tla</name>
+			<type>1</type>
+			<locationURI>PARENT-1-PROJECT_LOC/Sender.tla</locationURI>
+		</link>
+	</linkedResources>
+</projectDescription>
