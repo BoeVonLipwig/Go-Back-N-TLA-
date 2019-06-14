@@ -72,6 +72,7 @@ Fairness == /\ sender!Fairness
    for type checking *)
 Invariants ==  /\ sender!Invariants
                /\ receiver!Invariants
+               /\ WINDOW_SIZE < Len(MESSAGES)
 
 Spec == /\ Init /\ [][Next]_vars
         /\ SF_vars(dataChannel /\ Len(receiveDataQueue') = 2  /\ receiveDataQueue'[1] = requestNum)
@@ -89,9 +90,48 @@ Properties == /\CorrectResult
               /\receiver!Properties
 
 -------------       
-                  
-                  
+
+(*
+     * I did parts A & B
+     * Copied over the entieraty of data wire from abp 
+     * Most of the structure for this main control module was copied from my abp
+     * The sequenceNum and reciverNum variables always start at 1 
+     * Sender :
+        * Started from scratch
+        * Created a seperate process for each segment of the 3 way connection handshake 
+          and controled what one ran using a state variable 
+     * Recevier:
+        * Started from scratch
+        * Created a seperate process for each segment of the 3 way connection handshake and controled what one ran using a state variable
+     
+     * The whole Spec works as following:
+        * Connects via a 3 way hand shake:
+            * SYN and ACK are represented as bits insted of text because using text causes issue where text is
+              accdently compared to intgers and tla is unable to handle that and checking types before comparinging 
+              is difficult and comparitivly costly 
+            * Sender send SYN and its ISN (1, 0, SequenceNum)
+            * Reciver checks SYN message and replys with SYN ACK Senders ISN + 1 and its own ISN (1, 1, sequencesNumn + 1, reciverNum)
+            * Sender replys with ACK and Both ISNs + 1 (0, 1, sequenceNum +1, ReciverNum + 1)
+            * Reciver spams a request for data until it recives some and then goes into its reciver state
+            * Sender starts waiting for data requests and once it recives one moves into its sending state
+            * Both set their state to open
+        * Send and recive using the sliding window protocol 
+        * Terminate via another 3 way hand shake
+            * FIN and ACK are represented as negitive numbers insted of text because using text causes issue where text is
+              accdently compared to intgers and tla is unable to handle that and checking types before comparinging 
+              is difficult and comparitivly costly.
+            * I used negitive numbers insted of bits because if i used the bits solution it would be read as a normal
+              message by the reciver as it uses the fist index of the message as the sequence number which is capable of being 1. 
+            * Once the sender has recived confimation of its last message being recived it will send a FIN message 
+              to state its intention to break to connection, This message is a -1 as sending text causes issues as stated earlier
+            * Receiver will recive the -1 and acknolage it with a -2 (representing FIN ACK in this case)
+            * Sender will then reply with -3 (Meaning ACK) and reciver upon reciving it will shut off
+            * sender has no way to know if the message has been recived by the sender and no way to time out which is the normal
+              way to solve this problem so it will just send ACK untilll the end of time after setting its state to closed and which ends the spec
+     
+*)
+
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:26:12 NZST 2019 by sdmsi
+\* Last modified Fri Jun 14 19:01:59 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi

@@ -72,6 +72,7 @@ Fairness == /\ sender!Fairness
    for type checking *)
 Invariants ==  /\ sender!Invariants
                /\ receiver!Invariants
+               /\ WINDOW_SIZE < Len(MESSAGES)
 
 Spec == /\ Init /\ [][Next]_vars
         /\ SF_vars(dataChannel /\ Len(receiveDataQueue') = 2  /\ receiveDataQueue'[1] = requestNum)
@@ -89,9 +90,25 @@ Properties == /\CorrectResult
               /\receiver!Properties
 
 -------------       
-                  
-                  
+
+(*
+     * I did parts A & B
+     * Copied over the entieraty of data wire from abp 
+     * Most of the structure for this main control module was copied from my abp
+     * Sender :
+        * Started from scratch
+        * Created a seperate process for each segment of the 3 way connection handshake 
+          and controled what one ran using a state variable 
+        * When the state of the connection was "open" the main sliding window process 
+          from part a ran until it had sent its entire set of messages and recived confirmation of them being recived
+        * 
+     * Recevier:
+        * Started from scratch
+        * Created a seperate process for each segment of the 3 way connection handshake and controled what one ran using a state variable
+        * 
+*)
+
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:21:30 NZST 2019 by sdmsi
+\* Last modified Fri Jun 14 18:28:54 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi

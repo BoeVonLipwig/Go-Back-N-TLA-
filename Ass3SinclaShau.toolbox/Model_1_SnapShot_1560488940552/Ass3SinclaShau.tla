@@ -72,6 +72,7 @@ Fairness == /\ sender!Fairness
    for type checking *)
 Invariants ==  /\ sender!Invariants
                /\ receiver!Invariants
+               /\ WINDOW_SIZE < Len(MESSAGES)
 
 Spec == /\ Init /\ [][Next]_vars
         /\ SF_vars(dataChannel /\ Len(receiveDataQueue') = 2  /\ receiveDataQueue'[1] = requestNum)
@@ -89,9 +90,12 @@ Properties == /\CorrectResult
               /\receiver!Properties
 
 -------------       
-                  
-                  
+
+(*
+     
+*)
+
 =============================================================================
 \* Modification History
-\* Last modified Thu Jun 13 02:26:12 NZST 2019 by sdmsi
+\* Last modified Fri Jun 14 17:06:41 NZST 2019 by sdmsi
 \* Created Fri Jun 07 00:33:58 NZST 2019 by sdmsi
